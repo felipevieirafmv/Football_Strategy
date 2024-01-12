@@ -15,14 +15,15 @@ public class Menu : Form
         this.Load += delegate
         {
             WindowState = FormWindowState.Maximized;
+            FormBorderStyle = FormBorderStyle.None;
             this.Text = "Joguinho";
 
             Button ngBtn = new Button();
             ngBtn.Text = "New Game";
             ngBtn.Font = new Font("Comic Sans MS", 30);
-            ngBtn.Width = 200;
-            ngBtn.Height = 70;
-            ngBtn.Location = new Point(1300, 330);
+            ngBtn.Width = 230;
+            ngBtn.Height = 85;
+            ngBtn.Location = new Point(1300, 340);
             ngBtn.Click += delegate
             {
                 this.Hide();
@@ -32,9 +33,9 @@ public class Menu : Form
             Button cntBtn = new Button();
             cntBtn.Text = "Continue";
             cntBtn.Font = new Font("Comic Sans MS", 30);
-            cntBtn.Width = 200;
-            cntBtn.Height = 70;
-            cntBtn.Location = new Point(1300, 480);
+            cntBtn.Width = 230;
+            cntBtn.Height = 85;
+            cntBtn.Location = new Point(1300, 497);
             cntBtn.Click += delegate
             {
                 this.Hide();
@@ -44,9 +45,9 @@ public class Menu : Form
             Button exBtn = new Button();
             exBtn.Text = "Exit";
             exBtn.Font = new Font("Comic Sans MS", 30);
-            exBtn.Width = 200;
-            exBtn.Height = 70;
-            exBtn.Location = new Point(1300, 630);
+            exBtn.Width = 230;
+            exBtn.Height = 85;
+            exBtn.Location = new Point(1300, 640);
             exBtn.Click += delegate
             {
                 Application.Exit();
