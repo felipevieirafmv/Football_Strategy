@@ -4,4 +4,4 @@ using System.Windows.Forms;
 
 ApplicationConfiguration.Initialize();
 
-Application.Run(new Menu());
+Application.Run(new NewGame());

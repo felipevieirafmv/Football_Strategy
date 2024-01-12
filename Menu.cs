@@ -56,7 +56,7 @@ public class Menu : Form
         Controls.Add(exBtn);
         Controls.Add(pb);
 
-        this.img = Bitmap.FromFile("Img/suarezPixel.png");
+        this.img = Bitmap.FromFile("img/suarezPixel.png");
 
         this.Load += delegate
         {
