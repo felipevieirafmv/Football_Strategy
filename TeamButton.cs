@@ -22,6 +22,7 @@ public class TeamButton : BaseButton
     {
         g.FillRectangle(Brushes.Gray, Rect);
         g.DrawImage(image, new RectangleF((Rect.X + (Rect.Width/2 - image.Width/6)), Rect.Y + (Rect.Height/2 - image.Height/5), image.Width/3, image.Height/3));
+        g.DrawString("Teste 1", new Font("Comic Sans MS", 30), Brushes.Blue, new PointF(Rect.X, Rect.Y));
     }
     public override void DrawSelected(Graphics g, Image image, RectangleF Rect)
     {
