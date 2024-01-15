@@ -2,6 +2,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
+namespace Views;
+
 public class Menu : Form
 {
     private Graphics g = null;
