@@ -7,7 +7,7 @@ namespace Views;
 
 public class NewGame : Form
 {
-    public string selected { get; set; }
+    public bool selecionado = false;
     private Graphics g = null;
     private Bitmap bmp = null;
     private PictureBox pb = new PictureBox {
@@ -24,8 +24,8 @@ public class NewGame : Form
 
         Controls.Add(pb);
 
-        Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/athletico.png"), 200, 100, 350, 200));
-        Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/athletico.png"), 570, 100, 350, 200));
+        Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/athletico.png"), 200, 100, 275, 150, "Athletico Paranaense"));
+        Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/athletico.png"), 1000, 100, 350, 200, "CAP"));
 
         this.Load += delegate 
         {
@@ -38,7 +38,7 @@ public class NewGame : Form
 
             foreach (TeamButton item in Teams)
             {
-                item.DrawTeam(g, item.image, item.Rect);
+                item.DrawTeam(g);
             }
 
             pb.Refresh();
@@ -49,17 +49,23 @@ public class NewGame : Form
             foreach (TeamButton item in Teams)
             {
                 if (item.Rect.Contains(e.X, e.Y))
-                    item.DrawSelected(g, item.image, item.Rect);
-                else
-                    item.DrawTeam(g, item.image, item.Rect);
+                {
+                    if(item.Selected)
+                    {
+                        item.Selected = false;
+                        item.DrawTeam(g);
+                    }
+                    else
+                    {
+                        item.Selected = true;
+                        item.DrawTeam(g);
+                    }
+                }
             }
+
             pb.Refresh();
         };
     }
 
-    private void teamSelection (Graphics g, Image image, float X, float Y, float widRect, float heiRect)
-    {
-        this.g.FillRectangle(Brushes.Gray, X, Y, widRect, heiRect);
-        this.g.DrawImage(image, new RectangleF((X + (widRect/2 - image.Width/6)), Y + (heiRect/2 - image.Height/5), image.Width/3, image.Height/3));
-    }
+
 }

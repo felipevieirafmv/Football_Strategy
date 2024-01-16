@@ -8,6 +8,6 @@ public abstract class BaseButton
 {
     public PointF? Location { get; set; }
 
-    public virtual void DrawTeam (Graphics g, Image image, RectangleF Rect) { }
-    public virtual void DrawSelected (Graphics g, Image image, RectangleF Rect) { }
+    public virtual void DrawTeam (Graphics g) { }
+    public virtual void DrawSelected (Graphics g) { }
 }
