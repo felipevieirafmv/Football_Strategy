@@ -111,7 +111,7 @@ public class Escalacao : Form
         
         RectangleF rectangleF = new RectangleF();
         rectangleF.Location = new PointF(1400, 100);
-        rectangleF.Width = 5000;
+        rectangleF.Width = 400;
         rectangleF.Height = 100;
 
         this.Load += delegate
@@ -126,7 +126,6 @@ public class Escalacao : Form
             DrawField(Bitmap.FromFile("./img/Campo-de-Futebol.png"), X, Y, widRect, heiRect);
             Selecao(X1, Y1, widRect1, heiRect1);
             DrawPiece(rectangleF, "Murilo", 87);
-
         };
 
     }
@@ -160,7 +159,7 @@ public class Escalacao : Form
     public RectangleF DrawPiece(RectangleF location, string name, int overall)
     {
 
-        float realWidth = .6f * location.Height;
+        float realWidth = location.Width;
         var realSize = new SizeF(realWidth, location.Height);
  
         var deslocX = grabDesloc?.X ?? 0;
