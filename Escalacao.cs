@@ -1,11 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Net.NetworkInformation;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
 using System.Windows.Forms;
 
 public class Escalacao : Form
@@ -18,11 +12,19 @@ public class Escalacao : Form
     PointF? grabDesloc = null;
     bool isDown = false;
 
+    int frame = 0;
+
     private PictureBox pb = new PictureBox{
         Dock = DockStyle.Fill,
     };
 
+    
+
     public Escalacao() {
+
+
+        Timer tm = new Timer();
+        tm.Interval = 10;
         
         WindowState = FormWindowState.Maximized;
         // FormBorderStyle = FormBorderStyle.None;
@@ -105,14 +107,48 @@ public class Escalacao : Form
         Controls.Add(select_Ataque);
         Controls.Add(pb);
 
-        float X = 200, Y = 100, widRect = 300, heiRect = 200;
+        float X = 200, Y = 10, widRect = 300, heiRect = 200;
         int X1 = 1400, Y1 = 100, widRect1 = 400, heiRect1 = 650;
         int X2 = 1200, Y2 = 0, widRect2 = 720, heiRect2 = 1080;
         
-        RectangleF rectangleF = new RectangleF();
-        rectangleF.Location = new PointF(1400, 100);
-        rectangleF.Width = 400;
-        rectangleF.Height = 100;
+
+
+
+
+        RectangleF reservas = new RectangleF();
+        reservas.Location = new PointF(1400, 100);
+        reservas.Width = 400;
+        reservas.Height = 50;
+
+        RectangleF goleiro = new RectangleF();
+        goleiro.Location = new PointF(522, 820);
+        goleiro.Width = 86;
+        goleiro.Height = 88;
+
+        RectangleF Lateral_Direito = new RectangleF();
+        Lateral_Direito.Location = new PointF(800, 640);
+        Lateral_Direito.Width = 86;
+        Lateral_Direito.Height = 88;
+        
+        RectangleF Zagueiro_1 = new RectangleF();
+        Zagueiro_1.Location = new PointF(621, 680);
+        Zagueiro_1.Width = 86;
+        Zagueiro_1.Height = 88;
+
+        RectangleF Zagueiro_2 = new RectangleF();
+        Zagueiro_2.Location = new PointF(422, 680);
+        Zagueiro_2.Width = 86;
+        Zagueiro_2.Height = 88;
+
+        RectangleF Lateral_Esquerdo = new RectangleF();
+        Lateral_Esquerdo.Location = new PointF(254, 640);
+        Lateral_Esquerdo.Width = 86;
+        Lateral_Esquerdo.Height = 88;
+
+
+
+
+
 
         this.Load += delegate
         {
@@ -122,17 +158,60 @@ public class Escalacao : Form
             );
             g = Graphics.FromImage(bmp);
             pb.Image = bmp;
+            tm.Start();
             Menu_Selecao(X2, Y2, widRect2, heiRect2);
-            DrawField(Bitmap.FromFile("./img/Campo-de-Futebol.png"), X, Y, widRect, heiRect);
+            DrawField(Bitmap.FromFile("./img/Campo.png"), X, Y, widRect, heiRect);
             Selecao(X1, Y1, widRect1, heiRect1);
-            DrawPiece(rectangleF, "Murilo", 87);
+            DrawPiece(reservas, "Murilo", 87);
+            DrawEmptyPiece(reservas);
+            DrawEmptyPiece(goleiro);
+            DrawEmptyPiece(Lateral_Direito);
+            DrawEmptyPiece(Zagueiro_1);
+            DrawEmptyPiece(Zagueiro_2);
+            DrawEmptyPiece(Lateral_Esquerdo);
+
+            
+            // DrawEmptyPiece(goleiro);
+            // DrawEmptyPiece(goleiro);
+            // DrawEmptyPiece(goleiro);
+            // DrawEmptyPiece(goleiro);
+            // DrawEmptyPiece(goleiro);
+            // DrawEmptyPiece(goleiro);
+            // DrawEmptyPiece(goleiro);
+
+        };
+
+        KeyDown += (o, e) =>
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    Application.Exit();
+                    break;
+            }
+        };
+ 
+        
+        tm.Tick += delegate
+        {
+            frame++;
+            OnFrame(isDown, cursor){
+                
+            }
+ 
+            pb.Refresh();
         };
 
     }
 
+    private void OnFrame(bool isDown, PointF cursor)
+    {
+        throw new NotImplementedException();
+    }
+
     private void DrawField(Image image, float X, float Y, float widRect, float heiRect)
     {
-        g.DrawImage(image, new RectangleF(X, Y , image.Width, image.Height * 2));
+        g.DrawImage(image, new RectangleF(X, Y , image.Width, image.Height));
     }
 
     private void Selecao(int X, int Y, int widRect, int heiRect)
@@ -160,7 +239,7 @@ public class Escalacao : Form
     {
 
         float realWidth = location.Width;
-        var realSize = new SizeF(realWidth, location.Height);
+        var realSize = new SizeF(location.Width, location.Height);
  
         var deslocX = grabDesloc?.X ?? 0;
         var deslocY = grabDesloc?.Y ?? 0;
@@ -172,7 +251,7 @@ public class Escalacao : Form
         if (!cursorIn && (deslocX != 0 || deslocY != 0))
             rect = new RectangleF(location.Location, realSize);
  
-        var pen = new Pen(cursorIn ? Color.Cyan : Color.Black, 4f);
+        var pen = new Pen(cursorIn ? Color.Green : Color.Black, 1f);
         var yellowPen = new Pen(Color.Black, 3f);
         var whitePen = new Pen(Color.Black, 2f);
  
@@ -194,7 +273,34 @@ public class Escalacao : Form
         return rect;
     }
 
-    
-    
+    public RectangleF DrawEmptyPiece(RectangleF location)
+    {
+        float realWidth = location.Width;
+        var realSize = new SizeF(location.Width, location.Height);
+ 
+        var position = new PointF(location.X, location.Y);
+        RectangleF rect = new RectangleF(position, realSize);
+ 
+        bool cursorIn = rect.Contains(cursor);
+ 
+        var pen = new Pen(cursorIn ? Color.Cyan : Color.Black, 1);
+ 
+        g.FillRectangle(Brushes.LightBlue, rect);
+        g.DrawRectangle(pen, rect.X, rect.Y, realWidth, rect.Height);
+ 
+ 
+        if (!cursorIn || !isDown)
+            return rect;
+         
+        if (grabStart == null)
+        {
+            grabStart = cursor;
+            return rect;
+        }
+ 
+        return rect;
+    }
+
+ 
 }
 
