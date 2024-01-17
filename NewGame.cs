@@ -15,6 +15,7 @@ public class NewGame : Form
     };
 
     List<TeamButton> Teams = new List<TeamButton>();
+    ChooseTeamButton chooseTeam = null;
     
     public NewGame()
     {
@@ -47,7 +48,6 @@ public class NewGame : Form
 
             g.FillRectangle(Brushes.DarkCyan, 0, 0, pb.Width, pb.Height);
             g.FillRectangle(Brushes.Cyan, XIB, YIB, pb.Width*0.9f, pb.Height*0.84f);
-
             
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/america.png"), XIB + XTB, YIB + YTB, WTB, HTB, "América-MG"));
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/athletico.png"), XTB2 + DifX, YIB + YTB, WTB, HTB, "Athletico Paranaense"));
@@ -73,7 +73,8 @@ public class NewGame : Form
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/saopaulo.png"), XTB2 + DifX*3, YTB2 + DifY*3, WTB, HTB, "São Paulo"));
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/vasco.png"), XTB2 + DifX*4, YTB2 + DifY*3, WTB, HTB, "Vasco"));
 
-
+            chooseTeam = new ChooseTeamButton(g, pb.Width*0.9f - XTB, pb.Height*0.93f, 200, 50);
+            chooseTeam.DrawChooseTeam(g);
 
             foreach (TeamButton item in Teams)
             {
@@ -112,7 +113,21 @@ public class NewGame : Form
                 }
             }
 
+            chooseTeam.Selected = true;
+
             pb.Refresh();
+        };
+
+        pb.MouseUp += (o, e) =>
+        {
+            if (chooseTeam.Rect.Contains(e.X, e.Y))
+            {
+                foreach(TeamButton item in Teams)
+                {
+                    if (item.Selected)
+                        MessageBox.Show(item.Name);
+                }
+            }
         };
     }
 

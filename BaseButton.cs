@@ -9,5 +9,5 @@ public abstract class BaseButton
     public PointF? Location { get; set; }
 
     public virtual void DrawTeam (Graphics g) { }
-    public virtual void DrawSelected (Graphics g) { }
+    public virtual void DrawChooseTeam (Graphics g) { }
 }

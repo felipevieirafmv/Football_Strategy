@@ -4,9 +4,8 @@ using System.Drawing;
 namespace Views;
 
 public class TeamButton : BaseButton
-{   
+{
     public RectangleF Rect { get; set; }
-    public string Label { get; set; }
     public Image Image { get; set; }
     public string Name { get; set; }
     public bool Selected { get; set; } = false;
@@ -27,15 +26,6 @@ public class TeamButton : BaseButton
             g.FillRectangle(Brushes.Orange, this.Rect);
         else
             g.FillRectangle(Brushes.Gray, this.Rect);
-        g.DrawImage(this.Image, new RectangleF((this.Rect.X + (this.Rect.Width/2 - this.Rect.Width*0.1285f)), this.Rect.Y + (this.Rect.Height/2 - (this.Rect.Height*0.6f)/1.65f), this.Rect.Width*0.257f, this.Rect.Height*0.6f));
-        g.DrawString(Name, font, Brushes.White, new PointF(this.Rect.X + (this.Rect.Width/2 - textSize.Width/2), this.Rect.Y + this.Rect.Height*0.825f));
-    }
-    public override void DrawSelected(Graphics g)
-    {
-        Font font= new Font("Copperplate Gothic Bold", this.Rect.Width*0.05f);
-        SizeF textSize = g.MeasureString(Name, font);
-
-        g.FillRectangle(Brushes.Orange, this.Rect);
         g.DrawImage(this.Image, new RectangleF((this.Rect.X + (this.Rect.Width/2 - this.Rect.Width*0.1285f)), this.Rect.Y + (this.Rect.Height/2 - (this.Rect.Height*0.6f)/1.65f), this.Rect.Width*0.257f, this.Rect.Height*0.6f));
         g.DrawString(Name, font, Brushes.White, new PointF(this.Rect.X + (this.Rect.Width/2 - textSize.Width/2), this.Rect.Y + this.Rect.Height*0.825f));
     }
