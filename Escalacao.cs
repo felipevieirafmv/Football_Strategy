@@ -27,7 +27,6 @@ public class Escalacao : Form
         
         WindowState = FormWindowState.Maximized;
         // FormBorderStyle = FormBorderStyle.None;
-        BackColor = Color.DarkGreen;
 
         ComboBox select_tatica = new ComboBox
         {
@@ -146,6 +145,8 @@ public class Escalacao : Form
         
         tm.Tick += delegate
         {
+
+            g.Clear(Color.DarkGreen);
             frame++;
             Menu_Selecao(X2, Y2, widRect2, heiRect2);
             DrawField(Bitmap.FromFile("./img/Campo.png"), field);
@@ -159,17 +160,7 @@ public class Escalacao : Form
 
             // Escalação 4-3-3
             
-            DrawEmptyPiece(Posicao(522, 820)); //GL
-            DrawEmptyPiece(Posicao(800, 640)); //LD
-            DrawEmptyPiece(Posicao(621, 680)); //ZC
-            DrawEmptyPiece(Posicao(422, 680)); //ZC
-            DrawEmptyPiece(Posicao(246, 640)); //LE
-            DrawEmptyPiece(Posicao(521, 500)); //VOL
-            DrawEmptyPiece(Posicao(662, 400)); //MC
-            DrawEmptyPiece(Posicao(382, 400)); //MC
-            DrawEmptyPiece(Posicao(800, 200)); //PD
-            DrawEmptyPiece(Posicao(522, 150)); //ATA
-            DrawEmptyPiece(Posicao(246, 200)); //PE
+
 
             // DrawPiece(reservas);
 
@@ -243,19 +234,35 @@ public class Escalacao : Form
         g.FillRectangle(Brushes.LightBlue, rect);
         g.DrawRectangle(pen, rect.X, rect.Y, realWidth, rect.Height);
 
-        if (!cursorIn || !isDown)
+        if (!cursorIn || !isDown){
             return rect;
+        }
          
         if (grabStart == null)
         {
-            DrawEmptyPiece(location);
-            DrawShirt(image,location);
+            
             grabStart = cursor;
             return rect;
         }
+
+        DrawEmptyPiece(Posicao(522, 820)); //GL
+        DrawEmptyPiece(Posicao(800, 640)); //LD
+        DrawEmptyPiece(Posicao(621, 680)); //ZC
+        DrawEmptyPiece(Posicao(422, 680)); //ZC
+        DrawEmptyPiece(Posicao(246, 640)); //LE
+        DrawEmptyPiece(Posicao(521, 500)); //VOL
+        DrawEmptyPiece(Posicao(662, 400)); //MC
+        DrawEmptyPiece(Posicao(382, 400)); //MC
+        DrawEmptyPiece(Posicao(800, 200)); //PD
+        DrawEmptyPiece(Posicao(522, 150)); //ATA
+        DrawEmptyPiece(Posicao(246, 200)); //PE
         
-        shirtDesloc = new PointF(location.X = cursor.X - grabStart.Value.X, location.Y = cursor.Y - grabStart.Value.Y);
+        // shirtDesloc = new PointF(location.X = cursor.X - grabStart.Value.X, location.Y = cursor.Y - grabStart.Value.Y);
+
+        RectangleF tShirt = new RectangleF(location.X = cursor.X - grabStart.Value.X,location.Y = cursor.Y - grabStart.Value.Y, 86, 88);
         grabDesloc = new PointF(cursor.X - grabStart.Value.X, cursor.Y - grabStart.Value.Y);
+        DrawShirt(image,tShirt);
+
 
 
         return rect;
@@ -263,7 +270,7 @@ public class Escalacao : Form
 
     public RectangleF DrawEmptyPiece(RectangleF location)
     {
-        var grayBrush = new SolidBrush(Color.FromArgb(100, 11, 0, 51));
+        SolidBrush grayBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
 
 
         float realWidth = location.Width;
@@ -278,7 +285,7 @@ public class Escalacao : Form
 
         var nameRect = new RectangleF(rect.X + 14 , rect.Y + 90, 2 * realWidth / 3, realWidth / 6);
  
-        g.FillRectangle(brush: grayBrush, rect);
+        g.FillRectangle(grayBrush, rect);
         g.DrawRectangle(pen, rect.X, rect.Y, realWidth, rect.Height);
         DrawText( "Teste", Color.Black, nameRect);
  
