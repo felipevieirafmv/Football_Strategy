@@ -119,35 +119,7 @@ public class Escalacao : Form
         reservas.Location = new PointF(1400, 100);
         reservas.Width = 400;
         reservas.Height = 50;
-
-        RectangleF goleiro = new RectangleF();
-        goleiro.Location = new PointF(522, 820);
-        goleiro.Width = 86;
-        goleiro.Height = 88;
-
-        RectangleF Lateral_Direito = new RectangleF();
-        Lateral_Direito.Location = new PointF(800, 640);
-        Lateral_Direito.Width = 86;
-        Lateral_Direito.Height = 88;
         
-        RectangleF Zagueiro_1 = new RectangleF();
-        Zagueiro_1.Location = new PointF(621, 680);
-        Zagueiro_1.Width = 86;
-        Zagueiro_1.Height = 88;
-
-        RectangleF Zagueiro_2 = new RectangleF();
-        Zagueiro_2.Location = new PointF(422, 680);
-        Zagueiro_2.Width = 86;
-        Zagueiro_2.Height = 88;
-
-        RectangleF Lateral_Esquerdo = new RectangleF();
-        Lateral_Esquerdo.Location = new PointF(254, 640);
-        Lateral_Esquerdo.Width = 86;
-        Lateral_Esquerdo.Height = 88;
-
-
-
-
 
 
         this.Load += delegate
@@ -164,20 +136,20 @@ public class Escalacao : Form
             Selecao(X1, Y1, widRect1, heiRect1);
             DrawPiece(reservas, "Murilo", 87);
             DrawEmptyPiece(reservas);
-            DrawEmptyPiece(goleiro);
-            DrawEmptyPiece(Lateral_Direito);
-            DrawEmptyPiece(Zagueiro_1);
-            DrawEmptyPiece(Zagueiro_2);
-            DrawEmptyPiece(Lateral_Esquerdo);
 
-            
-            // DrawEmptyPiece(goleiro);
-            // DrawEmptyPiece(goleiro);
-            // DrawEmptyPiece(goleiro);
-            // DrawEmptyPiece(goleiro);
-            // DrawEmptyPiece(goleiro);
-            // DrawEmptyPiece(goleiro);
-            // DrawEmptyPiece(goleiro);
+
+            // Escalação 4-3-3
+            DrawEmptyPiece(Posicao(522, 820)); //GL
+            DrawEmptyPiece(Posicao(800, 640)); //LD
+            DrawEmptyPiece(Posicao(621, 680)); //ZC
+            DrawEmptyPiece(Posicao(422, 680)); //ZC
+            DrawEmptyPiece(Posicao(246, 640)); //LE
+            DrawEmptyPiece(Posicao(522, 500)); //VOL
+            DrawEmptyPiece(Posicao(662, 400)); //MC
+            DrawEmptyPiece(Posicao(382, 400)); //MC
+            DrawEmptyPiece(Posicao(800, 200)); //PD
+            DrawEmptyPiece(Posicao(522, 150)); //ATA
+            DrawEmptyPiece(Posicao(246, 200)); //PE
 
         };
 
@@ -195,13 +167,25 @@ public class Escalacao : Form
         tm.Tick += delegate
         {
             frame++;
-            OnFrame(isDown, cursor){
-                
-            }
  
             pb.Refresh();
         };
 
+    }
+
+    // public void Formacao(Posicao x, Posicao y)
+    // {
+
+    // }
+
+    private RectangleF Posicao(float X, float y)
+    {
+        RectangleF posicao = new RectangleF();
+        posicao.Location = new PointF(X, y);
+        posicao.Height = 88;
+        posicao.Width = 86;
+
+        return posicao;
     }
 
     private void OnFrame(bool isDown, PointF cursor)
@@ -285,7 +269,7 @@ public class Escalacao : Form
  
         var pen = new Pen(cursorIn ? Color.Cyan : Color.Black, 1);
  
-        g.FillRectangle(Brushes.LightBlue, rect);
+        g.FillRectangle(Brushes.GreenYellow, rect);
         g.DrawRectangle(pen, rect.X, rect.Y, realWidth, rect.Height);
  
  
