@@ -231,16 +231,15 @@ public class Escalacao : Form
         var yellowPen = new Pen(Color.Black, 3f);
         var whitePen = new Pen(Color.Black, 2f);
  
-        g.FillRectangle(Brushes.LightBlue, rect);
-        g.DrawRectangle(pen, rect.X, rect.Y, realWidth, rect.Height);
 
         if (!cursorIn || !isDown){
+            g.FillRectangle(Brushes.LightBlue, rect);
+            g.DrawRectangle(pen, rect.X, rect.Y, realWidth, rect.Height);
             return rect;
         }
          
         if (grabStart == null)
         {
-            
             grabStart = cursor;
             return rect;
         }
@@ -256,10 +255,8 @@ public class Escalacao : Form
         DrawEmptyPiece(Posicao(800, 200)); //PD
         DrawEmptyPiece(Posicao(522, 150)); //ATA
         DrawEmptyPiece(Posicao(246, 200)); //PE
-        
-        // shirtDesloc = new PointF(location.X = cursor.X - grabStart.Value.X, location.Y = cursor.Y - grabStart.Value.Y);
-
-        RectangleF tShirt = new RectangleF(location.X = cursor.X - grabStart.Value.X,location.Y = cursor.Y - grabStart.Value.Y, 86, 88);
+ 
+        RectangleF tShirt = new RectangleF(rect.X = cursor.X - 40,  rect.Y = cursor.Y - 40, 86, 88);
         grabDesloc = new PointF(cursor.X - grabStart.Value.X, cursor.Y - grabStart.Value.Y);
         DrawShirt(image,tShirt);
 
@@ -297,6 +294,11 @@ public class Escalacao : Form
             grabStart = cursor;
             return rect;
         }
+         if(cursorIn && isDown )
+         {
+            //colocar codigo para aparecer aqui das cmamisas
+            return rect;
+         }
  
         return rect;
     }
