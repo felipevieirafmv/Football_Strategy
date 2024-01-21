@@ -6,4 +6,4 @@ using Views;
 
 ApplicationConfiguration.Initialize();
 
-Application.Run(new Escalacao());
+Application.Run(new LineUp());
