@@ -19,7 +19,8 @@ public class TeamButton : BaseButton
 
     public override void DrawTeam(Graphics g)
     {
-        Font font= new Font("Copperplate Gothic Bold", this.Rect.Width*0.05f);
+
+        Font font = new Font("Copperplate Gothic Bold", this.Rect.Width*0.05f);
         SizeF textSize = g.MeasureString(Name, font);
 
         if(this.Selected)

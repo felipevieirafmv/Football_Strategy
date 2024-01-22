@@ -27,7 +27,7 @@ public class Menu : Form
         ngBtn.Click += delegate
         {
             this.Hide();
-            //Abrir tela de novo jogo
+            //Abrir a tela de New Game
         };
 
         Button cntBtn = new Button();

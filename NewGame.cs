@@ -22,6 +22,9 @@ public class NewGame : Form
         WindowState = FormWindowState.Maximized;
         FormBorderStyle = FormBorderStyle.None;
         this.Text = "Joguinho";
+        SolidBrush celestialBlue = new SolidBrush(Color.FromArgb(255, 68, 157, 209));
+        SolidBrush skyBlue = new SolidBrush(Color.FromArgb(255, 120, 192, 224));
+        SolidBrush lightYellow = new SolidBrush(Color.FromArgb(255, 229, 250, 184));
 
         Controls.Add(pb);
 
@@ -46,8 +49,8 @@ public class NewGame : Form
             float DifX = XTB + WTB;
             float DifY = YTB + HTB;
 
-            g.FillRectangle(Brushes.DarkCyan, 0, 0, pb.Width, pb.Height);
-            g.FillRectangle(Brushes.Cyan, XIB, YIB, pb.Width*0.9f, pb.Height*0.84f);
+            g.FillRectangle(celestialBlue, 0, 0, pb.Width, pb.Height);
+            g.FillRectangle(lightYellow, XIB, YIB, pb.Width*0.9f, pb.Height*0.84f);
             
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/america.png"), XIB + XTB, YIB + YTB, WTB, HTB, "América-MG"));
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/athletico.png"), XTB2 + DifX, YIB + YTB, WTB, HTB, "Athletico Paranaense"));
@@ -130,6 +133,4 @@ public class NewGame : Form
             }
         };
     }
-
-
 }
