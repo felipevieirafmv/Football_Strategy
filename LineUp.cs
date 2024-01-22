@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
 using Extra;
@@ -8,7 +9,7 @@ namespace Views;
 public class LineUp : Form
 {
     Bitmap bmp = null;
-    Graphics g = null;
+    public Graphics g = null;
     PointF cursor = PointF.Empty;
     PointF? grabStart = null;
     PointF? grabDesloc = null;
@@ -19,9 +20,8 @@ public class LineUp : Form
     private PictureBox pb = new PictureBox{
         Dock = DockStyle.Fill,
     };
-    Draws draw = new Draws();
-    Formation formation = new Formation();
-    Position position = new Position();
+    Formation formation = new Tactical433();
+    PositionDrawer position = new PositionDrawer();
     GameTactics gameTactics = new GameTactics();
 
     SolidBrush grayBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
@@ -50,8 +50,6 @@ public class LineUp : Form
             isDown = false;
             grabDesloc = null;
             grabStart = null;
-
-            position.SetShirt();
         };
 
         pb.MouseMove += (o, e) =>
@@ -84,6 +82,7 @@ public class LineUp : Form
                 pb.Height
             );
             g = Graphics.FromImage(bmp);
+            Draws.Graphics = g;
             pb.Image = bmp;
             tm.Start();
             
@@ -93,9 +92,9 @@ public class LineUp : Form
         {
             g.Clear(Color.DarkGreen);
 
-            draw.Menu(g);
-            draw.MenuBorder(g);
-            draw.DrawField(g, Bitmap.FromFile("./img/Field.png"));
+            Draws.Menu();
+            Draws.MenuBorder();
+            Draws.DrawField(Bitmap.FromFile("./img/Field.png"));
             
             DrawPlayer(shirt, player);
 
@@ -106,7 +105,7 @@ public class LineUp : Form
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public RectangleF DrawPlayer( Image image, RectangleF location)
+    public RectangleF DrawPlayer(Image image, RectangleF location)
     {
 
         float realWidth = location.Width;
@@ -127,6 +126,13 @@ public class LineUp : Form
 
         var pen = new Pen(cursorIn ? Color.LightGreen : Color.Black, 2f);
 
+        if (cursorIn && !isDown)
+        {
+            
+
+            grabStart = null;
+        }
+        
         if (!cursorIn || !isDown)
         {
             g.FillRectangle(Brushes.LightBlue, rect);
@@ -134,56 +140,22 @@ public class LineUp : Form
 
             return rect;
         }
+
+        formation.Draw(cursor, isDown);
+
          
         if (grabStart == null)
         {
             grabStart = cursor;
             return rect;
-        }
-
-
-        if (cursorIn && !isDown)
-        {
-            if (position.HasShirt())
-            {
-                DrawShirtOnPlayer(rect);
-            }
         }
 
         RectangleF tShirt = new RectangleF(rect.X = cursor.X - 40,  rect.Y = cursor.Y - 40, 86, 88);
         grabDesloc = new PointF(cursor.X - grabStart.Value.X, cursor.Y - grabStart.Value.Y);
         
-        formation.Tactical_4_3_3(this);
-        
-        draw.DrawPlayerShirt(g, image, tShirt);        
-        draw.DrawText(g, "Murilo", Color.Black, nameRect);
+        Draws.DrawPlayerShirt(image, tShirt);        
+        Draws.DrawText("Murilo", Color.Black, nameRect);
 
-        return rect;
-    }
-
-    public RectangleF DrawEmptyPosition(RectangleF location)
-    {
-        float realWidth = location.Width;
-        var realSize = new SizeF(location.Width, location.Height);
- 
-        var position = new PointF(location.X, location.Y);
-        RectangleF rect = new RectangleF(position, realSize);
- 
-        bool cursorIn = rect.Contains(cursor);
- 
-        var pen = new Pen(cursorIn ? Color.Green : Color.Black, 1);
-
-        g.FillRectangle(grayBrush, rect);
-        g.DrawRectangle(pen, rect.X, rect.Y, realWidth, rect.Height);
- 
-        if (!cursorIn || !isDown)
-            return rect;
-         
-        if (grabStart == null)
-        {
-            grabStart = cursor;
-            return rect;
-        }
         return rect;
     }
     public void DrawShirtOnPlayer(RectangleF playerPosition)
@@ -193,7 +165,4 @@ public class LineUp : Form
             g.DrawImage(shirt, playerPosition);
         }
     }
-
- 
 }
-

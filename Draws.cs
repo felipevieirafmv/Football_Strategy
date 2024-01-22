@@ -5,23 +5,24 @@ using Views;
 
 namespace Extra;
 
-public class Draws
+public static class Draws
 {
-    public Draws() { }
+    public static Graphics Graphics { get; set; }
+    private static Graphics g => Graphics;
 
-    public void DrawField(Graphics g, Image image)
+    public static void DrawField(Image image)
         => g.DrawImage(image, new RectangleF(200, 10, image.Width, image.Height));
 
-    public void Menu(Graphics g)
-        => g.FillRectangle(Brushes.DarkBlue, 1200, 0, 720, 1080);
+    public static void Menu()
+        => g.FillRectangle(Brushes.Yellow, 1200, 0, 720, 1080);
 
-    public void MenuBorder(Graphics g)
-        => g.DrawRectangle(Pens.White, 1300, 40, 450, 800);
+    public static void MenuBorder()
+        => g.DrawRectangle(Pens.Black, 1300, 40, 450, 800);
     
-    public void DrawPlayerShirt(Graphics g, Image image, RectangleF location)
+    public static void DrawPlayerShirt(Image image, RectangleF location)
         => g.DrawImage(image, new RectangleF(location.X, location.Y , image.Width, image.Height));
 
-    public void DrawText(Graphics g, string text, Color color, RectangleF location)
+    public static void DrawText(string text, Color color, RectangleF location)
     {
         var format = new StringFormat();
         format.Alignment = StringAlignment.Center;

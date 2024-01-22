@@ -1,40 +1,45 @@
-using System;
 using System.Drawing;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using Views;
+using System.Collections.Generic;
 
 
 namespace Extra;
-public class Formation
+public abstract class Formation
 {
-    Position t = new Position();
+    private Image shirt = Image.FromFile("Img/Shirt.png");
+    private List<(Position pos, PointF loc)> list = new();
+    public void Add(Position pos, PointF loc)
+        => list.Add((pos, loc));
 
     public Formation() { }
 
-   public void Tactical_4_3_3(LineUp lineUp)
+    public void Draw(PointF cursor, bool mouseDown)
     {
-        PlacePlayer(lineUp, t.GoalKeeper(new PointF(522, 800))); //GL
-        PlacePlayer(lineUp, t.LeftBack(new PointF(246, 640))); //LE
-        PlacePlayer(lineUp, t.Defender(new PointF(422, 680))); //ZC
-        PlacePlayer(lineUp, t.Defender(new PointF(621, 680))); //ZC
-        PlacePlayer(lineUp, t.RightBack(new PointF(800, 640))); //LD
-        PlacePlayer(lineUp, t.Midfield(new PointF(521, 500))); //VOL
-        PlacePlayer(lineUp, t.Midfield(new PointF(382, 400))); //MC
-        PlacePlayer(lineUp, t.Midfield(new PointF(662, 400))); //MC
-        PlacePlayer(lineUp, t.LeftWinger(new PointF(246, 200))); //PE
-        PlacePlayer(lineUp, t.RightWinger(new PointF(800, 200))); //PD
-        PlacePlayer(lineUp, t.Striker(new PointF(522, 150))); //ATA
-    }
-    private void PlacePlayer(LineUp lineUp, RectangleF position)
-    {
-        lineUp.DrawEmptyPosition(position);
-
-        if (t.hasPlayer)
+        foreach (var item in list)
         {
-            lineUp.DrawShirtOnPlayer(position);
+            this.DrawEmptyPosition(
+                new RectangleF(item.loc.X, item.loc.Y, 86, 88),
+                cursor, mouseDown);
         }
+    }
 
-        // Adicione lógica adicional, se necessário
+    public RectangleF DrawEmptyPosition(RectangleF location, PointF cursor, bool isDown)
+    {
+        float realWidth = location.Width;
+        var realSize = new SizeF(location.Width, location.Height);
+ 
+        var position = new PointF(location.X, location.Y);
+        RectangleF rect = new RectangleF(position, realSize);
+ 
+        bool cursorIn = rect.Contains(cursor);
+ 
+        var pen = new Pen(cursorIn ? Color.Green : Color.Black, 1);
+
+        Draws.Graphics.FillRectangle(Brushes.Gray, rect);
+        Draws.Graphics.DrawRectangle(pen, rect.X, rect.Y, realWidth, rect.Height);
+ 
+        if (!cursorIn || !isDown)
+            return rect;
+        
+        return rect;
     }
 }
