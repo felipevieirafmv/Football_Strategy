@@ -13,6 +13,7 @@ public class LineUp : Form
     PointF cursor = PointF.Empty;
     PointF? grabStart = null;
     PointF? grabDesloc = null;
+    PointF? grabFinish = null;
 
     bool isDown = false;
 
@@ -21,7 +22,6 @@ public class LineUp : Form
         Dock = DockStyle.Fill,
     };
     Formation formation = new Tactical433();
-    PositionDrawer position = new PositionDrawer();
     GameTactics gameTactics = new GameTactics();
 
     SolidBrush grayBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
@@ -59,7 +59,17 @@ public class LineUp : Form
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        Controls.Add(gameTactics.TacticalTraining());
+        var cb = gameTactics.TacticalTraining();
+        cb.SelectedIndexChanged += delegate
+        {
+            if (cb.SelectedIndex == 0)
+                this.formation = new Tactical433();
+            if (cb.SelectedIndex == 1)
+                this.formation = new Tactical4222();
+            if (cb.SelectedIndex == 2)
+                this.formation = new Tactical442();
+        };
+        Controls.Add(cb);
         Controls.Add(gameTactics.Style());
         Controls.Add(gameTactics.MarkingType());
         Controls.Add(gameTactics.Attack());
@@ -107,8 +117,6 @@ public class LineUp : Form
 
     public RectangleF DrawPlayer(Image image, RectangleF location)
     {
-
-        float realWidth = location.Width;
         var realSize = new SizeF(location.Width, location.Height);
  
         var deslocX = grabDesloc?.X ?? 0;
@@ -119,30 +127,30 @@ public class LineUp : Form
  
         bool cursorIn = rect.Contains(cursor);
 
-        var nameRect = new RectangleF(rect.X + 14 , rect.Y + 90, 2 * realWidth / 3, realWidth / 6);
+        var playerName = new RectangleF(rect.X + 14 , rect.Y + 90, 2 * location.Width / 3, location.Width / 6);
  
-        if (!cursorIn && (deslocX != 0 || deslocY != 0))
+        if (!cursorIn && (deslocX != 0 || deslocY != 0)){
             rect = new RectangleF(location.Location, realSize);
+        }
 
         var pen = new Pen(cursorIn ? Color.LightGreen : Color.Black, 2f);
 
-        if (cursorIn && !isDown)
+        if (cursorIn && !isDown && grabStart != null)
         {
-            
-
+            this.formation.SetPlayer(4, cursor);
             grabStart = null;
+            return rect;
         }
         
         if (!cursorIn || !isDown)
         {
             g.FillRectangle(Brushes.LightBlue, rect);
-            g.DrawRectangle(pen, rect.X, rect.Y, realWidth, rect.Height);
+            g.DrawRectangle(pen, rect.X, rect.Y, location.Width, rect.Height);
 
             return rect;
         }
 
         formation.Draw(cursor, isDown);
-
          
         if (grabStart == null)
         {
@@ -154,7 +162,7 @@ public class LineUp : Form
         grabDesloc = new PointF(cursor.X - grabStart.Value.X, cursor.Y - grabStart.Value.Y);
         
         Draws.DrawPlayerShirt(image, tShirt);        
-        Draws.DrawText("Murilo", Color.Black, nameRect);
+        Draws.DrawText("Murilo", Color.Black, playerName);
 
         return rect;
     }
