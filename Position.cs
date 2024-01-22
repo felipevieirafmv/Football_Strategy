@@ -7,7 +7,17 @@ namespace Extra;
 
 public class Position
 {
+
+    public bool hasPlayer = false;
     public Position() { }
+
+    public void SetShirt()
+        => hasPlayer = true;
+    public bool HasShirt()
+    {
+        return hasPlayer;
+    }
+
 
     public RectangleF GoalKeeper(PointF position)
     {

@@ -21,9 +21,12 @@ public class LineUp : Form
     };
     Draws draw = new Draws();
     Formation formation = new Formation();
+    Position position = new Position();
     GameTactics gameTactics = new GameTactics();
 
     SolidBrush grayBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
+
+    public Image shirt = Bitmap.FromFile("./img/Shirt.png");
 
 
 
@@ -47,6 +50,8 @@ public class LineUp : Form
             isDown = false;
             grabDesloc = null;
             grabStart = null;
+
+            position.SetShirt();
         };
 
         pb.MouseMove += (o, e) =>
@@ -92,7 +97,7 @@ public class LineUp : Form
             draw.MenuBorder(g);
             draw.DrawField(g, Bitmap.FromFile("./img/Field.png"));
             
-            DrawPlayer(Bitmap.FromFile("./img/Shirt.png"), player);
+            DrawPlayer(shirt, player);
 
             pb.Refresh();
         };
@@ -110,19 +115,23 @@ public class LineUp : Form
         var deslocX = grabDesloc?.X ?? 0;
         var deslocY = grabDesloc?.Y ?? 0;
 
-        PointF position = new PointF(location.X + deslocX, location.Y + deslocY);
-        RectangleF rect = new RectangleF(position, realSize);
+        PointF stance = new PointF(location.X + deslocX, location.Y + deslocY);
+        RectangleF rect = new RectangleF(stance, realSize);
  
         bool cursorIn = rect.Contains(cursor);
+
+        var nameRect = new RectangleF(rect.X + 14 , rect.Y + 90, 2 * realWidth / 3, realWidth / 6);
  
         if (!cursorIn && (deslocX != 0 || deslocY != 0))
             rect = new RectangleF(location.Location, realSize);
 
-        var pen = new Pen(cursorIn ? Color.Green : Color.Black, 1f);
+        var pen = new Pen(cursorIn ? Color.LightGreen : Color.Black, 2f);
 
-        if (!cursorIn || !isDown){
+        if (!cursorIn || !isDown)
+        {
             g.FillRectangle(Brushes.LightBlue, rect);
             g.DrawRectangle(pen, rect.X, rect.Y, realWidth, rect.Height);
+
             return rect;
         }
          
@@ -132,17 +141,25 @@ public class LineUp : Form
             return rect;
         }
 
+
+        if (cursorIn && !isDown)
+        {
+            if (position.HasShirt())
+            {
+                DrawShirtOnPlayer(rect);
+            }
+        }
+
         RectangleF tShirt = new RectangleF(rect.X = cursor.X - 40,  rect.Y = cursor.Y - 40, 86, 88);
         grabDesloc = new PointF(cursor.X - grabStart.Value.X, cursor.Y - grabStart.Value.Y);
         
         formation.Tactical_4_3_3(this);
-
-        draw.DrawPlayerShirt(g, image, tShirt);
+        
+        draw.DrawPlayerShirt(g, image, tShirt);        
+        draw.DrawText(g, "Murilo", Color.Black, nameRect);
 
         return rect;
     }
-
-
 
     public RectangleF DrawEmptyPosition(RectangleF location)
     {
@@ -154,13 +171,10 @@ public class LineUp : Form
  
         bool cursorIn = rect.Contains(cursor);
  
-        var pen = new Pen(cursorIn ? Color.Cyan : Color.Black, 1);
+        var pen = new Pen(cursorIn ? Color.Green : Color.Black, 1);
 
-        var nameRect = new RectangleF(rect.X + 14 , rect.Y + 90, 2 * realWidth / 3, realWidth / 6);
- 
         g.FillRectangle(grayBrush, rect);
         g.DrawRectangle(pen, rect.X, rect.Y, realWidth, rect.Height);
-        draw.DrawText(g, "Murilo", Color.Black, nameRect);
  
         if (!cursorIn || !isDown)
             return rect;
@@ -170,13 +184,14 @@ public class LineUp : Form
             grabStart = cursor;
             return rect;
         }
-         if(cursorIn && isDown )
-         {
-            //colocar codigo para aparecer aqui das cmamisas
-            return rect;
-         }
- 
         return rect;
+    }
+    public void DrawShirtOnPlayer(RectangleF playerPosition)
+    {
+        if (shirt != null)
+        {
+            g.DrawImage(shirt, playerPosition);
+        }
     }
 
  
