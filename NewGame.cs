@@ -59,10 +59,10 @@ public class NewGame : Form
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/botafogo.png"), XTB2 + DifX*4, YIB + YTB, WTB, HTB, "Botafogo"));
 
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/corinthians.png"), XIB + XTB, YTB2 + DifY, WTB, HTB, "Corinthians"));
-            Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/fantasma.jpg"), XTB2 + DifX, YTB2 + DifY, WTB, HTB, "CoritiBa"));
+            Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/coritiba.png"), XTB2 + DifX, YTB2 + DifY, WTB, HTB, "CoritiBa"));
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/cruzeiro.png"), XTB2 + DifX*2, YTB2 + DifY, WTB, HTB, "Cruzeiro"));
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/cuiaba.png"), XTB2 + DifX*3, YTB2 + DifY, WTB, HTB, "Cuiabá"));
-            Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/urubu.jpg"), XTB2 + DifX*4, YTB2 + DifY, WTB, HTB, "Flamengo"));
+            Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/flamengo.png"), XTB2 + DifX*4, YTB2 + DifY, WTB, HTB, "Flamengo"));
 
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/fluminense.png"), XIB + XTB, YTB2 + DifY*2, WTB, HTB, "Fluminense"));
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/fortaleza.png"), XTB2 + DifX, YTB2 + DifY*2, WTB, HTB, "Fortaleza"));

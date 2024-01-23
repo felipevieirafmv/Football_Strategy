@@ -6,4 +6,4 @@ using Views;
 
 ApplicationConfiguration.Initialize();
 
-Application.Run(new NewGame());
+Application.Run(new Menu());

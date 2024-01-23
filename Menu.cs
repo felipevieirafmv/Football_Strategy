@@ -14,6 +14,8 @@ public class Menu : Form
     };
     public Menu()
     {
+        NewGame game = new NewGame();
+
         WindowState = FormWindowState.Maximized;
         FormBorderStyle = FormBorderStyle.None;
         this.Text = "Joguinho";
@@ -27,7 +29,7 @@ public class Menu : Form
         ngBtn.Click += delegate
         {
             this.Hide();
-            //Abrir a tela de New Game
+            game.Show();
         };
 
         Button cntBtn = new Button();
