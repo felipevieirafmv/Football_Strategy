@@ -8,18 +8,20 @@ public abstract class Formation
 {
     private Image shirt = Image.FromFile("Img/Shirt.png");
     private List<(Position pos, PointF loc, object player)> list = new();
+    SolidBrush grayBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
+
     public void AddEmptyPosition(Position pos, PointF loc)
         => list.Add((pos, loc, null));
 
     public Formation() { }
+    
 
     public void SetPlayer(object player, PointF cursor)
     {
-        MessageBox.Show(cursor.ToString());
         for (int i = 0; i < list.Count; i++)
         {
             var item = list[i];
-            var itemRect = new RectangleF(item.loc, new SizeF(86, 88));
+            var itemRect = new RectangleF(item.loc, new SizeF(100, 100));
             if (!itemRect.Contains(cursor))
                 continue;
             
@@ -37,7 +39,7 @@ public abstract class Formation
             
             if (item.player != null)
                 this.DrawEmptyPosition(
-                new RectangleF(item.loc.X, item.loc.Y, 100, 100),
+                new RectangleF(item.loc.X, item.loc.Y, 86, 88),
                 cursor, mouseDown);
         }
     }
@@ -54,7 +56,7 @@ public abstract class Formation
  
         var pen = new Pen(cursorIn ? Color.Green : Color.Black, 1);
 
-        Draws.Graphics.FillRectangle(Brushes.Gray, rect);
+        Draws.Graphics.FillRectangle(grayBrush, rect);
         Draws.Graphics.DrawRectangle(pen, rect.X, rect.Y, realWidth, rect.Height);
  
         if (!cursorIn || !isDown)

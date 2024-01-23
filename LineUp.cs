@@ -12,8 +12,6 @@ public class LineUp : Form
     public Graphics g = null;
     PointF cursor = PointF.Empty;
     PointF? grabStart = null;
-    PointF? grabDesloc = null;
-    PointF? grabFinish = null;
 
     bool isDown = false;
 
@@ -48,8 +46,6 @@ public class LineUp : Form
         pb.MouseUp += (o, e) =>
         {
             isDown = false;
-            grabDesloc = null;
-            grabStart = null;
         };
 
         pb.MouseMove += (o, e) =>
@@ -75,15 +71,16 @@ public class LineUp : Form
         Controls.Add(gameTactics.Attack());
         Controls.Add(pb);
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    
-        RectangleF player = new RectangleF();
-        
-        player.Location = new PointF(1300, 40);
-        player.Width = 450;
-        player.Height = 40;
-        
-    ////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+
+        RectangleF player = new RectangleF
+        {
+            Location = new PointF(1300, y: 40),
+            Width = 450,
+            Height = 40
+        };
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 
         this.Load += delegate
         {
@@ -106,7 +103,7 @@ public class LineUp : Form
             Draws.MenuBorder();
             Draws.DrawField(Bitmap.FromFile("./img/Field.png"));
             
-            DrawPlayer(shirt, player);
+            DrawPlayer(player);
 
             pb.Refresh();
         };
@@ -115,62 +112,27 @@ public class LineUp : Form
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public RectangleF DrawPlayer(Image image, RectangleF location)
+    bool selected = false;
+    public void DrawPlayer(RectangleF location)
     {
-        var realSize = new SizeF(location.Width, location.Height);
- 
-        var deslocX = grabDesloc?.X ?? 0;
-        var deslocY = grabDesloc?.Y ?? 0;
+        bool cursorIn = location.Contains(cursor);
 
-        PointF stance = new PointF(location.X + deslocX, location.Y + deslocY);
-        RectangleF rect = new RectangleF(stance, realSize);
- 
-        bool cursorIn = rect.Contains(cursor);
-
-        var playerName = new RectangleF(rect.X + 14 , rect.Y + 90, 2 * location.Width / 3, location.Width / 6);
- 
-        if (!cursorIn && (deslocX != 0 || deslocY != 0)){
-            rect = new RectangleF(location.Location, realSize);
-        }
-
-        var pen = new Pen(cursorIn ? Color.LightGreen : Color.Black, 2f);
-
-        if (cursorIn && !isDown && grabStart != null)
+        if (cursorIn && isDown)
+            selected = true;
+            
+        if (!isDown)
         {
-            this.formation.SetPlayer(4, cursor);
-            grabStart = null;
-            return rect;
+            if (selected)
+                formation.SetPlayer(4, cursor);
+            selected = false;
         }
         
-        if (!cursorIn || !isDown)
-        {
-            g.FillRectangle(Brushes.LightBlue, rect);
-            g.DrawRectangle(pen, rect.X, rect.Y, location.Width, rect.Height);
-
-            return rect;
-        }
-
+        if (!selected)
+            return;
+        
         formation.Draw(cursor, isDown);
-         
-        if (grabStart == null)
-        {
-            grabStart = cursor;
-            return rect;
-        }
 
-        RectangleF tShirt = new RectangleF(rect.X = cursor.X - 40,  rect.Y = cursor.Y - 40, 86, 88);
-        grabDesloc = new PointF(cursor.X - grabStart.Value.X, cursor.Y - grabStart.Value.Y);
-        
-        Draws.DrawPlayerShirt(image, tShirt);        
-        Draws.DrawText("Murilo", Color.Black, playerName);
-
-        return rect;
-    }
-    public void DrawShirtOnPlayer(RectangleF playerPosition)
-    {
-        if (shirt != null)
-        {
-            g.DrawImage(shirt, playerPosition);
-        }
+        Draws.DrawPlayerShirt(shirt, 
+            new RectangleF(cursor.X - 43, cursor.Y - 44, 86, 88));
     }
 }
