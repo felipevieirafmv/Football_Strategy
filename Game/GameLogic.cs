@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Game;
 
@@ -30,12 +33,35 @@ public class GameLogic
 
     public void CreateConfrontations()
     {
-        foreach(Team t1 in teams)
+        // StreamWriter sw = new StreamWriter("./Game/confrontations.txt");
+        // foreach(Team t1 in teams)
+        // {
+        //     foreach (Team t2 in teams)
+        //     {
+        //         if(t1 != t2)
+        //         {
+        //             confrontations.Add(new Team[] { t1, t2 });
+        //             sw.WriteLine(t1.Name + "," + t2.Name);
+        //         }
+        //     }
+        // }
+        // sw.Close();
+
+        ChampionshipGenerator cg = new ChampionshipGenerator();
+
+        foreach(Team t in teams)
         {
-            foreach (Team t2 in teams)
+            cg.Add(t);
+        }
+
+        Dictionary<Team, Team[]> dict = cg.Generate();
+
+        foreach(Team t in teams)
+        {
+            MessageBox.Show(t.Name);
+            for (int i = 0; i < dict[t].Length; i++)
             {
-                if(t1 != t2)
-                    confrontations.Add(new Team[] { t1, t2 });
+                MessageBox.Show(dict[t][i].Name);
             }
         }
     }
