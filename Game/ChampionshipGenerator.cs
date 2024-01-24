@@ -2,12 +2,18 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.CodeDom.Compiler;
+using System.Data;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace Game;
 
 public class ChampionshipGenerator
 {
-    private List<Team> teams = Teams.GetAllTeams;
+    private List<Team> teams = new();
     private Dictionary<Team, Team[]> matchMap = new();
 
     public void Add(Team team)
@@ -18,40 +24,48 @@ public class ChampionshipGenerator
 
     public Dictionary<Team, Team[]> Generate()
     {
-        while (teams.Count > 0)
-        {
-            Team crr = getRandomTeam();
-            this.teams.Remove(crr);
+        LinkedList<Team> teams = new LinkedList<Team>(
+            getRandomTeams()
+        );
 
-            Team[] matches = matchMap[crr];
-            fillMatches(matches, crr);
+        int round = teams.Count - 1;
+        for (int i = 0; i < round; i++)
+        {
+            var last = teams.Last;
+
+            var ita = teams.First;
+            var itb = last;
+
+            for(int j = 0; j < teams.Count / 2; j++)
+            {
+                matchMap[ita.Value][i] = itb.Value;
+                matchMap[itb.Value][i] = ita.Value;
+                
+                ita = ita.Next;
+                itb = itb.Previous;
+            }
+
+            teams.RemoveLast();
+            teams.AddAfter(teams.First, last);
         }
+        
 
         return matchMap;
     }
 
     private Team getRandomTeam()
     {
-        Random random = new Random();
+        if (teams.Count == 0)
+            return null;
 
+        Random random = Random.Shared;
         return teams[random.Next(teams.Count())];
     }
 
-    private void fillMatches(Team[] matches, Team crr)
+    private List<Team> getRandomTeams()
     {
-        for(int i = 0; i < teams.Count(); i++)
-        {
-            Team t = getRandomTeam();
-            if(matches[i] != null)
-            {
-                if(!matches.Contains(t))
-                {
-                    matches[i] = t;
-                    matchMap[t][i] = crr;
-                }
-                else
-                    i--;
-            }
-        }
+        return teams
+            .OrderBy(t => Random.Shared.Next())
+            .ToList();
     }
 }

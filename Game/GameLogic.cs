@@ -55,15 +55,17 @@ public class GameLogic
         }
 
         Dictionary<Team, Team[]> dict = cg.Generate();
-
-        foreach(Team t in teams)
+        
+        string result = "";
+        foreach(var pair in dict)
         {
-            MessageBox.Show(t.Name);
-            for (int i = 0; i < dict[t].Length; i++)
-            {
-                MessageBox.Show(dict[t][i].Name);
-            }
+            result += (pair.Key?.Name ?? "null") + " ->\t";
+            var array = pair.Value;
+            foreach (var value in array)
+                result += (value?.Name ?? "null") + ", ";
+            result += "END\n\n";
         }
+        MessageBox.Show(result);
     }
 
     public void ResetTeams()
