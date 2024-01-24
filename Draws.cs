@@ -3,10 +3,12 @@ using System.Drawing;
 using System.Windows.Forms;
 using Views;
 
+
 namespace Extra;
 
 public static class Draws
 {
+    public static Image shirt = Bitmap.FromFile("./img/Shirt.png");
     public static Graphics Graphics { get; set; }
     private static Graphics g => Graphics;
 
@@ -19,8 +21,10 @@ public static class Draws
     public static void MenuBorder()
         => g.DrawRectangle(Pens.Black, 1300, 40, 450, 800);
     
-    public static void DrawPlayerShirt(Image image, RectangleF location)
-        => g.DrawImage(image, new RectangleF(location.X, location.Y , image.Width, image.Height));
+    public static void DrawPlayerShirt(PointF location)
+        => g.DrawImage(shirt, new RectangleF(location.X, location.Y , shirt.Width, shirt.Height));
+    public static void DrawPlayerMenu(PointF location)
+        => g.FillRectangle(Brushes.DarkBlue, new RectangleF(location.X, location.Y , 450, 40));
 
     public static void DrawText(string text, Color color, RectangleF location)
     {

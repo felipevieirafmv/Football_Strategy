@@ -21,11 +21,27 @@ public abstract class Formation
         for (int i = 0; i < list.Count; i++)
         {
             var item = list[i];
-            var itemRect = new RectangleF(item.loc, new SizeF(100, 100));
+            var itemRect = new RectangleF(item.loc, size: new SizeF(100, 100));
+
             if (!itemRect.Contains(cursor))
                 continue;
             
             list[i] = (item.pos, item.loc, player);
+        }
+    }
+
+    public void SetPlayerMenu(object player, PointF location)
+    {
+        for(int i = 0; i < list.Count; i++)
+        {
+            var item = list[i];
+            var itemRect = new RectangleF(item.loc, size: new SizeF(100, 100));
+
+            if(i != 0){
+                Draws.DrawPlayerMenu(new PointF(1300,  40));
+            }
+
+
         }
     }
 
@@ -41,7 +57,9 @@ public abstract class Formation
                 this.DrawEmptyPosition(
                 new RectangleF(item.loc.X, item.loc.Y, 86, 88),
                 cursor, mouseDown);
+
         }
+
     }
 
     public RectangleF DrawEmptyPosition(RectangleF location, PointF cursor, bool isDown)

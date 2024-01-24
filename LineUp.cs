@@ -115,6 +115,7 @@ public class LineUp : Form
     bool selected = false;
     public void DrawPlayer(RectangleF location)
     {
+
         bool cursorIn = location.Contains(cursor);
 
         if (cursorIn && isDown)
@@ -123,8 +124,16 @@ public class LineUp : Form
         if (!isDown)
         {
             if (selected)
-                formation.SetPlayer(4, cursor);
+            {
+                formation.SetPlayer(location, cursor);
+            }
             selected = false;
+            
+        }
+
+        if(!cursorIn || !isDown)
+        {
+
         }
         
         if (!selected)
@@ -132,7 +141,7 @@ public class LineUp : Form
         
         formation.Draw(cursor, isDown);
 
-        Draws.DrawPlayerShirt(shirt, 
-            new RectangleF(cursor.X - 43, cursor.Y - 44, 86, 88));
+        Draws.DrawPlayerShirt(
+            new PointF(cursor.X - 43, cursor.Y - 44));
     }
 }
