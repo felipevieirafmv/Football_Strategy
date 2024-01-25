@@ -13,6 +13,7 @@ public abstract class Formation
 
     public float y { get; set; } = 40;
 
+
     public void AddEmptyPosition(Position pos, PointF loc)
         => list.Add((pos, loc, null));
 
@@ -20,7 +21,7 @@ public abstract class Formation
     { }
     
 
-    public void SetPlayer(object player, PointF cursor)
+    public bool SetPlayer(object player, PointF cursor)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -31,46 +32,28 @@ public abstract class Formation
                 continue;
             
             list[i] = (item.pos, item.loc, player);
-            
+            return true;
         }
-    }
-    public void SetPlayerMenu(object player)
-    {
-        foreach (var item in list )
-        {
-            if(item.player == null)
-            {
-                var pen = new Pen(Color.Black, 2);
-                var playerMenu = new RectangleF(1300,  y += 40 , 450, 40);
-
-                Draws.Graphics.FillRectangle(Brushes.White, playerMenu);
-                Draws.Graphics.DrawRectangle(pen, playerMenu);
-                Draws.DrawText("Murilo Socek",Color.Black,playerMenu);
-            }
-
-            if(item.player != null)
-            {
-                Draws.DrawPlayerShirt(new PointF(item.loc.X, item.loc.Y));
-                Draws.DrawText("Murilo Socek",Color.Black, new RectangleF(item.loc.X, item.loc.Y + 54, 86, 88));
-            }
-        }
-        y = 0;
+        return false;
     }
 
+    // Separar em duas Classes
     public void Draw(PointF cursor, bool mouseDown)
     {
         foreach (var item in list)
         {
             if (item.player != null)
+            {
                 Draws.DrawPlayerShirt(new PointF(item.loc.X, item.loc.Y));
+                Draws.DrawText(item.player.ToString(),Color.Black, 
+                    new RectangleF(item.loc.X, item.loc.Y + 88, 86, 20));
+            }
             
             else
             this.DrawEmptyPosition(
                 new RectangleF(item.loc.X, item.loc.Y, 86, 88),
                 cursor, mouseDown);
-            
         }
-
     }
 
     public RectangleF DrawEmptyPosition(RectangleF location, PointF cursor, bool isDown)

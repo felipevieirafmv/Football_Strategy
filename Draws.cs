@@ -12,14 +12,21 @@ public static class Draws
     public static Graphics Graphics { get; set; }
     private static Graphics g => Graphics;
 
+    static SolidBrush yellowLight = new SolidBrush(Color.FromArgb(255, 211, 250, 214));
+    static SolidBrush green = new SolidBrush(Color.FromArgb(255, 8, 113, 8));
+
+
     public static void DrawField(Image image)
         => g.DrawImage(image, new RectangleF(200, 10, image.Width, image.Height));
 
     public static void Menu()
-        => g.FillRectangle(Brushes.Yellow, 1200, 0, 720, 1080);
+        => g.FillRectangle(green, 1200, 0, 720, 1080);
 
     public static void MenuBorder()
-        => g.DrawRectangle(Pens.Black, 1300, 40, 450, 800);
+    {
+        g.FillRectangle(yellowLight, 1300, 40, 450, 800);
+        g.DrawRectangle(Pens.Black, 1300, 40, 450, 800);
+    }
     
     public static void DrawPlayerShirt(PointF location)
         => g.DrawImage(shirt, new RectangleF(location.X, location.Y , shirt.Width, shirt.Height));

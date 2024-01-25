@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Extra;
 
@@ -23,9 +24,23 @@ public class LineUp : Form
     Formation formation = new Tactical433();
     GameTactics gameTactics = new GameTactics();
 
-    SolidBrush grayBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
-
     public Image shirt = Bitmap.FromFile("./img/Shirt.png");
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    List<(RectangleF rect, object player, bool selected)> list = new();
+
+    public void AddPlayer(object player)
+    {
+        var rect = new RectangleF
+        {
+            Location = new PointF(1300, y: 40 + list.Count * 40),
+            Width = 450,
+            Height = 40
+        };
+        list.Add((rect, player, false));
+    }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,13 +87,18 @@ public class LineUp : Form
         Controls.Add(pb);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
-
-        RectangleF player = new RectangleF
-        {
-            Location = new PointF(1300, y: 40),
-            Width = 450,
-            Height = 40
-        };
+        
+        AddPlayer("Murilão");
+        AddPlayer("Filipinho");
+        AddPlayer("Lander louco");
+        AddPlayer("Ratue");
+        AddPlayer("Renaight");
+        AddPlayer("Cineminha");
+        AddPlayer("Psicopata Do Detram");
+        AddPlayer("VR");
+        AddPlayer("Zago do Bem");
+        AddPlayer("Reizinho Delas");
+        AddPlayer("Feldzinho");
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -103,7 +123,9 @@ public class LineUp : Form
             Draws.MenuBorder();
             Draws.DrawField(Bitmap.FromFile("./img/Field.png"));
             
-            DrawPlayer(player);
+            formation.Draw(cursor: cursor, isDown);
+            for (int i = 0; i < list.Count; i++)
+                DrawPlayer(i);
 
             pb.Refresh();
         };
@@ -112,36 +134,52 @@ public class LineUp : Form
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    bool selected = false;
-    public void DrawPlayer(RectangleF player)
+    public void DrawPlayer(int index)
     {
+        var item = list[index];
+        var playerRect = item.rect;
+        var player = item.player;
+        var selected = item.selected;
 
-        bool cursorIn = player.Contains(cursor);
+        bool cursorIn = playerRect.Contains(cursor);
 
-        if (cursorIn && isDown)
+        if (cursorIn && isDown && list.All(x => !x.selected))
             selected = true;
             
         if (!isDown)
         {
             if (selected)
             {
-                formation.SetPlayer(player, cursor);
+                if (formation.SetPlayer(player, cursor))
+                    list.RemoveAt(index);
+                else 
+                {
+                    list[index] = (playerRect, player, false);
+                }
+                return;
             }
             selected = false;
-            
         }
 
-        if(!cursorIn || !isDown && selected == false)
+        if(!cursorIn || !isDown && !selected)
         {
-            formation.SetPlayerMenu(4);
+            if(!selected)
+            {
+                var pen = new Pen(Color.Black, 2);
+
+                Draws.Graphics.FillRectangle(Brushes.White, playerRect);
+                Draws.Graphics.DrawRectangle(pen, playerRect);
+                Draws.DrawText(player.ToString(),Color.Black,playerRect);
+            }
         }
-        
+
+        list[index] = (playerRect, player, selected);
         if (!selected)
             return;
-        
 
-        formation.Draw(cursor, selected);
         Draws.DrawPlayerShirt(
             new PointF(cursor.X - 43, cursor.Y - 44));
+        Draws.DrawText(player.ToString(),Color.Black, 
+            new RectangleF(cursor.X - 43, cursor.Y + 44, 86, 20));
     }
 }
