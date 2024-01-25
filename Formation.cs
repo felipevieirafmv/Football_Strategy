@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System;
 
 
 namespace Extra;
@@ -10,10 +11,13 @@ public abstract class Formation
     private List<(Position pos, PointF loc, object player)> list = new();
     SolidBrush grayBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
 
+    public float y { get; set; } = 40;
+
     public void AddEmptyPosition(Position pos, PointF loc)
         => list.Add((pos, loc, null));
 
-    public Formation() { }
+    public Formation() 
+    { }
     
 
     public void SetPlayer(object player, PointF cursor)
@@ -21,43 +25,50 @@ public abstract class Formation
         for (int i = 0; i < list.Count; i++)
         {
             var item = list[i];
-            var itemRect = new RectangleF(item.loc, size: new SizeF(100, 100));
+            var itemRect = new RectangleF(item.loc, size: new SizeF(86, 88));
 
             if (!itemRect.Contains(cursor))
                 continue;
             
             list[i] = (item.pos, item.loc, player);
+            
         }
     }
-
-    public void SetPlayerMenu(object player, PointF location)
+    public void SetPlayerMenu(object player)
     {
-        for(int i = 0; i < list.Count; i++)
+        foreach (var item in list )
         {
-            var item = list[i];
-            var itemRect = new RectangleF(item.loc, size: new SizeF(100, 100));
+            if(item.player == null)
+            {
+                var pen = new Pen(Color.Black, 2);
+                var playerMenu = new RectangleF(1300,  y += 40 , 450, 40);
 
-            if(i != 0){
-                Draws.DrawPlayerMenu(new PointF(1300,  40));
+                Draws.Graphics.FillRectangle(Brushes.White, playerMenu);
+                Draws.Graphics.DrawRectangle(pen, playerMenu);
+                Draws.DrawText("Murilo Socek",Color.Black,playerMenu);
             }
 
-
+            if(item.player != null)
+            {
+                Draws.DrawPlayerShirt(new PointF(item.loc.X, item.loc.Y));
+                Draws.DrawText("Murilo Socek",Color.Black, new RectangleF(item.loc.X, item.loc.Y + 54, 86, 88));
+            }
         }
+        y = 0;
     }
 
     public void Draw(PointF cursor, bool mouseDown)
     {
         foreach (var item in list)
         {
+            if (item.player != null)
+                Draws.DrawPlayerShirt(new PointF(item.loc.X, item.loc.Y));
+            
+            else
             this.DrawEmptyPosition(
                 new RectangleF(item.loc.X, item.loc.Y, 86, 88),
                 cursor, mouseDown);
             
-            if (item.player != null)
-                this.DrawEmptyPosition(
-                new RectangleF(item.loc.X, item.loc.Y, 86, 88),
-                cursor, mouseDown);
-
         }
 
     }
@@ -79,6 +90,7 @@ public abstract class Formation
  
         if (!cursorIn || !isDown)
             return rect;
+
         
         return rect;
     }

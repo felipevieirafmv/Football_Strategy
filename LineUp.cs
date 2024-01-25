@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
 using System.Windows.Forms;
@@ -25,7 +26,6 @@ public class LineUp : Form
     SolidBrush grayBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
 
     public Image shirt = Bitmap.FromFile("./img/Shirt.png");
-
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,10 +113,10 @@ public class LineUp : Form
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     bool selected = false;
-    public void DrawPlayer(RectangleF location)
+    public void DrawPlayer(RectangleF player)
     {
 
-        bool cursorIn = location.Contains(cursor);
+        bool cursorIn = player.Contains(cursor);
 
         if (cursorIn && isDown)
             selected = true;
@@ -125,22 +125,22 @@ public class LineUp : Form
         {
             if (selected)
             {
-                formation.SetPlayer(location, cursor);
+                formation.SetPlayer(player, cursor);
             }
             selected = false;
             
         }
 
-        if(!cursorIn || !isDown)
+        if(!cursorIn || !isDown && selected == false)
         {
-
+            formation.SetPlayerMenu(4);
         }
         
         if (!selected)
             return;
         
-        formation.Draw(cursor, isDown);
 
+        formation.Draw(cursor, selected);
         Draws.DrawPlayerShirt(
             new PointF(cursor.X - 43, cursor.Y - 44));
     }
