@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -33,19 +34,7 @@ public class GameLogic
 
     public void CreateConfrontations()
     {
-        // StreamWriter sw = new StreamWriter("./Game/confrontations.txt");
-        // foreach(Team t1 in teams)
-        // {
-        //     foreach (Team t2 in teams)
-        //     {
-        //         if(t1 != t2)
-        //         {
-        //             confrontations.Add(new Team[] { t1, t2 });
-        //             sw.WriteLine(t1.Name + "," + t2.Name);
-        //         }
-        //     }
-        // }
-        // sw.Close();
+        StreamWriter sw = new StreamWriter("./Game/confrontations.txt");
 
         ChampionshipGenerator cg = new ChampionshipGenerator();
 
@@ -55,17 +44,61 @@ public class GameLogic
         }
 
         Dictionary<Team, Team[]> dict = cg.Generate();
-        
-        string result = "";
-        foreach(var pair in dict)
+
+        Team[,] primeiroTurno = new Team[190, 2];
+
+        Random random = Random.Shared;
+
+        int indexArray = 0;
+        for(int i = 0; i < 19; i++)
         {
-            result += (pair.Key?.Name ?? "null") + " ->\t";
-            var array = pair.Value;
-            foreach (var value in array)
-                result += (value?.Name ?? "null") + ", ";
-            result += "END\n\n";
+            string result2 = "";
+            // sw.WriteLine($"Rodada {i+1}");
+            foreach(var pair in dict)
+            {
+                if(result2.Contains(pair.Key.Name) || result2.Contains(pair.Value[i].Name))
+                    continue;
+                if(random.Next(10) % 2 == 0)
+                {
+                    primeiroTurno[indexArray, 0] = pair.Key;
+                    primeiroTurno[indexArray, 1] = pair.Value[i];
+                }
+                else
+                {
+                    primeiroTurno[indexArray, 1] = pair.Key;
+                    primeiroTurno[indexArray, 0] = pair.Value[i];
+                }
+                result2 += pair.Key.Name;
+                result2 += pair.Value[i].Name;
+                indexArray++;
+            }
         }
-        MessageBox.Show(result);
+        
+        indexArray = 0;
+        for(int i = 0; i < 19; i++)
+        {
+            sw.WriteLine($"Rodada {i+1}");
+            for(int j = 0; j < 10; j++)
+            {
+                sw.WriteLine(primeiroTurno[indexArray, 0].Name + "," + primeiroTurno[indexArray, 1].Name);
+                indexArray++;
+            }
+            sw.WriteLine();
+        }
+
+        indexArray = 0;
+        for(int i = 0; i < 19; i++)
+        {
+            sw.WriteLine($"Rodada {i+20}");
+            for(int j = 0; j < 10; j++)
+            {
+                sw.WriteLine(primeiroTurno[indexArray, 1].Name + "," + primeiroTurno[indexArray, 0].Name);
+                indexArray++;
+            }
+            sw.WriteLine();
+        }
+
+        sw.Close();
     }
 
     public void ResetTeams()
