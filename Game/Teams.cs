@@ -20,7 +20,7 @@ public static class Teams
                     foreach (string line in lines)
                     {
                         string[] stats = line.Split(',');
-                        allTeams.Add(new Team(stats[0], int.Parse(stats[1])));
+                        allTeams.Add(new Team(stats[0], int.Parse(stats[1]), int.Parse(stats[2])));
                     }
                 }
 

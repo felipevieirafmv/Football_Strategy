@@ -12,7 +12,7 @@ public class Testes : Form
     public List<Team> teams = Teams.GetAllTeams;
     public Testes()
     {
-        StartGame logica = new StartGame(true, "Athletico");
+        StartGame sg = new StartGame(true, "Athletico");
     }
 
     public void CreatePlayers()
