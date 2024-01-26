@@ -30,6 +30,7 @@ public class NewGame : Form
 
         this.Load += delegate 
         {
+            this.Cursor = new Cursor("./img/felipera2.cur");
             bmp = new Bitmap(
                 pb.Width,
                 pb.Height
@@ -86,6 +87,17 @@ public class NewGame : Form
 
             pb.Refresh();
         };
+
+        KeyDown += (o, e) =>
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.Escape:
+                        Application.Exit();
+                        break;
+
+                }
+            };
 
         pb.MouseDown += (o, e) =>
         {
