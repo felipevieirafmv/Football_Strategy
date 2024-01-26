@@ -15,7 +15,10 @@ public class LineUp : Form
     PointF cursor = PointF.Empty;
     PointF? grabStart = null;
 
+    int scrollInfo = 0;
     bool isDown = false;
+    bool isRight = false;
+    bool doubleClick = false;
 
     Timer tm = new Timer();
     private PictureBox pb = new PictureBox{
@@ -29,17 +32,17 @@ public class LineUp : Form
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    List<(RectangleF rect, object player, bool selected)> list = new();
+    List<(RectangleF? rect, object player, bool selected)> list = new();
 
     public void AddPlayer(object player)
     {
         var rect = new RectangleF
         {
-            Location = new PointF(1300, y: 40 + list.Count * 40),
+            Location = new PointF(x: 1300, y: 40 + list.Count * 40),
             Width = 450,
             Height = 40
         };
-        list.Add((rect, player, false));
+        list.Add((null, player, false));
     }
 
 
@@ -52,10 +55,24 @@ public class LineUp : Form
         // FormBorderStyle = FormBorderStyle.None;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        pb.MouseWheel += (o, e) =>
+        {
+            if (e.Delta > 0)
+                scrollInfo++;
+            else scrollInfo--;
+            
+            if (scrollInfo > list.Count - 20)
+                scrollInfo = list.Count - 20;
+
+            if (scrollInfo < 0)
+                scrollInfo = 0;
+        };
 
         pb.MouseDown += (o, e) =>
         {
             isDown = true;
+            isRight = e.Button == MouseButtons.Right;
         };
 
         pb.MouseUp += (o, e) =>
@@ -66,6 +83,11 @@ public class LineUp : Form
         pb.MouseMove += (o, e) =>
         {
             cursor = e.Location;
+        };
+
+        pb.DoubleClick += (o, e) =>
+        {
+            doubleClick = true;
         };
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,16 +111,19 @@ public class LineUp : Form
         ////////////////////////////////////////////////////////////////////////////////////////////////
         
         AddPlayer("Murilão");
-        AddPlayer("Filipinho");
+        AddPlayer("Amigo da Eliana");
         AddPlayer("Lander louco");
         AddPlayer("Ratue");
         AddPlayer("Renaight");
         AddPlayer("Cineminha");
         AddPlayer("Psicopata Do Detram");
-        AddPlayer("VR");
+        AddPlayer("Amiga do Felipe");
         AddPlayer("Zago do Bem");
-        AddPlayer("Reizinho Delas");
+        AddPlayer("Reizinho");
         AddPlayer("Feldzinho");
+        AddPlayer("Nbalelly");
+        AddPlayer("Feldzinho 3");
+        AddPlayer("A Russa");
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -123,8 +148,11 @@ public class LineUp : Form
             Draws.MenuBorder();
             Draws.DrawField(Bitmap.FromFile("./img/Field.png"));
             
-            formation.Draw(cursor: cursor, isDown);
-            for (int i = 0; i < list.Count; i++)
+                    
+            formation.PlayerPosition();
+            if (list.Any(x => x.selected))
+                formation.Draw(cursor: cursor, isDown);
+            for (int i = scrollInfo; i < int.Min(list.Count, 20 + scrollInfo); i++)
                 DrawPlayer(i);
 
             pb.Refresh();
@@ -136,26 +164,46 @@ public class LineUp : Form
 
     public void DrawPlayer(int index)
     {
-        var item = list[index];
-        var playerRect = item.rect;
+        var item = list[index: index];
+        var defaultRect = new RectangleF(x: 1300, y: 40 + (index - scrollInfo) * 40, 450, 40);
+        var playerRect = item.rect ?? defaultRect;
         var player = item.player;
         var selected = item.selected;
+
+        if (isDown && isRight)
+        {
+            object removed = null;
+            formation.SetPlayer(null, cursor, ref removed);
+            if (removed is not null)
+                AddPlayer(player: removed);
+        }
 
         bool cursorIn = playerRect.Contains(cursor);
 
         if (cursorIn && isDown && list.All(x => !x.selected))
             selected = true;
-            
+
+        if(doubleClick && cursorIn)
+        {
+            doubleClick = false;
+            MessageBox.Show("teste");
+            formation.PlayerPosition();
+        }
+
         if (!isDown)
         {
             if (selected)
             {
-                if (formation.SetPlayer(player, cursor))
+                object removed = null;
+                if (formation.SetPlayer(player, cursor, ref removed))
                     list.RemoveAt(index);
                 else 
                 {
-                    list[index] = (playerRect, player, false);
+                    list[index] = (null, player, false);
                 }
+
+                if (removed is not null)
+                    AddPlayer(player: removed);
                 return;
             }
             selected = false;
@@ -166,14 +214,17 @@ public class LineUp : Form
             if(!selected)
             {
                 var pen = new Pen(Color.Black, 2);
-
-                Draws.Graphics.FillRectangle(Brushes.White, playerRect);
-                Draws.Graphics.DrawRectangle(pen, playerRect);
-                Draws.DrawText(player.ToString(),Color.Black,playerRect);
+                
+                foreach (var position in list)
+                {
+                    Draws.Graphics.FillRectangle(Brushes.White, playerRect);
+                    Draws.Graphics.DrawRectangle(pen, playerRect);
+                    Draws.DrawText(text: player.ToString(),Color.Black,playerRect);
+                }
             }
         }
 
-        list[index] = (playerRect, player, selected);
+        list[index] = (playerRect == defaultRect ? null : playerRect , player, selected);
         if (!selected)
             return;
 
@@ -181,5 +232,7 @@ public class LineUp : Form
             new PointF(cursor.X - 43, cursor.Y - 44));
         Draws.DrawText(player.ToString(),Color.Black, 
             new RectangleF(cursor.X - 43, cursor.Y + 44, 86, 20));
+
+
     }
 }

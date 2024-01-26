@@ -21,7 +21,7 @@ public abstract class Formation
     { }
     
 
-    public bool SetPlayer(object player, PointF cursor)
+    public bool SetPlayer(object player, PointF cursor, ref object removedPlayer)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -31,25 +31,32 @@ public abstract class Formation
             if (!itemRect.Contains(cursor))
                 continue;
             
+            removedPlayer = list[i].player;
             list[i] = (item.pos, item.loc, player);
             return true;
         }
         return false;
     }
 
-    // Separar em duas Classes
-    public void Draw(PointF cursor, bool mouseDown)
+
+    public void PlayerPosition()
     {
         foreach (var item in list)
         {
-            if (item.player != null)
+            if(item.player != null)
             {
                 Draws.DrawPlayerShirt(new PointF(item.loc.X, item.loc.Y));
                 Draws.DrawText(item.player.ToString(),Color.Black, 
                     new RectangleF(item.loc.X, item.loc.Y + 88, 86, 20));
-            }
-            
-            else
+            } 
+        }
+    }
+    public void Draw(PointF cursor, bool mouseDown)
+    {
+        
+        foreach (var item in list)
+        {
+            if(item.player == null)
             this.DrawEmptyPosition(
                 new RectangleF(item.loc.X, item.loc.Y, 86, 88),
                 cursor, mouseDown);
@@ -72,9 +79,8 @@ public abstract class Formation
         Draws.Graphics.DrawRectangle(pen, rect.X, rect.Y, realWidth, rect.Height);
  
         if (!cursorIn || !isDown)
-            return rect;
+            return rect;     
 
-        
         return rect;
     }
 }

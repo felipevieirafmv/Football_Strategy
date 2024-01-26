@@ -8,4 +8,5 @@ public enum Position
     LeftWinger,
     Striker,
     RightWinger,
+    Bench
 }
