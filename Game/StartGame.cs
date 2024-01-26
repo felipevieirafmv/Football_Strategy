@@ -7,28 +7,30 @@ using System.Windows.Forms;
 
 namespace Game;
 
-public class GameLogic
+public class StartGame
 {
-    public List<Player> TeamGame { get; set; }
+    public List<Player> TeamGame = new List<Player>();
     private List<Team> teams = Teams.GetAllTeams;
     private List<Team[]> confrontations = new List<Team[]>();
 
-    public GameLogic(bool newGame, string chooseTeam)
+    public StartGame(bool newGame, string chooseTeam)
     {
         if(newGame)
         {
             List<Player> players = Players.GetAllPlayers;
+
+            ResetTeams();
+            CreateConfrontations();
 
             foreach (Player p in players)
             {
                 if(p.Team == chooseTeam)
                     TeamGame.Add(p);
             }
-
         }
         else
         {
-            //utilizar o save ja existente
+            UseSave();
         }
     }
 
@@ -45,7 +47,7 @@ public class GameLogic
 
         Dictionary<Team, Team[]> dict = cg.Generate();
 
-        Team[,] primeiroTurno = new Team[190, 2];
+        Team[,] halfCS = new Team[190, 2];
 
         Random random = Random.Shared;
 
@@ -60,13 +62,13 @@ public class GameLogic
                     continue;
                 if(random.Next(10) % 2 == 0)
                 {
-                    primeiroTurno[indexArray, 0] = pair.Key;
-                    primeiroTurno[indexArray, 1] = pair.Value[i];
+                    halfCS[indexArray, 0] = pair.Key;
+                    halfCS[indexArray, 1] = pair.Value[i];
                 }
                 else
                 {
-                    primeiroTurno[indexArray, 1] = pair.Key;
-                    primeiroTurno[indexArray, 0] = pair.Value[i];
+                    halfCS[indexArray, 1] = pair.Key;
+                    halfCS[indexArray, 0] = pair.Value[i];
                 }
                 result2 += pair.Key.Name;
                 result2 += pair.Value[i].Name;
@@ -74,33 +76,30 @@ public class GameLogic
             }
         }
         
-        indexArray = 0;
-        for(int i = 0; i < 19; i++)
+        for(int i = 0; i < 190; i++)
         {
-            sw.WriteLine($"Rodada {i+1}");
-            for(int j = 0; j < 10; j++)
-            {
-                sw.WriteLine(primeiroTurno[indexArray, 0].Name + "," + primeiroTurno[indexArray, 1].Name);
-                indexArray++;
-            }
-            sw.WriteLine();
+            sw.WriteLine(halfCS[i, 0].Name + "," + halfCS[i, 1].Name);
         }
 
-        indexArray = 0;
-        for(int i = 0; i < 19; i++)
+        for(int i = 0; i < 190; i++)
         {
-            sw.WriteLine($"Rodada {i+20}");
-            for(int j = 0; j < 10; j++)
-            {
-                sw.WriteLine(primeiroTurno[indexArray, 1].Name + "," + primeiroTurno[indexArray, 0].Name);
-                indexArray++;
-            }
-            sw.WriteLine();
+            sw.WriteLine(halfCS[i, 1].Name + "," + halfCS[i, 0].Name);
         }
 
         sw.Close();
     }
-
+    private void UseSave()
+    {
+        string[] lines = File.ReadAllLines("./Game/confrontations.txt");
+        foreach (string l in lines)
+        {
+            string[] line = l.Split(',');
+            Team[] conf = new Team[2];
+            conf[0] = teams.FirstOrDefault(t => t.Name == line[0]);
+            conf[1] = teams.FirstOrDefault(t => t.Name == line[1]);
+            confrontations.Add(conf);
+        }
+    }
     public void ResetTeams()
     {
         foreach(Team t in teams)
@@ -110,10 +109,5 @@ public class GameLogic
             t.Attack = 1;
             t.Points = 0;
         }
-    }
-
-    public void CreateMatch()
-    {
-        //pegar os dois times que vao se enfrentar e simular a partida (ira precisar de mais funcoes para funcionar, nao descarto a necessidade de uma nova classe)
     }
 }

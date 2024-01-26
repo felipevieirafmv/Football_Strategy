@@ -12,16 +12,7 @@ public class Testes : Form
     public List<Team> teams = Teams.GetAllTeams;
     public Testes()
     {
-        GameLogic logica = new GameLogic(false, "Athletico");
-
-        this.Load += delegate
-        {
-            logica.CreateConfrontations();
-            
-            // CreatePlayers();
-
-            
-        };
+        StartGame logica = new StartGame(true, "Athletico");
     }
 
     public void CreatePlayers()

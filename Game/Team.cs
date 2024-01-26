@@ -10,7 +10,7 @@ public class Team
     public int Tactical { get; set; }
     public int Style { get; set; }
     public int Attack { get; set; }
-    public List<Player> TeamPlayers { get; set; }
+    public List<Player> TeamPlayers = new List<Player>();
 
     public Team(string name, int points)
     {
