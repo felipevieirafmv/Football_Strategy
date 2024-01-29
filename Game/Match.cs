@@ -7,4 +7,5 @@ public class Match
     public int GoalsA { get; set; }
     public int GoalsB { get; set; }
 
+    // public void 
 }
