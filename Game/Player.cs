@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace Game;
 
 public class Player
@@ -7,6 +9,8 @@ public class Player
     public string Team { get; set; }
     public int OverAll { get; set; }
     public string Position { get; set; }
+    public SizeF Tamanho = new SizeF(450, 40);
+    public PointF Location { get; set; }
 
     public Player(int id, string name, string team, int overall, string position)
     {
