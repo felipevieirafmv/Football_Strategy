@@ -2,13 +2,14 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System;
+using Game;
 
 
 namespace Extra;
 public abstract class Formation
 {
     private Image shirt = Image.FromFile("Img/Shirt.png");
-    private List<(Position pos, PointF loc, object player)> list = new();
+    private List<(Position pos, PointF loc, Player player)> list = new();
     SolidBrush grayBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
 
     public float y { get; set; } = 40;
@@ -21,7 +22,7 @@ public abstract class Formation
     { }
     
 
-    public bool SetPlayer(object player, PointF cursor, ref object removedPlayer)
+    public bool SetPlayer(Player player, PointF cursor, ref Player removedPlayer)
     {
         for (int i = 0; i < list.Count; i++)
         {
@@ -46,7 +47,7 @@ public abstract class Formation
             if(item.player != null)
             {
                 Draws.DrawPlayerShirt(new PointF(item.loc.X, item.loc.Y));
-                Draws.DrawText(item.player.ToString(),Color.Black, 
+                Draws.DrawText(item.player.Name,Color.Black, 
                     new RectangleF(item.loc.X, item.loc.Y + 88, 86, 20));
             } 
         }

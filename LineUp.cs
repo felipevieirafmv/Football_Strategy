@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Extra;
+using Game;
 
 namespace Views;
 
@@ -32,9 +33,9 @@ public class LineUp : Form
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    List<(RectangleF? rect, object player, bool selected)> list = new();
+    List<(RectangleF? rect, Player player, bool selected)> list = new();
 
-    public void AddPlayer(object player)
+    public void AddPlayer(Player player)
     {
         var rect = new RectangleF
         {
@@ -48,7 +49,26 @@ public class LineUp : Form
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public LineUp()
+    // public void GoToMatch(List<Player> playerList)
+    // {
+    //     List<Player> matchTeam = new List<Player>();
+
+    //     foreach(Player p in playerList)
+
+    //     if(p.position == LineUp.position)
+    //     {
+    //         matchTeam.Add(new Player(p.Name, p.OverAll))
+    //     }
+    //     else
+    //     {
+    //         matchTeam.Add(new Player(p.Name, p.OverAll * 0.65));
+    //     }
+
+    // }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public LineUp(List<Player> playerList)
     {
         tm.Interval = 10;
         WindowState = FormWindowState.Maximized;
@@ -109,21 +129,11 @@ public class LineUp : Form
         Controls.Add(pb);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        AddPlayer("Murilão");
-        AddPlayer("Amigo da Eliana");
-        AddPlayer("Lander louco");
-        AddPlayer("Ratue");
-        AddPlayer("Renaight");
-        AddPlayer("Cineminha");
-        AddPlayer("Psicopata Do Detram");
-        AddPlayer("Amiga do Felipe");
-        AddPlayer("Zago do Bem");
-        AddPlayer("Reizinho");
-        AddPlayer("Feldzinho");
-        AddPlayer("Nbalelly");
-        AddPlayer("Feldzinho 3");
-        AddPlayer("A Russa");
+
+        foreach(Player p in playerList)
+        {
+            AddPlayer(p);
+        }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -172,7 +182,7 @@ public class LineUp : Form
 
         if (isDown && isRight)
         {
-            object removed = null;
+            Player removed = null;
             formation.SetPlayer(null, cursor, ref removed);
             if (removed is not null)
                 AddPlayer(player: removed);
@@ -183,18 +193,11 @@ public class LineUp : Form
         if (cursorIn && isDown && list.All(x => !x.selected))
             selected = true;
 
-        if(doubleClick && cursorIn)
-        {
-            doubleClick = false;
-            MessageBox.Show("teste");
-            formation.PlayerPosition();
-        }
-
         if (!isDown)
         {
             if (selected)
             {
-                object removed = null;
+                Player removed = null;
                 if (formation.SetPlayer(player, cursor, ref removed))
                     list.RemoveAt(index);
                 else 
@@ -219,7 +222,7 @@ public class LineUp : Form
                 {
                     Draws.Graphics.FillRectangle(Brushes.White, playerRect);
                     Draws.Graphics.DrawRectangle(pen, playerRect);
-                    Draws.DrawText(text: player.ToString(),Color.Black,playerRect);
+                    Draws.DrawText(text: player.Name,Color.Black,playerRect);
                 }
             }
         }
@@ -230,7 +233,7 @@ public class LineUp : Form
 
         Draws.DrawPlayerShirt(
             new PointF(cursor.X - 43, cursor.Y - 44));
-        Draws.DrawText(player.ToString(),Color.Black, 
+        Draws.DrawText(player.Name,Color.Black, 
             new RectangleF(cursor.X - 43, cursor.Y + 44, 86, 20));
 
 
