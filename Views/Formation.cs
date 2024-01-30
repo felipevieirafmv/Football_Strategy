@@ -4,8 +4,8 @@ using System.Windows.Forms;
 using System;
 using Game;
 
+namespace Views;
 
-namespace Extra;
 public abstract class Formation
 {
     private Image shirt = Image.FromFile("Img/Shirt.png");

@@ -1,7 +1,18 @@
-# Football_Strategy
-Este é um jogo que pode emular o Brasileirão 2023, assumindo o controle como treinado de um dos times disponiveis.
+- [ ] Encontrar adversário do time escolhido (converter escalação pra lista)
+- [ ] Conectar tela de seleção com tela de jogo (mesmo que vazia).
+- [ ] Gerar time do adversário com base em um OverAll(0-100 ou 0-1.00).
+	-Ainda não sabemos as características então apenas gerar jogadores aleatórios.
+	-Gerar nomes aleatórios seria legal.
+- [ ] Terminar construtor do Simulator.
+- [ ] Considere adicionar cor/info, para desenhar os jogadores.
+- [ ] Implementar o resetPoisition.
+	-Basicamente um if que coloca os jogadores nas posições com base no tatical.
+- [ ] Conseguri visualizar a partida, função Draw.
+- [ ] Se der, gerar jogadores com nomes aleatórios pra tela de seleção.
 
-
-Draw Grid
-
-Draw List
+DEPOIS:
+-Simulação Tempo Real
+-Simulação Torneio
+-Tela do Torneio
+-Tela da Reseleção
+-Acabamento

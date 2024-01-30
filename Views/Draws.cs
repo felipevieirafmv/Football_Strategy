@@ -1,10 +1,8 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Views;
 
-
-namespace Extra;
+namespace Views;
 
 public static class Draws
 {

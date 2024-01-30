@@ -2,9 +2,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using Views;
 
-namespace Extra;
+namespace Views;
 
 public class GameTactics{
     public GameTactics() { }

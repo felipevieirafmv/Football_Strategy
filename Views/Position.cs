@@ -1,3 +1,5 @@
+namespace Views;
+
 public enum Position
 {
     GoalKeeper,

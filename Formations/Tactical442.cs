@@ -1,5 +1,6 @@
 using System.Drawing;
-using Extra;
+
+namespace Views;
 
 public class Tactical442 : Formation 
 {
