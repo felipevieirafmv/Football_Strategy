@@ -1,3 +1,4 @@
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Windows.Forms;
@@ -12,11 +13,12 @@ public class Game //singleton?
 
     public List<Player> TeamGame { get; private set; }
     public List<Team> AllTeams { get; set; } = Teams.GetAllTeams;
-    public List<Team[]> Confrontations { get; set; } = new();
-    public string LineUp { get; set; }
-    
+    public List<Team[]> Confrontations { get; set; }
+    public object LineUp { get; set; }
+    public int Gold { get; set; } = 1_000;
 
-    public void OpenSave()
+
+    public static void OpenSave()
     {
 
     }
@@ -26,10 +28,10 @@ public class Game //singleton?
 
     }
 
-    public static void New(bool newGame, string chooseTeam)
+    public static void New(string chooseTeam)
     {
-        StartGame sg = new StartGame(newGame, chooseTeam);
+        StartGame sg = new StartGame(true, chooseTeam);
 
-        
+        Current.Confrontations = sg.Confrontations;
     }
 }

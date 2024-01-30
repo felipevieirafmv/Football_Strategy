@@ -12,7 +12,7 @@ public class StartGame
 {
     public List<Player> TeamGame = new List<Player>();
     private List<Team> teams = Teams.GetAllTeams;
-    private List<Team[]> confrontations = new List<Team[]>();
+    public List<Team[]> Confrontations = new List<Team[]>();
 
     public StartGame(bool newGame, string chooseTeam)
     {
@@ -98,7 +98,7 @@ public class StartGame
             Team[] conf = new Team[2];
             conf[0] = teams.FirstOrDefault(t => t.Name == line[0]);
             conf[1] = teams.FirstOrDefault(t => t.Name == line[1]);
-            confrontations.Add(conf);
+            Confrontations.Add(conf);
         }
     }
     public void ResetTeams()
