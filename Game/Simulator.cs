@@ -26,6 +26,13 @@ public class Simulator
         this.teamAway = teamAway;
 
         this.taticalHome = taticalHome;
+        this.styleHome = styleHome;
+        this.attackHome = attackHome;
+        this.markHome = markHome;
+        this.taticalAway = taticalAway;
+        this.styleAway = styleAway;
+        this.attackAway = attackAway;
+        this.markAway = markAway;
         // TODO
         resetPosition(true);
     }

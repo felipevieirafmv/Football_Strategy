@@ -11,7 +11,7 @@ public class Game //singleton?
     public static Game Current => crr;
     public Game() { }
 
-    public List<Player> TeamGame { get; private set; }
+    public List<Player> TeamGame { get; set; } = new();
     public List<Team> AllTeams { get; set; } = Teams.GetAllTeams;
     public List<Team[]> Confrontations { get; set; }
     public object LineUp { get; set; }
