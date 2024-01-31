@@ -1,4 +1,6 @@
+using System;
 using System.Drawing;
+using System.IO;
 
 namespace Game;
 
@@ -12,12 +14,12 @@ public class Player
     public SizeF Tamanho = new SizeF(450, 40);
     public PointF Location { get; set; }
 
-    public Player(int id, string name, string team, int overall, string position)
+    public Player(string team)
     {
-        this.Id = id;
-        this.Name = name;
+        Random random = Random.Shared;
+        string[] firstName = File.ReadAllLines("./Game/firstName.txt");
+        string[] lastName = File.ReadAllLines("./Game/lastName.txt");
+        this.Name = firstName[random.Next(firstName.Length)] + " " + lastName[random.Next(lastName.Length)];
         this.Team = team;
-        this.OverAll = overall;
-        this.Position = position;
     }
 }

@@ -8,7 +8,6 @@ namespace Game;
 
 public class Testes : Form
 {
-    public List<Player> players = Players.GetAllPlayers;
     public List<Team> teams = Teams.GetAllTeams;
     public Testes()
     {

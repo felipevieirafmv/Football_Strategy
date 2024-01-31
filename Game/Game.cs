@@ -11,9 +11,10 @@ public class Game //singleton?
     public static Game Current => crr;
     public Game() { }
 
-    public List<Player> TeamGame { get; set; } = new();
+    public List<Player> TeamGame { get; set; }
     public List<Team> AllTeams { get; set; } = Teams.GetAllTeams;
     public List<Team[]> Confrontations { get; set; }
+    public Team CrrTeam { get; set; }
     public object LineUp { get; set; }
     public int Gold { get; set; } = 1_000;
 
@@ -27,6 +28,19 @@ public class Game //singleton?
     {
 
     }
+
+    public List<Player> NewPlayers()
+    {
+        List<Player> list = new();
+        for(int i = 0; i < 20; i++)
+        {
+            list.Add(new Player(this.CrrTeam.Name));
+        }
+
+        this.TeamGame = list;
+        return list;
+    }
+
 
     public static void New(string chooseTeam)
     {

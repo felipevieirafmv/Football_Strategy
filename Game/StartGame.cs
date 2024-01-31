@@ -18,16 +18,10 @@ public class StartGame
     {
         if(newGame)
         {
-            List<Player> players = Players.GetAllPlayers;
+            Game.Current.CrrTeam = teams.FirstOrDefault(t => t.Name == chooseTeam);
 
             ResetTeams();
             CreateConfrontations();
-
-            foreach (Player p in players)
-            {
-                if(p.Team == chooseTeam)
-                    TeamGame.Add(p);
-            }
         }
         else
         {

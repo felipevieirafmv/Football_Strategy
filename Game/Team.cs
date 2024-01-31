@@ -22,14 +22,11 @@ public class Team
         this.GD = gd;
     }
 
-    public void getTeamPlayer()
-    {
-        List<Player> allPlayers = Players.GetAllPlayers;
-
-        foreach(Player p in allPlayers)
-        {
-            if(p.Team == this.Name)
-                this.TeamPlayers.Add(p);
-        }
-    }
+    // public void getTeamPlayer()
+    // {
+    //     for(int i = 0; i < 20; i++)
+    //     {
+    //         this.TeamPlayers.Add(new Player(this.Name));
+    //     }
+    // }
 }
