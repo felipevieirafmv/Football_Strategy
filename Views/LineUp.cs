@@ -176,7 +176,7 @@ public class LineUp : Form
 
             Draws.Menu();
             Draws.MenuBorder();
-            Draws.DrawField(Bitmap.FromFile("./img/Field.png"));
+            Draws.DrawField(Bitmap.FromFile("./img/fieldLineUp.png"));
             
                     
             formation.PlayerPosition();
