@@ -21,5 +21,6 @@ public class Player
         string[] lastName = File.ReadAllLines("./Game/lastName.txt");
         this.Name = firstName[random.Next(firstName.Length)] + " " + lastName[random.Next(lastName.Length)];
         this.Team = team;
+        this.OverAll = random.Next(40, 61);
     }
 }
