@@ -5,10 +5,8 @@ using System.Xml.Serialization;
 
 namespace Views;
 
-public class GameTactics{
-    public GameTactics() { }
-
-    public ComboBox TacticalTraining()
+public static class GameTactics{
+    public static ComboBox TacticalTraining()
     {
         ComboBox tacticalTraining = new ComboBox
         {
@@ -26,7 +24,7 @@ public class GameTactics{
 
         return tacticalTraining;
     }
-    public ComboBox Style()
+    public static ComboBox Style()
     {
         ComboBox style = new ComboBox
         {
@@ -42,7 +40,7 @@ public class GameTactics{
 
         return style;
     }
-    public ComboBox MarkingType()
+    public static ComboBox MarkingType()
     {
         ComboBox markingType = new ComboBox
         {
@@ -58,7 +56,7 @@ public class GameTactics{
 
         return markingType;
     }
-    public ComboBox Attack()
+    public static ComboBox Attack()
     {
         ComboBox attack = new ComboBox
         {

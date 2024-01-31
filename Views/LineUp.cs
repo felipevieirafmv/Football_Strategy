@@ -25,7 +25,6 @@ public class LineUp : Form
         Dock = DockStyle.Fill,
     };
     Formation formation = new Tactical433();
-    GameTactics gameTactics = new GameTactics();
 
     public Image shirt = Bitmap.FromFile("./img/Shirt.png");
 
@@ -111,15 +110,78 @@ public class LineUp : Form
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-        var cb = gameTactics.TacticalTraining();
-        cb.SelectedIndexChanged += delegate
+        var cbTactics = GameTactics.TacticalTraining();
+        cbTactics.SelectedIndexChanged += delegate
         {
-            if (cb.SelectedIndex == 0)
+            if (cbTactics.SelectedIndex == 0)
+            {
                 this.formation = new Tactical433();
-            if (cb.SelectedIndex == 1)
+                Game.Current.CrrTeam.Tactical = 0;
+            }
+            if (cbTactics.SelectedIndex == 1)
+            {
                 this.formation = new Tactical4222();
-            if (cb.SelectedIndex == 2)
+                Game.Current.CrrTeam.Tactical = 1;
+            }
+            if (cbTactics.SelectedIndex == 2)
+            {
                 this.formation = new Tactical442();
+                Game.Current.CrrTeam.Tactical = 2;
+            }
+        };
+        var cbStyle = GameTactics.Style();
+        cbStyle.SelectedIndexChanged += delegate
+        {
+            switch (cbStyle.SelectedIndex)
+            {
+                case 0:
+                    Game.Current.CrrTeam.Style = 0;
+                    break;
+                case 1:
+                    Game.Current.CrrTeam.Style = 1;
+                    break;
+                case 2:
+                    Game.Current.CrrTeam.Style = 2;
+                    break;
+                default:
+                    break;
+            }
+        };
+        var cbMarking = GameTactics.Style();
+        cbMarking.SelectedIndexChanged += delegate
+        {
+            switch (cbMarking.SelectedIndex)
+            {
+                case 0:
+                    Game.Current.CrrTeam.Marking = 0;
+                    break;
+                case 1:
+                    Game.Current.CrrTeam.Marking = 1;
+                    break;
+                case 2:
+                    Game.Current.CrrTeam.Marking = 2;
+                    break;
+                default:
+                    break;
+            }
+        };
+        var cbAttack = GameTactics.Style();
+        cbAttack.SelectedIndexChanged += delegate
+        {
+            switch (cbAttack.SelectedIndex)
+            {
+                case 0:
+                    Game.Current.CrrTeam.Attack = 0;
+                    break;
+                case 1:
+                    Game.Current.CrrTeam.Attack = 1;
+                    break;
+                case 2:
+                    Game.Current.CrrTeam.Attack = 2;
+                    break;
+                default:
+                    break;
+            }
         };
 
         Button matchBtn = new Button();
@@ -138,13 +200,18 @@ public class LineUp : Form
 
             Game.Current.CrrConfrontation = Game.Current.Confrontations.FirstOrDefault(t => t[0] == Game.Current.CrrTeam || t[1] == Game.Current.CrrTeam);
 
-            // new Simulator();
+            MessageBox.Show(Game.Current.CrrConfrontation[0].Name + " X " + Game.Current.CrrConfrontation[1].Name);
+            if(Game.Current.CrrConfrontation[0] == Game.Current.CrrTeam)
+                new Simulator(Game.Current.CrrTeam, Game.Current.CrrConfrontation[1]);
+            else
+                new Simulator(Game.Current.CrrConfrontation[0], Game.Current.CrrTeam);
+
         };
 
-        Controls.Add(cb);
-        Controls.Add(gameTactics.Style());
-        Controls.Add(gameTactics.MarkingType());
-        Controls.Add(gameTactics.Attack());
+        Controls.Add(cbTactics);
+        Controls.Add(GameTactics.Style());
+        Controls.Add(GameTactics.MarkingType());
+        Controls.Add(GameTactics.Attack());
         Controls.Add(matchBtn);
         Controls.Add(pb);
 

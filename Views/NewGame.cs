@@ -20,8 +20,6 @@ public class NewGame : Form
     
     public NewGame()
     {
-        StartGame sg = null;
-
         WindowState = FormWindowState.Maximized;
         FormBorderStyle = FormBorderStyle.None;
         this.Text = "Joguinho";

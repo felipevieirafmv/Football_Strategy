@@ -17,22 +17,19 @@ public class Simulator
     private List<Player> teamAway;
     int taticalHome, styleHome, attackHome, markHome;
     int taticalAway, styleAway, attackAway, markAway;
-    public Simulator(
-        List<Player> teamHome, int taticalHome, int styleHome, int attackHome, int markHome,
-        List<Player> teamAway, int taticalAway, int styleAway, int attackAway, int markAway
-    )
+    public Simulator(Team teamHome, Team teamAway)
     {
-        this.teamHome = teamHome;
-        this.teamAway = teamAway;
+        this.teamHome = teamHome.TeamPlayers;
+        this.teamAway = teamAway.TeamPlayers;
 
-        this.taticalHome = taticalHome;
-        this.styleHome = styleHome;
-        this.attackHome = attackHome;
-        this.markHome = markHome;
-        this.taticalAway = taticalAway;
-        this.styleAway = styleAway;
-        this.attackAway = attackAway;
-        this.markAway = markAway;
+        this.taticalHome = teamHome.Tactical;
+        this.styleHome = teamHome.Style;
+        this.attackHome = teamHome.Attack;
+        this.markHome = teamHome.Marking;
+        this.taticalAway = teamAway.Tactical;
+        this.styleAway = teamAway.Style;
+        this.attackAway = teamAway.Attack;
+        this.markAway = teamAway.Marking;
         // TODO
         resetPosition(true);
     }
