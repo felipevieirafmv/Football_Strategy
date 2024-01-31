@@ -136,7 +136,9 @@ public class LineUp : Form
                 Game.Current.TeamGame.Add(p.player);
             }
 
-            
+            Game.Current.CrrConfrontation = Game.Current.Confrontations.FirstOrDefault(t => t[0] == Game.Current.CrrTeam || t[1] == Game.Current.CrrTeam);
+
+            // new Simulator();
         };
 
         Controls.Add(cb);
