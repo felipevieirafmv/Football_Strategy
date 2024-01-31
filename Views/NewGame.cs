@@ -2,9 +2,9 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using Game;
 
 namespace Views;
+using Game;
 
 public class NewGame : Form
 {
@@ -144,8 +144,8 @@ public class NewGame : Form
                 {
                     if (item.Selected)
                     {
-                        sg = new StartGame(true, item.Name);
-                        LineUp lu = new LineUp(sg.TeamGame);
+                        Game.New(item.Name);
+                        LineUp lu = new LineUp(Game.Current.TeamGame);
                         this.Hide();
                         lu.Show();
                     }

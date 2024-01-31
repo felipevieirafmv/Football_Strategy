@@ -3,37 +3,38 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System;
 using Game;
+using Microsoft.VisualBasic;
 
 namespace Views;
 
 public abstract class Formation
 {
     private Image shirt = Image.FromFile("Img/Shirt.png");
-    private List<(Position pos, PointF loc, Player player)> list = new();
+    public List<(Position pos, PointF loc, Player player)> FieldList = new();
     SolidBrush grayBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
+    public Player[] FieldTeam = new Player[11];
 
     public float y { get; set; } = 40;
 
 
     public void AddEmptyPosition(Position pos, PointF loc)
-        => list.Add((pos, loc, null));
+        => FieldList.Add((pos, loc, null));
 
     public Formation() 
-    { }
-    
+    { }    
 
     public bool SetPlayer(Player player, PointF cursor, ref Player removedPlayer)
     {
-        for (int i = 0; i < list.Count; i++)
+        for (int i = 0; i < FieldList.Count; i++)
         {
-            var item = list[i];
+            var item = FieldList[i];
             var itemRect = new RectangleF(item.loc, size: new SizeF(86, 88));
 
             if (!itemRect.Contains(cursor))
                 continue;
             
-            removedPlayer = list[i].player;
-            list[i] = (item.pos, item.loc, player);
+            removedPlayer = FieldList[i].player;
+            FieldList[i] = (item.pos, item.loc, player);
             return true;
         }
         return false;
@@ -42,7 +43,7 @@ public abstract class Formation
 
     public void PlayerPosition()
     {
-        foreach (var item in list)
+        foreach (var item in FieldList)
         {
             if(item.player != null)
             {
@@ -55,7 +56,7 @@ public abstract class Formation
     public void Draw(PointF cursor, bool mouseDown)
     {
         
-        foreach (var item in list)
+        foreach (var item in FieldList)
         {
             if(item.player == null)
             this.DrawEmptyPosition(

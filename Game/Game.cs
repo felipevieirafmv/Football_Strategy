@@ -11,12 +11,13 @@ public class Game //singleton?
     public static Game Current => crr;
     public Game() { }
 
-    public List<Player> TeamGame { get; private set; }
+    public List<Player> TeamGame { get; set; }
     public List<Team> AllTeams { get; set; } = Teams.GetAllTeams;
-    public List<Team[]> Confrontations { get; set; }
+    public List<Team[]> Confrontations { get; set; } = new();
+    public Team CrrTeam { get; set; }
     public object LineUp { get; set; }
     public int Gold { get; set; } = 1_000;
-
+    public Team[] CrrConfrontation { get; set; }
 
     public static void OpenSave()
     {

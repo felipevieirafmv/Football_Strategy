@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Game;
 
 namespace Views;
+using Game;
 
 public class LineUp : Form
 {
@@ -14,6 +13,7 @@ public class LineUp : Form
     public Graphics g = null;
     PointF cursor = PointF.Empty;
     PointF? grabStart = null;
+    private List<(Position pos, PointF loc, Player player)> fieldPlayer = new();
 
     int scrollInfo = 0;
     bool isDown = false;
@@ -121,10 +121,31 @@ public class LineUp : Form
             if (cb.SelectedIndex == 2)
                 this.formation = new Tactical442();
         };
+
+        Button matchBtn = new Button();
+        matchBtn.Text = "Jogo";
+        matchBtn.Font = new Font("Copperplate Gothic Bold", 15);
+        matchBtn.Width = 180;
+        matchBtn.Height = 60;
+        matchBtn.Location = new Point(1700, 960);
+        matchBtn.Click += delegate
+        {
+            fieldPlayer = formation.FieldList.OrderByDescending(item => item.loc.Y).ToList();
+            foreach(var p in fieldPlayer)
+            {
+                Game.Current.TeamGame.Add(p.player);
+            }
+
+            Game.Current.CrrConfrontation = Game.Current.Confrontations.FirstOrDefault(t => t[0] == Game.Current.CrrTeam || t[1] == Game.Current.CrrTeam);
+
+            // new Simulator();
+        };
+
         Controls.Add(cb);
         Controls.Add(gameTactics.Style());
         Controls.Add(gameTactics.MarkingType());
         Controls.Add(gameTactics.Attack());
+        Controls.Add(matchBtn);
         Controls.Add(pb);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -205,7 +226,9 @@ public class LineUp : Form
                 }
 
                 if (removed is not null)
+                {
                     AddPlayer(player: removed);
+                }
                 return;
             }
             selected = false;
@@ -234,7 +257,6 @@ public class LineUp : Form
             new PointF(cursor.X - 43, cursor.Y - 44));
         Draws.DrawText(player.Name,Color.Black, 
             new RectangleF(cursor.X - 43, cursor.Y + 44, 86, 20));
-
 
     }
 }

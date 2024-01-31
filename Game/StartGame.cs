@@ -18,16 +18,10 @@ public class StartGame
     {
         if(newGame)
         {
-            List<Player> players = Players.GetAllPlayers;
-
+            Game.Current.CrrTeam = teams.FirstOrDefault(t => t.Name == chooseTeam);
+            Game.Current.TeamGame = Game.Current.CrrTeam.TeamPlayers;
             ResetTeams();
             CreateConfrontations();
-
-            foreach (Player p in players)
-            {
-                if(p.Team == chooseTeam)
-                    TeamGame.Add(p);
-            }
         }
         else
         {
@@ -80,11 +74,15 @@ public class StartGame
         for(int i = 0; i < 190; i++)
         {
             sw.WriteLine(halfCS[i, 0].Name + "," + halfCS[i, 1].Name);
+            Team[] teamsArray = { halfCS[i, 0], halfCS[i, 1] };
+            Game.Current.Confrontations.Add(teamsArray);
         }
 
         for(int i = 0; i < 190; i++)
         {
             sw.WriteLine(halfCS[i, 1].Name + "," + halfCS[i, 0].Name);
+            Team[] teamsArray = { halfCS[i, 1], halfCS[i, 0] };
+            Game.Current.Confrontations.Add(teamsArray);
         }
 
         sw.Close();
