@@ -30,7 +30,7 @@ public class Simulator
         this.styleAway = teamAway.Style;
         this.attackAway = teamAway.Attack;
         this.markAway = teamAway.Marking;
-        
+
         resetPosition(true);
     }
 
@@ -73,7 +73,7 @@ public class Simulator
 
     private void resetPosition(bool homeStart)
     {
-
+        
     }
 
     private void simulate()
