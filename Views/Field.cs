@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace Views;
+using Game;
 
 public class Field : Form
 {
@@ -21,7 +22,11 @@ public class Field : Form
         tm.Interval = 10;
         WindowState = FormWindowState.Maximized;
         FormBorderStyle = FormBorderStyle.None;
-
+        
+        if(Game.Current.CrrConfrontation[0] == Game.Current.CrrTeam)
+            new Simulator(Game.Current.CrrTeam, Game.Current.CrrConfrontation[1]);
+        else
+            new Simulator(Game.Current.CrrConfrontation[0], Game.Current.CrrTeam);
 
         Controls.Add(pb);
 

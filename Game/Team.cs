@@ -13,7 +13,8 @@ public class Team
     public int Attack { get; set; } = 1;
     public int Marking { get; set; } = 1;
     public int GD { get; set; }
-    public List<Player> TeamPlayers = new List<Player>();
+    public List<Player> Squad = new List<Player>();
+    public List<Player> FirstTeam = new List<Player>();
 
     public Team(string name, int points, int gd)
     {
@@ -23,7 +24,12 @@ public class Team
 
         for(int i = 0; i < 20; i++)
         {
-            TeamPlayers.Add(new Player(this.Name));
+            Squad.Add(new Player(this.Name));
+        }
+
+        for(int i = 0; i < 11; i++)
+        {
+            FirstTeam.Add(Squad[i]);
         }
     }
 

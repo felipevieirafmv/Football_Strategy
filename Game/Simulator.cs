@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Game;
 
@@ -19,8 +20,8 @@ public class Simulator
     int taticalAway, styleAway, attackAway, markAway;
     public Simulator(Team teamHome, Team teamAway)
     {
-        this.teamHome = teamHome.TeamPlayers;
-        this.teamAway = teamAway.TeamPlayers;
+        this.teamHome = teamHome.FirstTeam;
+        this.teamAway = teamAway.FirstTeam;
 
         this.taticalHome = teamHome.Tactical;
         this.styleHome = teamHome.Style;
@@ -30,6 +31,18 @@ public class Simulator
         this.styleAway = teamAway.Style;
         this.attackAway = teamAway.Attack;
         this.markAway = teamAway.Marking;
+
+        MessageBox.Show(teamHome.Name);
+        foreach(Player p in this.teamHome)
+        {
+            MessageBox.Show(p.Name);
+        }
+
+        MessageBox.Show(teamAway.Name);
+        foreach(Player p in this.teamAway)
+        {
+            MessageBox.Show(p.Name);
+        }
 
         resetPosition(true);
     }

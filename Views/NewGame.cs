@@ -143,7 +143,7 @@ public class NewGame : Form
                     if (item.Selected)
                     {
                         Game.New(item.Name);
-                        LineUp lu = new LineUp(Game.Current.TeamGame);
+                        LineUp lu = new LineUp(Game.Current.CrrTeam.Squad);
                         this.Hide();
                         lu.Show();
                     }

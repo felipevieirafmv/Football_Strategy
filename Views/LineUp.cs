@@ -193,18 +193,21 @@ public class LineUp : Form
         matchBtn.Click += delegate
         {
             fieldPlayer = formation.FieldList.OrderByDescending(item => item.loc.Y).ToList();
+
+            Game.Current.TeamGame = new();
+
             foreach(var p in fieldPlayer)
             {
                 Game.Current.TeamGame.Add(p.player);
             }
 
+            Game.Current.CrrTeam.FirstTeam = Game.Current.TeamGame;
+
             Game.Current.CrrConfrontation = Game.Current.Confrontations.FirstOrDefault(t => t[0] == Game.Current.CrrTeam || t[1] == Game.Current.CrrTeam);
 
-            MessageBox.Show(Game.Current.CrrConfrontation[0].Name + " X " + Game.Current.CrrConfrontation[1].Name);
-            if(Game.Current.CrrConfrontation[0] == Game.Current.CrrTeam)
-                new Simulator(Game.Current.CrrTeam, Game.Current.CrrConfrontation[1]);
-            else
-                new Simulator(Game.Current.CrrConfrontation[0], Game.Current.CrrTeam);
+            Field f = new Field();
+            this.Hide();
+            f.Show();
 
         };
 

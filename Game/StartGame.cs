@@ -19,7 +19,7 @@ public class StartGame
         if(newGame)
         {
             Game.Current.CrrTeam = teams.FirstOrDefault(t => t.Name == chooseTeam);
-            Game.Current.TeamGame = Game.Current.CrrTeam.TeamPlayers;
+            Game.Current.TeamGame = Game.Current.CrrTeam.Squad;
             ResetTeams();
             CreateConfrontations();
         }
