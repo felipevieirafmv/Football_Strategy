@@ -22,11 +22,12 @@ public class Field : Form
         tm.Interval = 10;
         WindowState = FormWindowState.Maximized;
         FormBorderStyle = FormBorderStyle.None;
+        Simulator simulation = null;
         
         if(Game.Current.CrrConfrontation[0] == Game.Current.CrrTeam)
-            new Simulator(Game.Current.CrrTeam, Game.Current.CrrConfrontation[1]);
+            simulation = new Simulator(Game.Current.CrrTeam, Game.Current.CrrConfrontation[1]);
         else
-            new Simulator(Game.Current.CrrConfrontation[0], Game.Current.CrrTeam);
+            simulation = new Simulator(Game.Current.CrrConfrontation[0], Game.Current.CrrTeam);
 
         Controls.Add(pb);
 
@@ -58,6 +59,8 @@ public class Field : Form
             g.Clear(Color.DarkGreen);
 
             g.DrawImage(field,0,0,field.Width * 2, field.Height * 2);
+
+            simulation.Draw(g, DateTime.Now.Millisecond);
             
             pb.Refresh();
         };

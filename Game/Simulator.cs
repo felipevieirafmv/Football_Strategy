@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -13,6 +14,7 @@ public class Simulator
     private int currentTime = -1;
     private Dictionary<Player, PointF> playerMap = new();
     private Dictionary<Player, PointF> nextMap = new();
+    private List<PointF> field433 = new();
     private Player ball = null;
     private List<Player> teamHome;
     private List<Player> teamAway;
@@ -54,7 +56,7 @@ public class Simulator
         {
             playerMap = nextMap;
             nextMap = new();
-            simulate();
+            simulate(g);
             currentTime = (int)time;
         }
         float frameTime = time - currentTime;
@@ -86,12 +88,38 @@ public class Simulator
 
     private void resetPosition(bool homeStart)
     {
-        
+        int i = 0;
+        foreach(Player p in teamHome)
+        {
+            playerMap.Add(p, field433[i]);
+            i++;
+        }
     }
 
-    private void simulate()
+    private void simulate(Graphics g)
     {
         foreach (var pair in playerMap)
             nextMap.Add(pair.Key, pair.Value);
+        
+        foreach(Player p in teamHome)
+        {
+            g.FillRectangle(Brushes.DarkBlue, 50, 50, playerMap[p].X, playerMap[p].Y);
+        }
+    }
+
+    private void fillTacticals()
+    {
+        field433.Add(new PointF(150, 500));
+        field433.Add(new PointF(300, 350));
+        field433.Add(new PointF(300, 550));
+        field433.Add(new PointF(300, 200));
+        field433.Add(new PointF(300, 800));
+        field433.Add(new PointF(800, 500));
+        field433.Add(new PointF(900, 600));
+        field433.Add(new PointF(300, 500));
+        field433.Add(new PointF(300, 500));
+        field433.Add(new PointF(300, 500));
+        field433.Add(new PointF(300, 500));
+        field433.Add(new PointF(300, 500));
     }
 }
