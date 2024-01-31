@@ -3,7 +3,7 @@
 - [X] Gerar time do adversário com base em um OverAll(0-100 ou 0-1.00).
 	-Ainda não sabemos as características então apenas gerar jogadores aleatórios.
 	-Gerar nomes aleatórios seria legal.
-- [ ] Terminar construtor do Simulator.
+- [X] Terminar construtor do Simulator.
 - [ ] Considere adicionar cor/info, para desenhar os jogadores.
 - [ ] Implementar o resetPoisition.
 	-Basicamente um if que coloca os jogadores nas posições com base no tatical.

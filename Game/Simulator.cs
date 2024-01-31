@@ -30,7 +30,7 @@ public class Simulator
         this.styleAway = teamAway.Style;
         this.attackAway = teamAway.Attack;
         this.markAway = teamAway.Marking;
-        // TODO
+        
         resetPosition(true);
     }
 
