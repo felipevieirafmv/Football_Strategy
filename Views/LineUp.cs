@@ -26,7 +26,7 @@ public class LineUp : Form
     };
     Formation formation = new Tactical433();
 
-    public Image shirt = Bitmap.FromFile("./img/Shirt.png");
+    public Image shirt = Bitmap.FromFile("./img/Shirts/Shirt.png");
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -246,7 +246,7 @@ public class LineUp : Form
 
             Draws.Menu();
             Draws.MenuBorder();
-            Draws.DrawField(Bitmap.FromFile("./img/fieldLineUp.png"));
+            Draws.DrawField(Bitmap.FromFile("./img/Fields/fieldLineUp.png"));
             
                     
             formation.PlayerPosition();

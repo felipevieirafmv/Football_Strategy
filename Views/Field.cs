@@ -16,7 +16,7 @@ public class Field : Form
         Dock = DockStyle.Fill,
     };
 
-    public Image field = Bitmap.FromFile("./img/fieldtest.png");
+    public Image field = Bitmap.FromFile("./img/Fields/fieldtest.png");
 
     public Field()
     {
