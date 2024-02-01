@@ -55,21 +55,10 @@ public class Simulator
 
     public void Draw(Graphics g, float time)
     {
-        foreach(Player p in teamHome)
-        {
-            g.FillRectangle(Brushes.DarkBlue, nextMap[p].X - playerSize.Width/2, nextMap[p].Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
-            Draws.DrawText(p.Name, Color.White, new RectangleF(nextMap[p].X - playerSize.Width/2, nextMap[p].Y - playerSize.Height/2, 100, 20));
-        }
-
-        foreach(Player p in teamAway)
-        {
-            g.FillRectangle(Brushes.Red, nextMap[p].X - playerSize.Width/2, nextMap[p].Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
-            Draws.DrawText(p.Name, Color.White, new RectangleF(nextMap[p].X - playerSize.Width/2, nextMap[p].Y - playerSize.Height/2, 100, 20));
-        }
-
         var dt = currentTime - (int)time;
         if (dt < 0)
         {
+            simulate();
             playerMap = nextMap;
             nextMap = new();
             currentTime = (int)time;
@@ -85,7 +74,8 @@ public class Simulator
                 oldPosition.Y * (1 - frameTime) + newPosition.Y * frameTime
             );
 
-            nextMap[player] = position;
+            g.FillRectangle(Brushes.DarkBlue, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
+            Draws.DrawText(player.Name, Color.White, new RectangleF(position.X - playerSize.Width/2, position.Y - playerSize.Height/2, 100, 20));
         }
 
         foreach (var player in teamAway)
@@ -97,7 +87,8 @@ public class Simulator
                 oldPosition.Y * (1 - frameTime) + newPosition.Y * frameTime
             );
 
-            nextMap[player] = position;
+            g.FillRectangle(Brushes.Red, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
+            Draws.DrawText(player.Name, Color.White, new RectangleF(position.X - playerSize.Width/2, position.Y - playerSize.Height/2, 100, 20));
         }
     }
 
@@ -106,14 +97,14 @@ public class Simulator
         int i = 0;
         foreach(Player p in teamHome)
         {
-            nextMap.Add(p, home433[i]);
+            playerMap.Add(p, home433[i]);
             i++;
         }
 
         i = 0;
         foreach(Player p in teamAway)
         {
-            nextMap.Add(p, away433[i]);
+            playerMap.Add(p, away433[i]);
             i++;
         }
     }
