@@ -16,7 +16,7 @@ public class NewGame : Form
     };
 
     List<TeamButton> Teams = new List<TeamButton>();
-    ChooseTeamButton chooseTeam = null;
+    ChooseButton chooseTeam = null;
     
     public NewGame()
     {
@@ -78,8 +78,8 @@ public class NewGame : Form
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/saopaulo.png"), XTB2 + DifX*3, YTB2 + DifY*3, WTB, HTB, "SaoPaulo"));
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/vasco.png"), XTB2 + DifX*4, YTB2 + DifY*3, WTB, HTB, "Vasco"));
 
-            chooseTeam = new ChooseTeamButton(g, pb.Width*0.9f - XTB, pb.Height*0.93f, 200, 50);
-            chooseTeam.DrawChooseTeam(g);
+            chooseTeam = new ChooseButton(g, pb.Width*0.9f - XTB, pb.Height*0.93f, 200, 50, "New Game");
+            chooseTeam.DrawChooseButton(g);
 
             foreach (TeamButton item in Teams)
             {
