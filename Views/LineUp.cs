@@ -20,6 +20,8 @@ public class LineUp : Form
     bool isRight = false;
     bool doubleClick = false;
 
+    ChooseButton matchBtn = null;
+
     Timer tm = new Timer();
     private PictureBox pb = new PictureBox{
         Dock = DockStyle.Fill,
@@ -37,32 +39,13 @@ public class LineUp : Form
     {
         var rect = new RectangleF
         {
-            Location = new PointF(x: 1300, y: 40 + list.Count * 40),
-            Width = 450,
-            Height = 40
+            Location = new PointF(pb.Width*0.677f, pb.Height*0.037f + list.Count * pb.Height*0.037f),
+            Width = pb.Width*0.234f,
+            Height = pb.Height*0.037f
         };
         list.Add((null, player, false));
     }
 
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-
-    // public void GoToMatch(List<Player> playerList)
-    // {
-    //     List<Player> matchTeam = new List<Player>();
-
-    //     foreach(Player p in playerList)
-
-    //     if(p.position == LineUp.position)
-    //     {
-    //         matchTeam.Add(new Player(p.Name, p.OverAll))
-    //     }
-    //     else
-    //     {
-    //         matchTeam.Add(new Player(p.Name, p.OverAll * 0.65));
-    //     }
-
-    // }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -91,6 +74,26 @@ public class LineUp : Form
         {
             isDown = true;
             isRight = e.Button == MouseButtons.Right;
+
+            if(matchBtn.Rect.Contains(e.X, e.Y))
+            {
+                fieldPlayer = formation.FieldList.OrderByDescending(item => item.loc.Y).ToList();
+
+                Game.Current.TeamGame = new();
+
+                foreach(var p in fieldPlayer)
+                {
+                    Game.Current.TeamGame.Add(p.player);
+                }
+
+                Game.Current.CrrTeam.FirstTeam = Game.Current.TeamGame;
+
+                Game.Current.CrrConfrontation = Game.Current.Confrontations.FirstOrDefault(t => t[0] == Game.Current.CrrTeam || t[1] == Game.Current.CrrTeam);
+
+                Field f = new Field();
+                this.Hide();
+                f.Show();
+            }
         };
 
         pb.MouseUp += (o, e) =>
@@ -184,38 +187,10 @@ public class LineUp : Form
             }
         };
 
-        Button matchBtn = new Button();
-        matchBtn.Text = "Jogo";
-        matchBtn.Font = new Font("Copperplate Gothic Bold", 15);
-        matchBtn.Width = 180;
-        matchBtn.Height = 60;
-        matchBtn.Location = new Point(1700, 960);
-        matchBtn.Click += delegate
-        {
-            fieldPlayer = formation.FieldList.OrderByDescending(item => item.loc.Y).ToList();
-
-            Game.Current.TeamGame = new();
-
-            foreach(var p in fieldPlayer)
-            {
-                Game.Current.TeamGame.Add(p.player);
-            }
-
-            Game.Current.CrrTeam.FirstTeam = Game.Current.TeamGame;
-
-            Game.Current.CrrConfrontation = Game.Current.Confrontations.FirstOrDefault(t => t[0] == Game.Current.CrrTeam || t[1] == Game.Current.CrrTeam);
-
-            Field f = new Field();
-            this.Hide();
-            f.Show();
-
-        };
-
         Controls.Add(cbTactics);
         Controls.Add(GameTactics.Style());
         Controls.Add(GameTactics.MarkingType());
         Controls.Add(GameTactics.Attack());
-        Controls.Add(matchBtn);
         Controls.Add(pb);
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -237,16 +212,17 @@ public class LineUp : Form
             Draws.Graphics = g;
             pb.Image = bmp;
             tm.Start();
-            
+
+            matchBtn = new ChooseButton(g, pb.Width*0.897f, pb.Height * 0.897f, pb.Width*0.093f, pb.Height * 0.055f, "Game");
         };
 
         tm.Tick += delegate
         {
             g.Clear(Color.DarkGreen);
 
-            Draws.Menu();
+            Draws.Menu(pb);
             Draws.MenuBorder();
-            Draws.DrawField(Bitmap.FromFile("./img/fieldLineUp.png"));
+            Draws.DrawField(Bitmap.FromFile("./img/fieldLineUp.png"), pb);
             
                     
             formation.PlayerPosition();
@@ -254,6 +230,8 @@ public class LineUp : Form
                 formation.Draw(cursor: cursor, isDown);
             for (int i = scrollInfo; i < int.Min(list.Count, 20 + scrollInfo); i++)
                 DrawPlayer(i);
+                
+            matchBtn.DrawChooseButton(g);
 
             pb.Refresh();
         };
@@ -265,7 +243,7 @@ public class LineUp : Form
     public void DrawPlayer(int index)
     {
         var item = list[index: index];
-        var defaultRect = new RectangleF(x: 1300, y: 40 + (index - scrollInfo) * 40, 450, 40);
+        var defaultRect = new RectangleF(pb.Width*0.677f, pb.Height*0.037f + (index - scrollInfo) * pb.Height*0.037f, pb.Width*0.234f, pb.Height*0.037f);
         var playerRect = item.rect ?? defaultRect;
         var player = item.player;
         var selected = item.selected;

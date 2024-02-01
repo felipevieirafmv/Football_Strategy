@@ -14,11 +14,11 @@ public static class Draws
     static SolidBrush green = new SolidBrush(Color.FromArgb(255, 8, 113, 8));
 
 
-    public static void DrawField(Image image)
-        => g.DrawImage(image, new RectangleF(200, 10, image.Width, image.Height));
+    public static void DrawField(Image image, PictureBox pb)
+        => g.DrawImage(image, new RectangleF(pb.Width*0.104f, pb.Height*0.009f, pb.Width*0.38f, pb.Height*0.921f));
 
-    public static void Menu()
-        => g.FillRectangle(green, 1200, 0, 720, 1080);
+    public static void Menu(PictureBox pb)
+        => g.FillRectangle(green, pb.Width*0.625f, 0, pb.Width*0.375f, pb.Height);
 
     public static void MenuBorder()
     {
