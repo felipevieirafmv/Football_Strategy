@@ -326,7 +326,7 @@ public class LineUp : Form
         Draws.DrawPlayerShirt(
             new PointF(cursor.X - 43, cursor.Y - 44));
         Draws.DrawText(player.Name,Color.Black, 
-            new RectangleF(cursor.X - 43, cursor.Y + 44, 86, 20));
+            new RectangleF(cursor.X - 43, cursor.Y + 44, 86, 30));
 
     }
 }

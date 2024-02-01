@@ -10,6 +10,7 @@ public class Field : Form
     private Graphics g = null;
     private Bitmap bmp = null;
     private Image img = null;
+    private float timeDraw = 0;
     Timer tm = new Timer();
     private PictureBox pb = new PictureBox {
         Dock = DockStyle.Fill,
@@ -60,7 +61,7 @@ public class Field : Form
 
             g.DrawImage(field,0,0,field.Width * 2, field.Height * 2);
 
-            simulation.Draw(g, DateTime.Now.Millisecond);
+            simulation.Draw(g, 0);
             
             pb.Refresh();
         };
