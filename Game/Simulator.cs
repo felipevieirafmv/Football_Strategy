@@ -136,11 +136,22 @@ public class Simulator
         var playersRandom = playersToPass
             .OrderBy(p => random.Next()).ToList();
         
-        var playerOptions = playersRandom.Take(2);
+        var playerOptions = playersRandom.Take(2).ToList();
 
-        var playerChoosed = playerOptions
-            .OrderByDescending(p => p.Value.X)
-            .FirstOrDefault();
+        var playerChoosed = new KeyValuePair<Player, System.Drawing.PointF>();
+
+        if(playerOptions[0].Key.Team == teamHome[0].Team)
+        {
+            playerChoosed = playerOptions
+                .OrderByDescending(p => p.Value.X)
+                .FirstOrDefault();
+        }
+        else
+        {
+            playerChoosed = playerOptions
+                .OrderBy(p => p.Value.X)
+                .FirstOrDefault();
+        }
 
         playerWithBall = playerChoosed.Key;
 
@@ -148,7 +159,11 @@ public class Simulator
             .Where(p => p.Key != playerWithBall);
 
         nextMap.Add(playerChoosed.Key, playerChoosed.Value);
-        nextMap.Add(ball.Key, playerChoosed.Value);
+        if(random.Next(1, 100) < playerChoosed.Key.PassingAbility)
+            nextMap.Add(ball.Key, playerChoosed.Value);
+        else
+            nextMap.Add(ball.Key, new PointF(playerChoosed.Value.X + random.Next(1,100), playerChoosed.Value.Y + random.Next(1,100)));
+            
 
         foreach (var pair in otherPlayers)
         {
@@ -157,7 +172,13 @@ public class Simulator
 
             // Aqui
 
-            var nextPosition = new PointF(position.X + 5, position.Y);
+            var nextPosition = new PointF();
+
+            if(pair.Key.Team == teamHome[0].Team)
+                nextPosition = new PointF(position.X + random.Next(1,10), position.Y);
+            else
+                nextPosition = new PointF(position.X - random.Next(1,10), position.Y);
+
             nextMap.Add(player, nextPosition);
         }
     }
