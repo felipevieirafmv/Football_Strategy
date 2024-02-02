@@ -13,6 +13,7 @@ public abstract class Formation
     public List<(Position pos, PointF loc, Player player)> FieldList = new();
     SolidBrush grayBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
     public Player[] FieldTeam = new Player[11];
+    PictureBox pb = new PictureBox();
 
     public float y { get; set; } = 40;
 
@@ -41,13 +42,13 @@ public abstract class Formation
     }
 
 
-    public void PlayerPosition()
+    public void PlayerPosition(PictureBox pb)
     {
         foreach (var item in FieldList)
         {
             if(item.player != null)
             {
-                Draws.DrawPlayerShirt(new PointF(item.loc.X, item.loc.Y));
+                Draws.DrawPlayerShirt(new PointF(item.loc.X, item.loc.Y), pb);
                 Draws.DrawText(item.player.Name,Color.Black, 
                     new RectangleF(item.loc.X, item.loc.Y + 88, 86, 20));
             } 

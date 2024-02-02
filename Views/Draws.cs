@@ -20,14 +20,14 @@ public static class Draws
     public static void Menu(PictureBox pb)
         => g.FillRectangle(green, pb.Width*0.625f, 0, pb.Width*0.375f, pb.Height);
 
-    public static void MenuBorder()
+    public static void MenuBorder(PictureBox pb)
     {
-        g.FillRectangle(yellowLight, 1300, 40, 450, 800);
-        g.DrawRectangle(Pens.Black, 1300, 40, 450, 800);
+        g.FillRectangle(yellowLight, pb.Width*0.677f, pb.Height*0.037f, pb.Width*0.234f, pb.Height*0.74f);
+        g.DrawRectangle(Pens.Black, pb.Width*0.677f, pb.Height*0.037f, pb.Width*0.234f, pb.Height*0.74f);
     }
     
-    public static void DrawPlayerShirt(PointF location)
-        => g.DrawImage(shirt, new RectangleF(location.X, location.Y , shirt.Width, shirt.Height));
+    public static void DrawPlayerShirt(PointF location, PictureBox pb)
+        => g.DrawImage(shirt, new RectangleF(location.X, location.Y , pb.Width*0.044f, pb.Height*0.081f));
     public static void DrawPlayerMenu(PointF location)
         => g.FillRectangle(Brushes.DarkBlue, new RectangleF(location.X, location.Y , 450, 40));
 

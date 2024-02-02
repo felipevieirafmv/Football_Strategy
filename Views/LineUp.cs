@@ -221,11 +221,11 @@ public class LineUp : Form
             g.Clear(Color.DarkGreen);
 
             Draws.Menu(pb);
-            Draws.MenuBorder();
+            Draws.MenuBorder(pb);
             Draws.DrawField(Bitmap.FromFile("./img/fieldLineUp.png"), pb);
             
                     
-            formation.PlayerPosition();
+            formation.PlayerPosition(pb);
             if (list.Any(x => x.selected))
                 formation.Draw(cursor: cursor, isDown);
             for (int i = scrollInfo; i < int.Min(list.Count, 20 + scrollInfo); i++)
@@ -302,9 +302,9 @@ public class LineUp : Form
             return;
 
         Draws.DrawPlayerShirt(
-            new PointF(cursor.X - 43, cursor.Y - 44));
+            new PointF(cursor.X - pb.Width*0.022f, cursor.Y - pb.Height*0.04f), pb);
         Draws.DrawText(player.Name,Color.Black, 
-            new RectangleF(cursor.X - 43, cursor.Y + 44, 86, 30));
+            new RectangleF(cursor.X - pb.Width*0.022f, cursor.Y + pb.Height*0.04f, pb.Width*0.044f, pb.Height*0.027f));
 
     }
 }
