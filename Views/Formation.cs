@@ -13,7 +13,6 @@ public abstract class Formation
     public List<(Position pos, PointF loc, Player player)> FieldList = new();
     SolidBrush grayBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
     public Player[] FieldTeam = new Player[11];
-    PictureBox pb = new PictureBox();
 
     public float y { get; set; } = 40;
 
@@ -24,12 +23,12 @@ public abstract class Formation
     public Formation() 
     { }    
 
-    public bool SetPlayer(Player player, PointF cursor, ref Player removedPlayer)
+    public bool SetPlayer(Player player, PointF cursor, ref Player removedPlayer, PictureBox pb)
     {
         for (int i = 0; i < FieldList.Count; i++)
         {
             var item = FieldList[i];
-            var itemRect = new RectangleF(item.loc, size: new SizeF(86, 88));
+            var itemRect = new RectangleF(item.loc, size: new SizeF(pb.Width*0.044f, pb.Height*0.081f));
 
             if (!itemRect.Contains(cursor))
                 continue;
@@ -50,18 +49,17 @@ public abstract class Formation
             {
                 Draws.DrawPlayerShirt(new PointF(item.loc.X, item.loc.Y), pb);
                 Draws.DrawText(item.player.Name,Color.Black, 
-                    new RectangleF(item.loc.X, item.loc.Y + 88, 86, 20));
+                    new RectangleF(item.loc.X, item.loc.Y + pb.Height*0.081f, pb.Width*0.044f, pb.Height*0.03f));
             } 
         }
     }
-    public void Draw(PointF cursor, bool mouseDown)
+    public void Draw(PointF cursor, bool mouseDown, PictureBox pb)
     {
-        
         foreach (var item in FieldList)
         {
             if(item.player == null)
             this.DrawEmptyPosition(
-                new RectangleF(item.loc.X, item.loc.Y, 86, 88),
+                new RectangleF(item.loc.X, item.loc.Y, pb.Width*0.044f, pb.Height*0.081f),
                 cursor, mouseDown);
         }
     }

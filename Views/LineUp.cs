@@ -20,7 +20,8 @@ public class LineUp : Form
     bool isRight = false;
     bool doubleClick = false;
 
-    ChooseButton matchBtn = null;
+    ChooseButton btMatch = null;
+    ChooseButton btRand = null;
 
     Timer tm = new Timer();
     private PictureBox pb = new PictureBox{
@@ -75,7 +76,7 @@ public class LineUp : Form
             isDown = true;
             isRight = e.Button == MouseButtons.Right;
 
-            if(matchBtn.Rect.Contains(e.X, e.Y))
+            if(btMatch.Rect.Contains(e.X, e.Y))
             {
                 fieldPlayer = formation.FieldList.OrderByDescending(item => item.loc.Y).ToList();
 
@@ -93,6 +94,15 @@ public class LineUp : Form
                 Field f = new Field();
                 this.Hide();
                 f.Show();
+            }
+
+            if (btRand.Rect.Contains(e.X, e.Y))
+            {
+                formation.FieldList = list
+                    .Select(el => (Position.Bench, PointF.Empty, el.player))
+                    .OrderByDescending(el => Random.Shared.Next())
+                    .Take(11)
+                    .ToList();
             }
         };
 
@@ -209,11 +219,18 @@ public class LineUp : Form
                 pb.Height
             );
             g = Graphics.FromImage(bmp);
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             Draws.Graphics = g;
             pb.Image = bmp;
             tm.Start();
 
-            matchBtn = new ChooseButton(g, pb.Width*0.897f, pb.Height * 0.897f, pb.Width*0.093f, pb.Height * 0.055f, "Game");
+            btMatch = new ChooseButton(g, pb.Width*0.897f, pb.Height * 0.897f, pb.Width*0.093f, pb.Height * 0.055f, "Game");
+            btRand = new ChooseButton(g, pb.Width*0.897f, pb.Height * 0.837f, pb.Width*0.093f, pb.Height * 0.055f, "Random");
+        };
+
+        this.FormClosed += delegate
+        {
+            Application.Exit();
         };
 
         tm.Tick += delegate
@@ -227,11 +244,12 @@ public class LineUp : Form
                     
             formation.PlayerPosition(pb);
             if (list.Any(x => x.selected))
-                formation.Draw(cursor: cursor, isDown);
+                formation.Draw(cursor: cursor, isDown, pb);
             for (int i = scrollInfo; i < int.Min(list.Count, 20 + scrollInfo); i++)
                 DrawPlayer(i);
                 
-            matchBtn.DrawChooseButton(g);
+            btMatch.DrawChooseButton(g);
+            btRand.DrawChooseButton(g);
 
             pb.Refresh();
         };
@@ -251,7 +269,7 @@ public class LineUp : Form
         if (isDown && isRight)
         {
             Player removed = null;
-            formation.SetPlayer(null, cursor, ref removed);
+            formation.SetPlayer(null, cursor, ref removed, pb);
             if (removed is not null)
                 AddPlayer(player: removed);
         }
@@ -266,7 +284,7 @@ public class LineUp : Form
             if (selected)
             {
                 Player removed = null;
-                if (formation.SetPlayer(player, cursor, ref removed))
+                if (formation.SetPlayer(player, cursor, ref removed, pb))
                     list.RemoveAt(index);
                 else 
                 {

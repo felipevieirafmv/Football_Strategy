@@ -55,13 +55,15 @@ public class Field : Form
             }
         };
 
+        DateTime start = DateTime.Now;
         tm.Tick += delegate
         {
             g.Clear(Color.DarkGreen);
 
             g.DrawImage(field,0,0,field.Width * 2, field.Height * 2);
 
-            simulation.Draw(g, 0);
+            var time = DateTime.Now - start;
+            simulation.Draw(g, (float)time.TotalSeconds);
             
             pb.Refresh();
         };

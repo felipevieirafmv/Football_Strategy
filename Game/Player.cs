@@ -14,6 +14,8 @@ public class Player
     public SizeF Tamanho = new SizeF(450, 40);
     public PointF Location { get; set; }
 
+    public int PassingAbility { get; set; }
+
     public Player(string team)
     {
         Random random = Random.Shared;
@@ -22,5 +24,7 @@ public class Player
         this.Name = firstName[random.Next(firstName.Length)] + " " + lastName[random.Next(lastName.Length)];
         this.Team = team;
         this.OverAll = random.Next(40, 61);
+
+        this.PassingAbility = random.Next(40, 61);
     }
 }

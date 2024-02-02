@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -18,7 +19,7 @@ public class Simulator
     private List<PointF> home433 = new();
     private List<PointF> away433 = new();
     private SizeF playerSize= new SizeF(20, 20);
-    private Player ball = null;
+    private Player ball = new Player("ball");
     private List<Player> teamHome;
     private List<Player> teamAway;
     int taticalHome, styleHome, attackHome, markHome;
@@ -37,18 +38,6 @@ public class Simulator
         this.attackAway = teamAway.Attack;
         this.markAway = teamAway.Marking;
 
-        // MessageBox.Show(teamHome.Name);
-        // foreach(Player p in this.teamHome)
-        // {
-        //     MessageBox.Show(p.Name);
-        // }
-
-        // MessageBox.Show(teamAway.Name);
-        // foreach(Player p in this.teamAway)
-        // {
-        //     MessageBox.Show(p.Name);
-        // }
-
         fillTacticals();
         resetPosition(true);
     }
@@ -58,9 +47,9 @@ public class Simulator
         var dt = currentTime - (int)time;
         if (dt < 0)
         {
-            simulate();
             playerMap = nextMap;
             nextMap = new();
+            simulate();
             currentTime = (int)time;
         }
         float frameTime = time - currentTime;
@@ -68,7 +57,7 @@ public class Simulator
         foreach (var player in teamHome)
         {
             var oldPosition = playerMap[player];
-            var newPosition = playerMap[player];
+            var newPosition = nextMap[player];
             var position = new PointF(
                 oldPosition.X * (1 - frameTime) + newPosition.X * frameTime,
                 oldPosition.Y * (1 - frameTime) + newPosition.Y * frameTime
@@ -81,7 +70,7 @@ public class Simulator
         foreach (var player in teamAway)
         {
             var oldPosition = playerMap[player];
-            var newPosition = playerMap[player];
+            var newPosition = nextMap[player];
             var position = new PointF(
                 oldPosition.X * (1 - frameTime) + newPosition.X * frameTime,
                 oldPosition.Y * (1 - frameTime) + newPosition.Y * frameTime
@@ -90,6 +79,14 @@ public class Simulator
             g.FillRectangle(Brushes.Red, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
             Draws.DrawText(player.Name, Color.White, new RectangleF(position.X - playerSize.Width/2, position.Y - playerSize.Height/2, 100, 20));
         }
+
+        var oldPositionball = playerMap[ball];
+        var newPositionball = nextMap[ball];
+        var positionball = new PointF(
+            oldPositionball.X * (1 - frameTime) + newPositionball.X * frameTime,
+            oldPositionball.Y * (1 - frameTime) + newPositionball.Y * frameTime
+        );
+        g.FillEllipse(Brushes.FloralWhite, new RectangleF(positionball.X - 5, positionball.Y - 5, 10, 10));
     }
 
     private void resetPosition(bool homeStart)
@@ -97,22 +94,72 @@ public class Simulator
         int i = 0;
         foreach(Player p in teamHome)
         {
-            playerMap.Add(p, home433[i]);
+            nextMap.Add(p, home433[i]);
             i++;
+
+            if (i == 11)
+                nextMap[ball] = home433[i - 1];
         }
 
         i = 0;
         foreach(Player p in teamAway)
         {
-            playerMap.Add(p, away433[i]);
+            nextMap.Add(p, away433[i]);
             i++;
         }
     }
 
     private void simulate()
     {
-        foreach (var pair in playerMap)
-            nextMap.Add(pair.Key, pair.Value);
+        Random random = new Random();
+
+        var ball = playerMap
+            .FirstOrDefault(p => p.Key.Team == "ball");
+        var ballPosition = ball.Value;
+        
+        var players = playerMap
+            .Where(p => p.Key != ball.Key);
+        
+        var playerWithBall = players
+            .OrderBy(p => (p.Value.X - ballPosition.X) * (p.Value.X - ballPosition.X) + (p.Value.Y - ballPosition.Y) * (p.Value.Y - ballPosition.Y))
+            .FirstOrDefault()
+            .Key;
+        
+        var otherPlayers = players
+            .Where(p => p.Key != playerWithBall);
+        
+        var playersToPass = otherPlayers
+            .Where(p => p.Key.Team == playerWithBall.Team)
+            .OrderBy(p => (p.Value.X - ballPosition.X) * (p.Value.X - ballPosition.X) + (p.Value.Y - ballPosition.Y) * (p.Value.Y - ballPosition.Y))
+            .Take(5);
+
+        var playersRandom = playersToPass
+            .OrderBy(p => random.Next()).ToList();
+        
+        var playerOptions = playersRandom.Take(2);
+
+        var playerChoosed = playerOptions
+            .OrderByDescending(p => p.Value.X)
+            .FirstOrDefault();
+
+        playerWithBall = playerChoosed.Key;
+
+        otherPlayers = players
+            .Where(p => p.Key != playerWithBall);
+
+        nextMap.Add(playerChoosed.Key, playerChoosed.Value);
+        nextMap.Add(ball.Key, playerChoosed.Value);
+
+        foreach (var pair in otherPlayers)
+        {
+            var player = pair.Key;
+            var position = pair.Value;
+
+            // Aqui
+
+            var nextPosition = new PointF(position.X + 5, position.Y);
+            nextMap.Add(player, nextPosition);
+        }
     }
 
     private void fillTacticals()
