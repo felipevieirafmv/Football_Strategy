@@ -41,13 +41,13 @@ public abstract class Formation
     }
 
 
-    public void PlayerPosition(PictureBox pb)
+    public void PlayerPosition(PictureBox pb, Image shirt)
     {
         foreach (var item in FieldList)
         {
             if(item.player != null)
             {
-                Draws.DrawPlayerShirt(new PointF(item.loc.X, item.loc.Y), pb);
+                Draws.DrawPlayerShirt(new PointF(item.loc.X, item.loc.Y), pb, shirt);
                 Draws.DrawText(item.player.Name,Color.Black, 
                     new RectangleF(item.loc.X, item.loc.Y + pb.Height*0.081f, pb.Width*0.044f, pb.Height*0.03f));
             } 

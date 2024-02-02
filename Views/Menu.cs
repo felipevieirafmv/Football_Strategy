@@ -51,6 +51,11 @@ public class Menu : Form
             pb.Refresh();
         };
 
+        this.FormClosed += delegate
+        {
+            Application.Exit();
+        };
+
         pb.MouseDown += (o, e) =>
         {
             if(ngBtn.Rect.Contains(e.X, e.Y))

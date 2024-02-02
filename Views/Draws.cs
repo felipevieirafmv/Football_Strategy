@@ -6,7 +6,6 @@ namespace Views;
 
 public static class Draws
 {
-    public static Image shirt = Bitmap.FromFile("./img/Shirt.png");
     public static Graphics Graphics { get; set; }
     private static Graphics g => Graphics;
 
@@ -26,7 +25,7 @@ public static class Draws
         g.DrawRectangle(Pens.Black, pb.Width*0.677f, pb.Height*0.037f, pb.Width*0.234f, pb.Height*0.74f);
     }
     
-    public static void DrawPlayerShirt(PointF location, PictureBox pb)
+    public static void DrawPlayerShirt(PointF location, PictureBox pb, Image shirt)
         => g.DrawImage(shirt, new RectangleF(location.X, location.Y , pb.Width*0.044f, pb.Height*0.081f));
     public static void DrawPlayerMenu(PointF location)
         => g.FillRectangle(Brushes.DarkBlue, new RectangleF(location.X, location.Y , 450, 40));

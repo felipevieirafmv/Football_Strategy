@@ -29,6 +29,7 @@ public class Simulator
         this.teamHome = teamHome.FirstTeam;
         this.teamAway = teamAway.FirstTeam;
 
+
         this.taticalHome = teamHome.Tactical;
         this.styleHome = teamHome.Style;
         this.attackHome = teamHome.Attack;
@@ -38,6 +39,7 @@ public class Simulator
         this.attackAway = teamAway.Attack;
         this.markAway = teamAway.Marking;
 
+        MessageBox.Show(teamHome.Style.ToString());
         fillTacticals();
         resetPosition(true);
     }
@@ -175,9 +177,49 @@ public class Simulator
             var nextPosition = new PointF();
 
             if(pair.Key.Team == teamHome[0].Team)
-                nextPosition = new PointF(position.X + random.Next(1,10), position.Y);
+            {
+                if(pair.Value == home433[0])
+                    nextPosition = new PointF(position.X, position.Y);
+                else
+                    {
+                        switch (styleHome)
+                        {
+                            case 0:
+                                nextPosition = new PointF(position.X + random.Next(1,100), position.Y);
+                                break;
+                            case 1:
+                                nextPosition = new PointF(position.X + random.Next(1,50), position.Y);
+                                break;
+                            case 2:
+                                nextPosition = new PointF(position.X + random.Next(1,10), position.Y);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+            }
             else
-                nextPosition = new PointF(position.X - random.Next(1,10), position.Y);
+            {
+                if(pair.Value == away433[0])
+                    nextPosition = new PointF(position.X, position.Y);
+                else
+                {
+                        switch (styleAway)
+                        {
+                            case 0:
+                                nextPosition = new PointF(position.X - random.Next(1,100), position.Y);
+                                break;
+                            case 1:
+                                nextPosition = new PointF(position.X - random.Next(1,50), position.Y);
+                                break;
+                            case 2:
+                                nextPosition = new PointF(position.X - random.Next(1,10), position.Y);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+            }
 
             nextMap.Add(player, nextPosition);
         }

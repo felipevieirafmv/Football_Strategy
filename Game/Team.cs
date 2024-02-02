@@ -9,7 +9,7 @@ public class Team
     public string Name { get; set; }
     public int Points { get; set; }
     public int Tactical { get; set; } = 1;
-    public int Style { get; set; } = 1;
+    public int Style { get; set; } = 0;
     public int Attack { get; set; } = 1;
     public int Marking { get; set; } = 1;
     public int GD { get; set; }
@@ -31,6 +31,10 @@ public class Team
         {
             FirstTeam.Add(Squad[i]);
         }
+
+        Random random = new Random();
+
+        // this.Style = random.Next(0, 3);
     }
 
     // public void getTeamPlayer()

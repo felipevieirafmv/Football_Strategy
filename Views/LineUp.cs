@@ -29,7 +29,7 @@ public class LineUp : Form
     };
     Formation formation = new Tactical433();
 
-    public Image shirt = Bitmap.FromFile("./img/Shirt.png");
+    public Image shirt = null;
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,6 +55,9 @@ public class LineUp : Form
         tm.Interval = 10;
         WindowState = FormWindowState.Maximized;
         // FormBorderStyle = FormBorderStyle.None;
+
+        this.shirt = Bitmap.FromFile("./img/Shirt.png")
+            .GetThumbnailImage(pb.Width, pb.Height, null, nint.Zero);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
         
@@ -145,20 +148,15 @@ public class LineUp : Form
         var cbStyle = GameTactics.Style();
         cbStyle.SelectedIndexChanged += delegate
         {
-            switch (cbStyle.SelectedIndex)
+            if(cbStyle.SelectedIndex == 0)
+                Game.Current.CrrTeam.Style = 0;
+            if(cbStyle.SelectedIndex == 1)
             {
-                case 0:
-                    Game.Current.CrrTeam.Style = 0;
-                    break;
-                case 1:
-                    Game.Current.CrrTeam.Style = 1;
-                    break;
-                case 2:
-                    Game.Current.CrrTeam.Style = 2;
-                    break;
-                default:
-                    break;
+                Game.Current.CrrTeam.Style = 1;
+                MessageBox.Show("entrou");
             }
+            if(cbStyle.SelectedIndex == 2)
+                Game.Current.CrrTeam.Style = 2;
         };
         var cbMarking = GameTactics.Style();
         cbMarking.SelectedIndexChanged += delegate
@@ -242,7 +240,7 @@ public class LineUp : Form
             Draws.DrawField(Bitmap.FromFile("./img/fieldLineUp.png"), pb);
             
                     
-            formation.PlayerPosition(pb);
+            formation.PlayerPosition(pb, this.shirt);
             if (list.Any(x => x.selected))
                 formation.Draw(cursor: cursor, isDown, pb);
             for (int i = scrollInfo; i < int.Min(list.Count, 20 + scrollInfo); i++)
@@ -320,7 +318,7 @@ public class LineUp : Form
             return;
 
         Draws.DrawPlayerShirt(
-            new PointF(cursor.X - pb.Width*0.022f, cursor.Y - pb.Height*0.04f), pb);
+            new PointF(cursor.X - pb.Width*0.022f, cursor.Y - pb.Height*0.04f), pb, this.shirt);
         Draws.DrawText(player.Name,Color.Black, 
             new RectangleF(cursor.X - pb.Width*0.022f, cursor.Y + pb.Height*0.04f, pb.Width*0.044f, pb.Height*0.027f));
 
