@@ -6,7 +6,6 @@ namespace Views;
 
 public static class Draws
 {
-    public static Image shirt = Bitmap.FromFile("./img/Shirts/Shirt.png");
     public static Graphics Graphics { get; set; }
     private static Graphics g => Graphics;
 

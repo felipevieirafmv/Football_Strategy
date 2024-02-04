@@ -1,14 +1,16 @@
-1.Encontrar adversário do time escolhido (converter escalação pra lista)
-2.Conectar tela de seleção com tela de jogo (mesmo que vazia).
-3.Gerar time do adversário com base em um OverAll(0-100 ou 0-1.00).
-	-Ainda não sabemos as características então apenas gerar jogadores aleatórios.
-	-Gerar nomes aleatórios seria legal.
-4.Terminar construtor do Simulator.
-5.Considere adicionar cor/info, para desenhar os jogadores.
-6.Implementar o resetPoisition.
-	-Basicamente um if que coloca os jogadores nas posições com base no tatical.
-7.Conseguri visualizar a partida, função Draw.
-8.Se der, gerar jogadores com nomes aleatórios pra tela de seleção.
+Now: 
+
+- FInalizar Pixelart de Jogadores
+
+To Do:
+
+1. Corcertar Erro ao mandar escalação vazia
+2. Concertar Erro ao mudar a escalação
+3. consertar vizualização da Escalação Aleatoria
+4. Reposicionar Botões
+5. Finalizar Formações
+6. Finalizar Responsabilidade
+
 
 DEPOIS:
 -Simulação Tempo Real
