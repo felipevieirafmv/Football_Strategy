@@ -9,6 +9,7 @@ public class TeamButton : BaseButton
     public Image Image { get; set; }
     public string Name { get; set; }
     public bool Selected { get; set; } = false;
+    SolidBrush Gray = new SolidBrush(Color.FromArgb(255, 180, 180, 180));
 
     public TeamButton(Graphics g, Image image, float X, float Y, float width, float height, string Name)
     {
@@ -26,7 +27,7 @@ public class TeamButton : BaseButton
         if(this.Selected)
             g.FillRectangle(Brushes.Orange, this.Rect);
         else
-            g.FillRectangle(Brushes.Gray, this.Rect);
+            g.FillRectangle(Gray, this.Rect);
         g.DrawImage(this.Image, new RectangleF((this.Rect.X + (this.Rect.Width/2 - this.Rect.Width*0.1285f)), this.Rect.Y + (this.Rect.Height/2 - (this.Rect.Height*0.6f)/1.65f), this.Rect.Width*0.257f, this.Rect.Height*0.6f));
         g.DrawString(Name, font, Brushes.White, new PointF(this.Rect.X + (this.Rect.Width/2 - textSize.Width/2), this.Rect.Y + this.Rect.Height*0.825f));
     }

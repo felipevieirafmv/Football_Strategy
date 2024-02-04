@@ -56,7 +56,7 @@ public class LineUp : Form
         WindowState = FormWindowState.Maximized;
         // FormBorderStyle = FormBorderStyle.None;
 
-        this.shirt = Bitmap.FromFile("./img/Shirt.png")
+        this.shirt = Bitmap.FromFile("./img//Shirts/Shirt.png")
             .GetThumbnailImage(pb.Width, pb.Height, null, nint.Zero);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -237,7 +237,7 @@ public class LineUp : Form
 
             Draws.Menu(pb);
             Draws.MenuBorder(pb);
-            Draws.DrawField(Bitmap.FromFile("./img/fieldLineUp.png"), pb);
+            Draws.DrawField(Bitmap.FromFile("./img/Fields/fieldLineUp.png"), pb);
             
                     
             formation.PlayerPosition(pb, this.shirt);

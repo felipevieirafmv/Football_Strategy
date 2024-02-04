@@ -25,7 +25,7 @@ public class Menu : Form
 
         Controls.Add(pb);
 
-        this.img = Bitmap.FromFile("img/suarez.png");
+        this.img = Bitmap.FromFile("img/Game/FootballStrategy.png");
 
         this.Load += delegate
         {
@@ -35,7 +35,7 @@ public class Menu : Form
             );
             this.g = Graphics.FromImage(bmp);
             pb.Image = bmp;
-            g.DrawImage(img, 200, 350);
+            g.DrawImage(img, 0, 0, img.Width * 1.15f, img.Height* 1.15f);
 
             SizeF btnSize = new SizeF(pb.Width * 0.1198f, pb.Height * 0.078f);
 

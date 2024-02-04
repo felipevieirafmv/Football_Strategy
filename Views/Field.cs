@@ -16,7 +16,7 @@ public class Field : Form
         Dock = DockStyle.Fill,
     };
 
-    public Image field = Bitmap.FromFile("./img/fieldtest.png");
+    public Image field = Bitmap.FromFile("./img/Fields/FieldGame.png");
 
     public Field()
     {
@@ -60,7 +60,7 @@ public class Field : Form
         {
             g.Clear(Color.DarkGreen);
 
-            g.DrawImage(field,0,0,field.Width * 2, field.Height * 2);
+            g.DrawImage(field,0,0,field.Width, field.Height);
 
             var time = DateTime.Now - start;
             simulation.Draw(g, (float)time.TotalSeconds);

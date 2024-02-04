@@ -9,7 +9,7 @@ namespace Views;
 
 public abstract class Formation
 {
-    private Image shirt = Image.FromFile("Img/Shirt.png");
+    private Image shirt = Image.FromFile("Img/Shirts/Shirt.png");
     public List<(Position pos, PointF loc, Player player)> FieldList = new();
     SolidBrush grayBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
     public Player[] FieldTeam = new Player[11];
