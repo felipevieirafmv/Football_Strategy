@@ -5,6 +5,8 @@ using System.Linq;
 using System.Windows.Forms;
 
 namespace Views;
+
+using System.Security.Cryptography.X509Certificates;
 using Game;
 
 public class LineUp : Form
@@ -12,14 +14,12 @@ public class LineUp : Form
     Bitmap bmp = null;
     public Graphics g = null;
     PointF cursor = PointF.Empty;
-    PointF? grabStart = null;
     private List<(Position pos, PointF loc, Player player)> fieldPlayer = new();
 
 
     int scrollInfo = 0;
     bool isDown = false;
     bool isRight = false;
-    bool doubleClick = false;
 
     ChooseButton btMatch = null;
     ChooseButton btRand = null;
@@ -33,8 +33,8 @@ public class LineUp : Form
     public Image shirt = null;
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     List<(RectangleF? rect, Player player, bool selected)> list = new();
     public void AddPlayer(Player player)
     {
@@ -46,6 +46,7 @@ public class LineUp : Form
         };
         list.Add((null, player, false));
     }
+
 
      public void SetShirt()
     {
@@ -68,7 +69,7 @@ public class LineUp : Form
                 this.shirt = Bitmap.FromFile("./img//Shirts/Corinthians.png");
     
         else if (Game.Current.CrrTeam.Name == "Coritiba")
-                this.shirt = Bitmap.FromFile("./img/Shirts/Shirt.png");
+                this.shirt = Bitmap.FromFile("./img/Shirts/Coritiba.png");
 
         else if (Game.Current.CrrTeam.Name == "Cruzeiro")
             this.shirt = Bitmap.FromFile("./img/Shirts/Cruzeiro.png");
@@ -198,11 +199,6 @@ public class LineUp : Form
             cursor = e.Location;
         };
 
-        pb.DoubleClick += (o, e) =>
-        {
-            doubleClick = true;
-        };
-
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
         var cbTactics = GameTactics.TacticalTraining();
@@ -212,16 +208,25 @@ public class LineUp : Form
             {
                 this.formation = new Tactical433();
                 Game.Current.CrrTeam.Tactical = 0;
+                MessageBox.Show("433");
+                for (int i = scrollInfo; i < int.Min(list.Count, 20 + scrollInfo); i++)
+                    DrawPlayer(i);
+
             }
             if (cbTactics.SelectedIndex == 1)
             {
                 this.formation = new Tactical4222();
                 Game.Current.CrrTeam.Tactical = 1;
+                MessageBox.Show("4222");
+
             }
             if (cbTactics.SelectedIndex == 2)
             {
                 this.formation = new Tactical442();
                 Game.Current.CrrTeam.Tactical = 2;
+                MessageBox.Show("442");
+
+                MessageBox.Show(list.Count.ToString());
             }
         };
         var cbStyle = GameTactics.Style();
@@ -229,11 +234,10 @@ public class LineUp : Form
         {
             if(cbStyle.SelectedIndex == 0)
                 Game.Current.CrrTeam.Style = 0;
+
             if(cbStyle.SelectedIndex == 1)
-            {
                 Game.Current.CrrTeam.Style = 1;
-                MessageBox.Show("entrou");
-            }
+
             if(cbStyle.SelectedIndex == 2)
                 Game.Current.CrrTeam.Style = 2;
         };
@@ -348,7 +352,7 @@ public class LineUp : Form
             Player removed = null;
             formation.SetPlayer(null, cursor, ref removed, pb);
             if (removed is not null)
-                AddPlayer(player: removed);
+                AddPlayer(removed);
         }
 
         bool cursorIn = playerRect.Contains(cursor);
@@ -370,7 +374,7 @@ public class LineUp : Form
 
                 if (removed is not null)
                 {
-                    AddPlayer(player: removed);
+                    AddPlayer(removed);
                 }
                 return;
             }

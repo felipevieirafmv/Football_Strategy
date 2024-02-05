@@ -6,6 +6,4 @@ public class Match
     public Team TeamB { get; set; }
     public int GoalsA { get; set; }
     public int GoalsB { get; set; }
-
-    // public void 
 }

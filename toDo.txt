@@ -1,21 +1,36 @@
 Now: 
 
-- FInalizar Pixelart de Jogadores
 
-To Do:
+A Fazer:
 
-2. Concertar Erro ao mudar a escalação
-3. consertar vizualização da Escalação Aleatoria
-4. Reposicionar Botões
-5. Finalizar Formações
-6. Finalizar Responsabilidade
+- Consertar vizualização da Escalação Aleatoria
+- Fazer Tela de Tabela do Brasileriao e resultados da rodada 
+- Finalizar Formações
+- Reposicionar Botões
+- Finalizar Responsividade
+- Finalizar Pixelart de Players
+- reset Formação
+
+Trevisan:
+
+- Bola Parar ao errar passe
+- Movimentação do Jogador fluída
+= direção da Movimentação
+= Simulação Torneio
+= Implementar escolha de Jogadores final da partida
+= Concertar Erro ao mudar a escalação
 
 
 
 
 DEPOIS:
+
 -Simulação Tempo Real
+
 -Simulação Torneio
+
 -Tela do Torneio
+
 -Tela da Reseleção
+
 -Acabamento
