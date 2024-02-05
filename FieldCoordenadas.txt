@@ -1,0 +1,28 @@
+Superior Esquerdo -> 124 x 256  ---  Superior Direito -> 1795 x 256
+
+|								|
+|								|
+|								|
+|								|
+
+Inferior Esquedo -> 64 x 1023 ---  Inferior Direito -> 1855 x 1023
+
+
+Gol Esquedo Superior -> 102 x 578
+Gol Esquedo Inferior -> 92 x 700
+
+
+Gol Direito Superior -> 1817 x 578
+Gol Direito Inferior -> 1827 x 700
+
+
+Tamanho Total Superior do Campo -> 1670
+Tamanho Total Inferior do Campo -> 1790
+
+Altura do Campo -> 766
+
+Altura Meio do campo -> 383
+
+Ponto Meio Campo -> 628
+
+

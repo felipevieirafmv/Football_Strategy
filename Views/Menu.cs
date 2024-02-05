@@ -39,13 +39,13 @@ public class Menu : Form
 
             SizeF btnSize = new SizeF(pb.Width * 0.1198f, pb.Height * 0.078f);
 
-            ngBtn = new ChooseButton(g, pb.Width * 0.677f, pb.Height * 0.315f, btnSize.Width, btnSize.Height, "New Game");
+            ngBtn = new ChooseButton(g, pb.Width * 0.25f, pb.Height * 0.7f, btnSize.Width, btnSize.Height, "New Game");
             ngBtn.DrawChooseButton(g);
 
-            cntBtn = new ChooseButton(g, pb.Width * 0.677f, pb.Height * 0.46f, btnSize.Width, btnSize.Height, "Continue");
+            cntBtn = new ChooseButton(g, pb.Width * 0.45f, pb.Height * 0.7f, btnSize.Width, btnSize.Height, "Continue");
             cntBtn.DrawChooseButton(g);
 
-            exBtn = new ChooseButton(g, pb.Width * 0.677f, pb.Height * 0.592f, btnSize.Width, btnSize.Height, "Exit");
+            exBtn = new ChooseButton(g, pb.Width * 0.65f, pb.Height * 0.7f, btnSize.Width, btnSize.Height, "Exit");
             exBtn.DrawChooseButton(g);
 
             pb.Refresh();
