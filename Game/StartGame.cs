@@ -103,9 +103,6 @@ public class StartGame
     {
         foreach(Team t in teams)
         {
-            t.Tactical = 1;
-            t.Style = 1;
-            t.Attack = 1;
             t.Points = 0;
         }
     }
