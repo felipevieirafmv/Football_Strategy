@@ -16,6 +16,9 @@ public class Simulator
     private int currentTime = -1;
     private Dictionary<Player, PointF> playerMap = new();
     private Dictionary<Player, PointF> nextMap = new();
+    private Image homePlayer = Bitmap.FromFile("./img/Players/PlayerRight.png");
+    private Image awayPlayer = Bitmap.FromFile("./img/Players/PlayerLeftRed.png");
+
     private List<PointF> home433 = new();
     private List<PointF> away433 = new();
     private SizeF playerSize= new SizeF(20, 20);
@@ -65,7 +68,8 @@ public class Simulator
                 oldPosition.Y * (1 - frameTime) + newPosition.Y * frameTime
             );
 
-            g.FillRectangle(Brushes.DarkBlue, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
+            // g.FillRectangle(Brushes.Blue, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
+            Draws.DrawPlayer(homePlayer, new PointF(position.X - homePlayer.Width/2, position.Y - homePlayer.Height/2));
             Draws.DrawText(player.Name, Color.White, new RectangleF(position.X - playerSize.Width/2, position.Y - playerSize.Height/2, 100, 20));
         }
 
@@ -78,7 +82,8 @@ public class Simulator
                 oldPosition.Y * (1 - frameTime) + newPosition.Y * frameTime
             );
 
-            g.FillRectangle(Brushes.Red, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
+            // g.FillRectangle(Brushes.Red, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
+            Draws.DrawPlayer(awayPlayer, new PointF(position.X - homePlayer.Width/2, position.Y - homePlayer.Height/2));
             Draws.DrawText(player.Name, Color.White, new RectangleF(position.X - playerSize.Width/2, position.Y - playerSize.Height/2, 100, 20));
         }
 
@@ -185,13 +190,13 @@ public class Simulator
                         switch (styleHome)
                         {
                             case 0:
-                                nextPosition = new PointF(position.X + random.Next(1,100), position.Y);
+                                nextPosition = new PointF(position.X + random.Next(1,10), position.Y);
                                 break;
                             case 1:
                                 nextPosition = new PointF(position.X + random.Next(1,50), position.Y);
                                 break;
                             case 2:
-                                nextPosition = new PointF(position.X + random.Next(1,10), position.Y);
+                                nextPosition = new PointF(position.X + random.Next(1,100), position.Y);
                                 break;
                             default:
                                 break;
@@ -207,13 +212,13 @@ public class Simulator
                         switch (styleAway)
                         {
                             case 0:
-                                nextPosition = new PointF(position.X - random.Next(1,100), position.Y);
+                                nextPosition = new PointF(position.X - random.Next(1,10), position.Y);
                                 break;
                             case 1:
                                 nextPosition = new PointF(position.X - random.Next(1,50), position.Y);
                                 break;
                             case 2:
-                                nextPosition = new PointF(position.X - random.Next(1,10), position.Y);
+                                nextPosition = new PointF(position.X - random.Next(1,100), position.Y);
                                 break;
                             default:
                                 break;
@@ -227,28 +232,28 @@ public class Simulator
 
     private void fillTacticals()
     {
-        home433.Add(new PointF(150, 540)); //GK
-        home433.Add(new PointF(300, 400)); //DCL
-        home433.Add(new PointF(300, 680)); //DCR
-        home433.Add(new PointF(400, 200)); //LB
-        home433.Add(new PointF(400, 880)); //RB
-        home433.Add(new PointF(500, 540)); //MD
-        home433.Add(new PointF(600, 440)); //MCL
-        home433.Add(new PointF(600, 640)); //MCR
-        home433.Add(new PointF(800, 250)); //LW
-        home433.Add(new PointF(800, 830)); //RW
-        home433.Add(new PointF(900, 540)); //ST
+        home433.Add(new PointF(154, 628)); //GK
+        home433.Add(new PointF(284, 498)); //DCL
+        home433.Add(new PointF(264, 738)); //DCR
+        home433.Add(new PointF(344, 335)); //LB
+        home433.Add(new PointF(304, 902)); //RB
+        home433.Add(new PointF(500, 628)); //MD
+        home433.Add(new PointF(603, 528)); //MCL
+        home433.Add(new PointF(597, 728)); //MCR
+        home433.Add(new PointF(800, 335)); //LW
+        home433.Add(new PointF(800, 902)); //RW
+        home433.Add(new PointF(900, 628)); //ST
 
-        away433.Add(new PointF(1770, 540)); //GK
-        away433.Add(new PointF(1620, 680)); //DCL
-        away433.Add(new PointF(1620, 400)); //DCR
-        away433.Add(new PointF(1520, 880)); //LB
-        away433.Add(new PointF(1520, 200)); //RB
-        away433.Add(new PointF(1420, 540)); //MD
-        away433.Add(new PointF(1320, 640)); //MCL
-        away433.Add(new PointF(1320, 440)); //MCR
-        away433.Add(new PointF(1120, 830)); //LW
-        away433.Add(new PointF(1120, 250)); //RW
-        away433.Add(new PointF(1020, 540)); //ST
+        away433.Add(new PointF(1755, 628)); //GK
+        away433.Add(new PointF(1635, 498)); //DCL
+        away433.Add(new PointF(1655, 738)); //DCR
+        away433.Add(new PointF(1575, 335)); //LB
+        away433.Add(new PointF(1615, 902)); //RB
+        away433.Add(new PointF(1409, 628)); //MD
+        away433.Add(new PointF(1307, 528)); //MCL
+        away433.Add(new PointF(1312, 728)); //MCR
+        away433.Add(new PointF(1120, 335)); //LW
+        away433.Add(new PointF(1120, 902)); //RW
+        away433.Add(new PointF(1020, 628)); //ST
     }
 }
