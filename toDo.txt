@@ -4,12 +4,13 @@ Now:
 
 To Do:
 
-1. Corcertar Erro ao mandar escalação vazia
 2. Concertar Erro ao mudar a escalação
 3. consertar vizualização da Escalação Aleatoria
 4. Reposicionar Botões
 5. Finalizar Formações
 6. Finalizar Responsabilidade
+
+
 
 
 DEPOIS:

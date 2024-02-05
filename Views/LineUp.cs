@@ -68,49 +68,49 @@ public class LineUp : Form
                 this.shirt = Bitmap.FromFile("./img//Shirts/Corinthians.png");
     
         else if (Game.Current.CrrTeam.Name == "Coritiba")
-                this.shirt = Bitmap.FromFile("./img//Shirts/Shirt.png");
+                this.shirt = Bitmap.FromFile("./img/Shirts/Shirt.png");
 
         else if (Game.Current.CrrTeam.Name == "Cruzeiro")
-            this.shirt = Bitmap.FromFile("./img//Shirts/Cruzeiro.png");
+            this.shirt = Bitmap.FromFile("./img/Shirts/Cruzeiro.png");
 
         else if (Game.Current.CrrTeam.Name == "Cuiaba")
-            this.shirt = Bitmap.FromFile("./img//Shirts/Cuiaba.png");
+            this.shirt = Bitmap.FromFile("./img/Shirts/Cuiaba.png");
 
         else if (Game.Current.CrrTeam.Name == "Flamengo")
-            this.shirt = Bitmap.FromFile("./img//Shirts/Flamengo.png");
+            this.shirt = Bitmap.FromFile("./img/Shirts/Flamengo.png");
 
         else if (Game.Current.CrrTeam.Name == "Fluminense")
-            this.shirt = Bitmap.FromFile("./img//Shirts/Fluminense.png");
+            this.shirt = Bitmap.FromFile("./img/Shirts/Fluminense.png");
 
         else if (Game.Current.CrrTeam.Name == "Fortaleza")
-            this.shirt = Bitmap.FromFile("./img//Shirts/Fortaleza.png");
+            this.shirt = Bitmap.FromFile("./img/Shirts/Fortaleza.png");
 
         else if (Game.Current.CrrTeam.Name == "Goias")
             this.shirt = Bitmap.FromFile("./img//Shirts/Goias.png");
 
         else if (Game.Current.CrrTeam.Name == "Gremio")
-            this.shirt = Bitmap.FromFile("./img//Shirts/Gremio.png");
+            this.shirt = Bitmap.FromFile("./img/Shirts/Gremio.png");
 
         else if (Game.Current.CrrTeam.Name == "Internacional")
-            this.shirt = Bitmap.FromFile("./img//Shirts/Internacional.png");
+            this.shirt = Bitmap.FromFile("./img/Shirts/Internacional.png");
 
         else if (Game.Current.CrrTeam.Name == "Palmeiras")
-            this.shirt = Bitmap.FromFile("./img//Shirts/Palmeiras.png");
+            this.shirt = Bitmap.FromFile("./img/Shirts/Palmeiras.png");
 
         else if (Game.Current.CrrTeam.Name == "RBBragantino")
-            this.shirt = Bitmap.FromFile("./img//Shirts/RBBragantino.png");
+            this.shirt = Bitmap.FromFile("./img/Shirts/RBBragantino.png");
 
         else if (Game.Current.CrrTeam.Name == "Santos")
-            this.shirt = Bitmap.FromFile("./img//Shirts/Santos.png");
+            this.shirt = Bitmap.FromFile("./img/Shirts/Santos.png");
 
         else if (Game.Current.CrrTeam.Name == "SaoPaulo")
-            this.shirt = Bitmap.FromFile("./img//Shirts/SaoPaulo.png");
+            this.shirt = Bitmap.FromFile("./img/Shirts/SaoPaulo.png");
 
         else if (Game.Current.CrrTeam.Name == "Vasco")
-            this.shirt = Bitmap.FromFile("./img//Shirts/Vasco.png");
+            this.shirt = Bitmap.FromFile("./img/Shirts/Vasco.png");
 
         else
-            this.shirt = Bitmap.FromFile("./img//Shirts/Shirt.png");
+            this.shirt = Bitmap.FromFile("./img/Shirts/Shirt.png");
 
         this.shirt = this.shirt.GetThumbnailImage(pb.Width, pb.Height, null, nint.Zero);
     }
@@ -153,15 +153,19 @@ public class LineUp : Form
 
                 foreach(var p in fieldPlayer)
                 {
+                    if(p.player is null)
+                        continue;
+
                     Game.Current.TeamGame.Add(p.player);
                 }
 
-                // MessageBox.Show(Game.Current.TeamGame.Count.ToString());
+                MessageBox.Show(Game.Current.TeamGame.Count.ToString());
                 // Esta Adicionando 11 Jogadores mesmo que as posições estejam vazias
 
-                if (Game.Current.TeamGame.Count < 10)
+                if (Game.Current.TeamGame.Count < 11)
                 {
-                    MessageBox.Show("Inclomplete LineUp");
+                    MessageBox.Show("Incomplete LineUp");
+                    // MessageBox.Show(Game.Current.TeamGame.Count.ToString());
                     return;
                 }
 
