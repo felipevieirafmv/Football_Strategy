@@ -16,6 +16,9 @@ public class Simulator
     private int currentTime = -1;
     private Dictionary<Player, PointF> playerMap = new();
     private Dictionary<Player, PointF> nextMap = new();
+    private Image homePlayer = Bitmap.FromFile("./img/Players/PlayerRight.png");
+    private Image awayPlayer = Bitmap.FromFile("./img/Players/PlayerLeftRed.png");
+
     private List<PointF> home433 = new();
     private List<PointF> away433 = new();
     private SizeF playerSize= new SizeF(20, 20);
@@ -65,7 +68,8 @@ public class Simulator
                 oldPosition.Y * (1 - frameTime) + newPosition.Y * frameTime
             );
 
-            g.FillRectangle(Brushes.DarkBlue, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
+            // g.FillRectangle(Brushes.Blue, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
+            Draws.DrawPlayer(homePlayer, new PointF(position.X - homePlayer.Width/2, position.Y - homePlayer.Height/2));
             Draws.DrawText(player.Name, Color.White, new RectangleF(position.X - playerSize.Width/2, position.Y - playerSize.Height/2, 100, 20));
         }
 
@@ -78,7 +82,8 @@ public class Simulator
                 oldPosition.Y * (1 - frameTime) + newPosition.Y * frameTime
             );
 
-            g.FillRectangle(Brushes.Red, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
+            // g.FillRectangle(Brushes.Red, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
+            Draws.DrawPlayer(awayPlayer, new PointF(position.X - homePlayer.Width/2, position.Y - homePlayer.Height/2));
             Draws.DrawText(player.Name, Color.White, new RectangleF(position.X - playerSize.Width/2, position.Y - playerSize.Height/2, 100, 20));
         }
 
@@ -185,13 +190,13 @@ public class Simulator
                         switch (styleHome)
                         {
                             case 0:
-                                nextPosition = new PointF(position.X + random.Next(1,100), position.Y);
+                                nextPosition = new PointF(position.X + random.Next(0,0), position.Y);
                                 break;
                             case 1:
-                                nextPosition = new PointF(position.X + random.Next(1,50), position.Y);
+                                nextPosition = new PointF(position.X + random.Next(0,0), position.Y);
                                 break;
                             case 2:
-                                nextPosition = new PointF(position.X + random.Next(1,10), position.Y);
+                                nextPosition = new PointF(position.X + random.Next(0,0), position.Y);
                                 break;
                             default:
                                 break;
@@ -207,13 +212,13 @@ public class Simulator
                         switch (styleAway)
                         {
                             case 0:
-                                nextPosition = new PointF(position.X - random.Next(1,100), position.Y);
+                                nextPosition = new PointF(position.X - random.Next(0,0), position.Y);
                                 break;
                             case 1:
-                                nextPosition = new PointF(position.X - random.Next(1,50), position.Y);
+                                nextPosition = new PointF(position.X - random.Next(0,0), position.Y);
                                 break;
                             case 2:
-                                nextPosition = new PointF(position.X - random.Next(1,10), position.Y);
+                                nextPosition = new PointF(position.X - random.Next(0,0), position.Y);
                                 break;
                             default:
                                 break;

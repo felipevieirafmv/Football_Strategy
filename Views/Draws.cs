@@ -41,6 +41,9 @@ public static class Draws
         g.DrawString(text, SystemFonts.MenuFont, brush, location, format);
     }
 
+    public static void DrawPlayer(Image player, PointF location)
+        => g.DrawImage(player, new RectangleF(location.X, location.Y, 25, 42));
+
     /////////////////////////////////////////////////////////////////////////
     
 }
