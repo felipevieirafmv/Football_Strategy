@@ -1,12 +1,11 @@
 duvidas Trevis:
-comentarios da funcao draw
-consertar tamanho dos nomes
-Perspectiva de campo e possivel pelo tempo?
-como usar o gitignore
 organizaçao do codigo como esta
 esc nao funciona
+getThumbnailImage pra deslagar pq nao alterou nada
 
 
 correcoes:
 retornar a lista de jogadores após mudar a tatica;
 impedir de prosseguir sem completar a escalacao;
+consertar seleçao aleatoria
+form closed
