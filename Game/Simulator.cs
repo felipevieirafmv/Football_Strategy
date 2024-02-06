@@ -130,6 +130,12 @@ public class Simulator
             .FirstOrDefault(p => p.Key.Team == "ball");
         var ballPosition = ballInGame.Value;
         
+        if(new RectangleF(70, 500, 50, 122).Contains(ballInGame.Value.X, ballInGame.Value.Y))
+        {
+            resetPosition(true);
+            return;
+        }
+
         if(new RectangleF(1827, 500, 50, 122).Contains(ballInGame.Value.X, ballInGame.Value.Y))
         {
             resetPosition(false);
@@ -145,10 +151,22 @@ public class Simulator
             .Key;
 
         // MessageBox.Show(Math.Sqrt(((1817 - playerMap[playerWithBall].X) * (1817 - playerMap[playerWithBall].X)) + ((639 - playerMap[playerWithBall].Y) * (639 - playerMap[playerWithBall].Y))).ToString());
-        if(Math.Sqrt(((1817 - playerMap[playerWithBall].X) * (1817 - playerMap[playerWithBall].X)) + ((639 - playerMap[playerWithBall].Y) * (639 - playerMap[playerWithBall].Y))) < 300 && !kicked)
+        if(playerWithBall.Team == teamHome[0].Team)
         {
-            nextMap.Add(ballInGame.Key, new PointF(1835, random.Next(578, 700)));
-            kicked = true;
+            if(Math.Sqrt(((1817 - playerMap[playerWithBall].X) * (1817 - playerMap[playerWithBall].X)) + ((639 - playerMap[playerWithBall].Y) * (639 - playerMap[playerWithBall].Y))) < 300 && !kicked)
+            {
+                nextMap.Add(ballInGame.Key, new PointF(1835, random.Next(578, 700)));
+                kicked = true;
+            }
+        }
+
+        if(playerWithBall.Team == teamAway[0].Team)
+        {
+            if(Math.Sqrt(((102 - playerMap[playerWithBall].X) * (102 - playerMap[playerWithBall].X)) + ((639 - playerMap[playerWithBall].Y) * (639 - playerMap[playerWithBall].Y))) < 300 && !kicked)
+            {
+                nextMap.Add(ballInGame.Key, new PointF(95, random.Next(578, 700)));
+                kicked = true;
+            }
         }
         
         var otherPlayers = players
