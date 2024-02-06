@@ -12,7 +12,7 @@ public class Team
     public int Style { get; set; } = 0;
     public int Attack { get; set; } = 1;
     public int Marking { get; set; } = 1;
-    public int GD { get; set; }
+    public int GD { get; set; } //Goals Difference
     public List<Player> Squad = new List<Player>();
     public List<Player> FirstTeam = new List<Player>();
 
