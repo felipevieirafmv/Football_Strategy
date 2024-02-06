@@ -48,7 +48,7 @@ public class LineUp : Form
     }
 
 
-     public void SetShirt()
+    public void SetShirt()
     {
         if(Game.Current.CrrTeam.Name == "America")
             this.shirt = Bitmap.FromFile("./img//Shirts/America.png");
@@ -160,13 +160,9 @@ public class LineUp : Form
                     Game.Current.TeamGame.Add(p.player);
                 }
 
-                MessageBox.Show(Game.Current.TeamGame.Count.ToString());
-                // Esta Adicionando 11 Jogadores mesmo que as posições estejam vazias
-
                 if (Game.Current.TeamGame.Count < 11)
                 {
                     MessageBox.Show("Incomplete LineUp");
-                    // MessageBox.Show(Game.Current.TeamGame.Count.ToString());
                     return;
                 }
 
@@ -236,8 +232,10 @@ public class LineUp : Form
                 Game.Current.CrrTeam.Style = 0;
 
             if(cbStyle.SelectedIndex == 1)
+            {
                 Game.Current.CrrTeam.Style = 1;
-
+                MessageBox.Show("entrou");
+            }
             if(cbStyle.SelectedIndex == 2)
                 Game.Current.CrrTeam.Style = 2;
         };
@@ -279,6 +277,9 @@ public class LineUp : Form
         };
 
         Controls.Add(cbTactics);
+        Controls.Add(cbStyle);
+        Controls.Add(cbMarking);
+        Controls.Add(cbAttack);
         Controls.Add(GameTactics.Style());
         Controls.Add(GameTactics.MarkingType());
         Controls.Add(GameTactics.Attack());

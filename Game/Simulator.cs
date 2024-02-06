@@ -27,6 +27,7 @@ public class Simulator
     private List<Player> teamAway;
     int taticalHome, styleHome, attackHome, markHome;
     int taticalAway, styleAway, attackAway, markAway;
+    bool kicked = false;
     public Simulator(Team teamHome, Team teamAway)
     {
         this.teamHome = teamHome.FirstTeam;
@@ -42,7 +43,6 @@ public class Simulator
         this.attackAway = teamAway.Attack;
         this.markAway = teamAway.Marking;
 
-        MessageBox.Show(teamHome.Style.ToString());
         fillTacticals();
         resetPosition(true);
     }
@@ -94,6 +94,7 @@ public class Simulator
             oldPositionball.Y * (1 - frameTime) + newPositionball.Y * frameTime
         );
         g.FillEllipse(Brushes.FloralWhite, new RectangleF(positionball.X - 5, positionball.Y - 5, 10, 10));
+
     }
 
     private void resetPosition(bool homeStart)
@@ -103,9 +104,6 @@ public class Simulator
         {
             nextMap.Add(p, home433[i]);
             i++;
-
-            if (i == 11)
-                nextMap[ball] = home433[i - 1];
         }
 
         i = 0;
@@ -114,23 +112,62 @@ public class Simulator
             nextMap.Add(p, away433[i]);
             i++;
         }
+
+        if (homeStart)
+            nextMap[ball] = home433[10];
+        else
+            nextMap[ball] = away433[10];
+
+
+        kicked = false;
     }
 
     private void simulate()
     {
         Random random = new Random();
 
-        var ball = playerMap
+        var ballInGame = playerMap
             .FirstOrDefault(p => p.Key.Team == "ball");
-        var ballPosition = ball.Value;
+        var ballPosition = ballInGame.Value;
+        
+        if(new RectangleF(70, 500, 50, 122).Contains(ballInGame.Value.X, ballInGame.Value.Y))
+        {
+            resetPosition(true);
+            return;
+        }
+
+        if(new RectangleF(1827, 500, 50, 122).Contains(ballInGame.Value.X, ballInGame.Value.Y))
+        {
+            resetPosition(false);
+            return;
+        }
         
         var players = playerMap
-            .Where(p => p.Key != ball.Key);
+            .Where(p => p.Key != ballInGame.Key);
         
         var playerWithBall = players
             .OrderBy(p => (p.Value.X - ballPosition.X) * (p.Value.X - ballPosition.X) + (p.Value.Y - ballPosition.Y) * (p.Value.Y - ballPosition.Y))
             .FirstOrDefault()
             .Key;
+
+        // MessageBox.Show(Math.Sqrt(((1817 - playerMap[playerWithBall].X) * (1817 - playerMap[playerWithBall].X)) + ((639 - playerMap[playerWithBall].Y) * (639 - playerMap[playerWithBall].Y))).ToString());
+        if(playerWithBall.Team == teamHome[0].Team)
+        {
+            if(Math.Sqrt(((1817 - playerMap[playerWithBall].X) * (1817 - playerMap[playerWithBall].X)) + ((639 - playerMap[playerWithBall].Y) * (639 - playerMap[playerWithBall].Y))) < 300 && !kicked)
+            {
+                nextMap.Add(ballInGame.Key, new PointF(1835, random.Next(578, 700)));
+                kicked = true;
+            }
+        }
+
+        if(playerWithBall.Team == teamAway[0].Team)
+        {
+            if(Math.Sqrt(((102 - playerMap[playerWithBall].X) * (102 - playerMap[playerWithBall].X)) + ((639 - playerMap[playerWithBall].Y) * (639 - playerMap[playerWithBall].Y))) < 300 && !kicked)
+            {
+                nextMap.Add(ballInGame.Key, new PointF(95, random.Next(578, 700)));
+                kicked = true;
+            }
+        }
         
         var otherPlayers = players
             .Where(p => p.Key != playerWithBall);
@@ -166,12 +203,15 @@ public class Simulator
             .Where(p => p.Key != playerWithBall);
 
         nextMap.Add(playerChoosed.Key, playerChoosed.Value);
-        if(random.Next(1, 100) < playerChoosed.Key.PassingAbility)
-            nextMap.Add(ball.Key, playerChoosed.Value);
-        else
-            nextMap.Add(ball.Key, new PointF(playerChoosed.Value.X + random.Next(1,100), playerChoosed.Value.Y + random.Next(1,100)));
-            
 
+        if(!kicked)
+        {
+            if(random.Next(1, 100) < playerChoosed.Key.PassingAbility)
+                nextMap.Add(ballInGame.Key, playerChoosed.Value);
+            else
+                nextMap.Add(ballInGame.Key, new PointF(playerChoosed.Value.X + random.Next(1,100), playerChoosed.Value.Y + random.Next(1,100)));
+        }
+            
         foreach (var pair in otherPlayers)
         {
             var player = pair.Key;
@@ -190,13 +230,13 @@ public class Simulator
                         switch (styleHome)
                         {
                             case 0:
-                                nextPosition = new PointF(position.X + random.Next(1,10), position.Y);
+                                nextPosition = new PointF(position.X + random.Next(1,200), position.Y);
                                 break;
                             case 1:
-                                nextPosition = new PointF(position.X + random.Next(1,50), position.Y);
+                                nextPosition = new PointF(position.X + random.Next(1,35), position.Y);
                                 break;
                             case 2:
-                                nextPosition = new PointF(position.X + random.Next(1,100), position.Y);
+                                nextPosition = new PointF(position.X + random.Next(1,20), position.Y);
                                 break;
                             default:
                                 break;
@@ -212,13 +252,13 @@ public class Simulator
                         switch (styleAway)
                         {
                             case 0:
-                                nextPosition = new PointF(position.X - random.Next(1,10), position.Y);
+                                nextPosition = new PointF(position.X - random.Next(1,200), position.Y);
                                 break;
                             case 1:
-                                nextPosition = new PointF(position.X - random.Next(1,50), position.Y);
+                                nextPosition = new PointF(position.X - random.Next(1,35), position.Y);
                                 break;
                             case 2:
-                                nextPosition = new PointF(position.X - random.Next(1,100), position.Y);
+                                nextPosition = new PointF(position.X - random.Next(1,20), position.Y);
                                 break;
                             default:
                                 break;

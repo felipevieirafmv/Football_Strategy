@@ -7,4 +7,4 @@ using Game;
 
 ApplicationConfiguration.Initialize();
 
-Application.Run(new Standings());
+Application.Run(new Menu());
