@@ -17,8 +17,7 @@ public class Standings : Form
         Dock = DockStyle.Fill,
     };
 
-    List<(RectangleF? rect, Player player, bool selected)> list = new();
-
+    
 
         
 
@@ -51,16 +50,27 @@ public class Standings : Form
             pb.Image = bmp;
             tm.Start();
 
-            
+
             var pen = new Pen(Color.Black, 2);
             var i = 0;
+            var totalHeight = 50 * (Teams.GetAllTeams.Count + 1);
+            var startY = (Height - totalHeight) / 2;
+
+
+            g.FillRectangle(Brushes.White, 600, startY, 1200, totalHeight);
+            g.DrawRectangle(pen, 600, startY, 1200, totalHeight);
+            Draws.DrawText("Tems", Color.Black, new RectangleF(600, startY, 200, 50));
+            Draws.DrawText("Points", Color.Black, new RectangleF(1200, startY, 200, 50));
+            Draws.DrawText("Pontos", Color.Black, new RectangleF(1600, startY, 200, 50));
 
             foreach (var teams in Teams.GetAllTeams)
             {
                 i++;
-                Draws.Graphics.FillRectangle(Brushes.White, 600, 50 * i, 1200, 50);
-                Draws.Graphics.DrawRectangle(pen, 600, 50 * i, 1200, 50);
-                Draws.DrawText(teams.Name,Color.Black,new RectangleF(600, 50 * i, 1200, 50));
+                g.FillRectangle(Brushes.White, 600, startY + 50 * i, 1200, 50);
+                g.DrawRectangle(pen, 600, startY + 50 * i, 1200, 50);
+                Draws.DrawText(teams.Name, Color.Black, new RectangleF(600, startY + 50 * i, 200, 50));
+                Draws.DrawPoints(teams.Points.ToString(), Color.Black, new RectangleF(1200, startY + 50 * i, 200, 50));
+                Draws.DrawGDTeam(teams.GD.ToString(), Color.Black, new RectangleF(1600, startY + 50 * i, 200, 50));
             }
 
             pb.Refresh();
@@ -82,71 +92,27 @@ public class Standings : Form
 
     }
 
-    public void DrawTeams(int index)
-    {
-        var item = list[index: index];
-        var defaultRect = new RectangleF(pb.Width*0.677f, pb.Height*0.037f + (index - scrollInfo) * pb.Height*0.037f, pb.Width*0.234f, pb.Height*0.037f);
-        var playerRect = item.rect ?? defaultRect;
-        var player = item.player;
-        var selected = item.selected;
+    // public void DrawTeams(int index)
+    // {
+    //     var item = Teams.GetAllTeams[index: index];
+    //     var defaultRect = new RectangleF(pb.Width*0.677f, pb.Height*0.037f, pb.Width*0.234f, pb.Height*0.037f);
+    //     var playerRect = item.rect ?? defaultRect;
+    //     var player = item.player;
+    //     var selected = item.selected;
 
-        if (isDown && isRight)
-        {
-            Player removed = null;
-            formation.SetPlayer(null, cursor, ref removed, pb);
-            if (removed is not null)
-                AddPlayer(removed);
-        }
+    //     var pen = new Pen(Color.Black, 2);
+        
+    //     foreach (var position in list)
+    //     {
+    //         Draws.Graphics.FillRectangle(Brushes.White, playerRect);
+    //         Draws.Graphics.DrawRectangle(pen, playerRect);
+    //         Draws.DrawText(text: player.Name,Color.Black,playerRect);
+    //     }
 
-        bool cursorIn = playerRect.Contains(cursor);
 
-        if (cursorIn && isDown && list.All(x => !x.selected))
-            selected = true;
+    //     list[index] = (playerRect == defaultRect ? null : playerRect , player, selected);
+    //     if (!selected)
+    //         return;
 
-        if (!isDown)
-        {
-            if (selected)
-            {
-                Player removed = null;
-                if (formation.SetPlayer(player, cursor, ref removed, pb))
-                    list.RemoveAt(index);
-                else 
-                {
-                    list[index] = (null, player, false);
-                }
-
-                if (removed is not null)
-                {
-                    AddPlayer(removed);
-                }
-                return;
-            }
-            selected = false;
-        }
-
-        if(!cursorIn || !isDown && !selected)
-        {
-            if(!selected)
-            {
-                var pen = new Pen(Color.Black, 2);
-                
-                foreach (var position in list)
-                {
-                    Draws.Graphics.FillRectangle(Brushes.White, playerRect);
-                    Draws.Graphics.DrawRectangle(pen, playerRect);
-                    Draws.DrawText(text: player.Name,Color.Black,playerRect);
-                }
-            }
-        }
-
-        list[index] = (playerRect == defaultRect ? null : playerRect , player, selected);
-        if (!selected)
-            return;
-
-        Draws.DrawPlayerShirt(
-            new PointF(cursor.X - pb.Width*0.022f, cursor.Y - pb.Height*0.04f), pb, this.shirt);
-        Draws.DrawText(player.Name,Color.Black, 
-            new RectangleF(cursor.X - pb.Width*0.022f, cursor.Y + pb.Height*0.04f, pb.Width*0.044f, pb.Height*0.027f));
-
-    }
+    // }
 }
