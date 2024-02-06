@@ -15,6 +15,9 @@ public class Player
     public PointF Location { get; set; }
 
     public int PassingAbility { get; set; }
+    public int KickingAblity { get; set; }
+    public int GoalKeeperAbility { get; set; }
+    public int Disputa { get; set; }
 
     public Player(string team)
     {
@@ -26,5 +29,8 @@ public class Player
         this.OverAll = random.Next(40, 61);
 
         this.PassingAbility = random.Next(40, 61);
+        this.KickingAblity = random.Next(40, 61);
+        this.GoalKeeperAbility = random.Next(40, 61);
+        this.Disputa = random.Next(40, 61);
     }
 }

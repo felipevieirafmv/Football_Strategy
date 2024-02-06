@@ -12,15 +12,15 @@ public class Team
     public int Style { get; set; } = 0;
     public int Attack { get; set; } = 1;
     public int Marking { get; set; } = 1;
-    public int GD { get; set; } //Goals Difference
+    public int Diff { get; set; } //Goals Difference
     public List<Player> Squad = new List<Player>();
     public List<Player> FirstTeam = new List<Player>();
 
-    public Team(string name, int points, int gd)
+    public Team(string name, int points, int diff)
     {
         this.Name = name;
         this.Points = points;
-        this.GD = gd;
+        this.Diff = diff;
 
         for(int i = 0; i < 20; i++)
         {

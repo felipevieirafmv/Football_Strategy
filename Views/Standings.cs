@@ -70,7 +70,7 @@ public class Standings : Form
                 g.DrawRectangle(pen, 600, startY + 50 * i, 1200, 50);
                 Draws.DrawText(teams.Name, Color.Black, new RectangleF(600, startY + 50 * i, 200, 50));
                 Draws.DrawPoints(teams.Points.ToString(), Color.Black, new RectangleF(1200, startY + 50 * i, 200, 50));
-                Draws.DrawGDTeam(teams.GD.ToString(), Color.Black, new RectangleF(1600, startY + 50 * i, 200, 50));
+                Draws.DrawGDTeam(teams.Diff.ToString(), Color.Black, new RectangleF(1600, startY + 50 * i, 200, 50));
             }
 
             pb.Refresh();

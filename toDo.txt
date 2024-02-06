@@ -3,23 +3,28 @@ Now:
 
 A Fazer:
 
-- Consertar vizualização da Escalação Aleatoria
 - Fazer Tela de Tabela do Brasileriao e resultados da rodada 
-- Finalizar Formações
-- Reposicionar Botões
+- reset Formação
 - Finalizar Responsividade
 - Finalizar Pixelart de Players
-- reset Formação
+- Finalizar Formações
+- Ordenar Tabela
+- Consertar vizualização da Escalação Aleatoria
+- Resultados dos Jogas
+- Peso de Jogadores
 
 Trevisan:
 
-- Bola Parar ao errar passe
-- Movimentação do Jogador fluída
+= Placar e tempo de Jogo
+= Trocar de Tatica e nao perder os Jogadores
 = direção da Movimentação
-= Simulação Torneio
+= Simulação Torneio (Simular Confrontos e Resultados)
 = Implementar escolha de Jogadores final da partida
 = Concertar Erro ao mudar a escalação
-
+= Atributos Especias dos Jogadores
+- Concertar Botao Esc no Escalação
+- Bola Parar ao errar passe
+- Movimentação do Jogador fluída
 
 
 

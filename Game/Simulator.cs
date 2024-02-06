@@ -15,6 +15,7 @@ public class Simulator
 
     private int currentTime = -1;
     private Dictionary<Player, PointF> playerMap = new();
+    private Dictionary<Player, PointF> crrMap = new();
     private Dictionary<Player, PointF> nextMap = new();
     private Image homePlayer = Bitmap.FromFile("./img/Players/PlayerRight.png");
     private Image awayPlayer = Bitmap.FromFile("./img/Players/PlayerLeftRed.png");
@@ -32,7 +33,6 @@ public class Simulator
     {
         this.teamHome = teamHome.FirstTeam;
         this.teamAway = teamAway.FirstTeam;
-
 
         this.taticalHome = teamHome.Tactical;
         this.styleHome = teamHome.Style;
@@ -53,20 +53,25 @@ public class Simulator
         if (dt < 0)
         {
             playerMap = nextMap;
-            nextMap = new();
+            nextMap = new Dictionary<Player, PointF>();
             simulate();
             currentTime = (int)time;
         }
         float frameTime = time - currentTime;
 
+        crrMap.Clear();
         foreach (var player in teamHome)
         {
+            if (!nextMap.ContainsKey(player))
+                nextMap.Add(player, playerMap[player]);
+
             var oldPosition = playerMap[player];
             var newPosition = nextMap[player];
             var position = new PointF(
                 oldPosition.X * (1 - frameTime) + newPosition.X * frameTime,
                 oldPosition.Y * (1 - frameTime) + newPosition.Y * frameTime
             );
+            crrMap[player] = position;
 
             // g.FillRectangle(Brushes.Blue, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
             Draws.DrawPlayer(homePlayer, new PointF(position.X - homePlayer.Width/2, position.Y - homePlayer.Height/2));
@@ -75,6 +80,9 @@ public class Simulator
 
         foreach (var player in teamAway)
         {
+            if (!nextMap.ContainsKey(player))
+                nextMap.Add(player, playerMap[player]);
+            
             var oldPosition = playerMap[player];
             var newPosition = nextMap[player];
             var position = new PointF(
@@ -87,6 +95,11 @@ public class Simulator
             Draws.DrawText(player.Name, Color.White, new RectangleF(position.X - playerSize.Width/2, position.Y - playerSize.Height/2, 100, 20));
         }
 
+        if (!nextMap.ContainsKey(ball))
+            return;
+        if (!playerMap.ContainsKey(ball))
+            return;
+        
         var oldPositionball = playerMap[ball];
         var newPositionball = nextMap[ball];
         var positionball = new PointF(
@@ -113,32 +126,47 @@ public class Simulator
             i++;
         }
 
-        if (homeStart)
-            nextMap[ball] = home433[10];
-        else
-            nextMap[ball] = away433[10];
-
+        nextMap[ball] = 
+            homeStart ? 
+            home433[10] : 
+            away433[10];
 
         kicked = false;
     }
 
     private void simulate()
     {
-        Random random = new Random();
+        Random random = Random.Shared;
 
         var ballInGame = playerMap
             .FirstOrDefault(p => p.Key.Team == "ball");
         var ballPosition = ballInGame.Value;
+
+        int endField = 1827;
         
-        if(new RectangleF(70, 500, 50, 122).Contains(ballInGame.Value.X, ballInGame.Value.Y))
+        var homeGoal = new RectangleF(70, 500, 32, 122);
+        if(homeGoal.Contains(ballInGame.Value.X, ballInGame.Value.Y))
         {
             resetPosition(true);
             return;
         }
 
-        if(new RectangleF(1827, 500, 50, 122).Contains(ballInGame.Value.X, ballInGame.Value.Y))
+        var awayGoal = new RectangleF(endField, 500, 32, 122);
+        if(awayGoal.Contains(ballInGame.Value.X, ballInGame.Value.Y))
         {
             resetPosition(false);
+            return;
+        }
+
+        if (ballInGame.Value.X > endField)
+        {
+            resetPosition(false);
+            return;
+        }
+
+        if (ballInGame.Value.X < 102)
+        {
+            resetPosition(true);
             return;
         }
         
@@ -146,27 +174,48 @@ public class Simulator
             .Where(p => p.Key != ballInGame.Key);
         
         var playerWithBall = players
-            .OrderBy(p => (p.Value.X - ballPosition.X) * (p.Value.X - ballPosition.X) + (p.Value.Y - ballPosition.Y) * (p.Value.Y - ballPosition.Y))
+            .OrderBy(p => -p.Key.Disputa +
+                (p.Value.X - ballPosition.X) * (p.Value.X - ballPosition.X) + 
+                (p.Value.Y - ballPosition.Y) * (p.Value.Y - ballPosition.Y))
             .FirstOrDefault()
             .Key;
 
         // MessageBox.Show(Math.Sqrt(((1817 - playerMap[playerWithBall].X) * (1817 - playerMap[playerWithBall].X)) + ((639 - playerMap[playerWithBall].Y) * (639 - playerMap[playerWithBall].Y))).ToString());
-        if(playerWithBall.Team == teamHome[0].Team)
-        {
-            if(Math.Sqrt(((1817 - playerMap[playerWithBall].X) * (1817 - playerMap[playerWithBall].X)) + ((639 - playerMap[playerWithBall].Y) * (639 - playerMap[playerWithBall].Y))) < 300 && !kicked)
-            {
-                nextMap.Add(ballInGame.Key, new PointF(1835, random.Next(578, 700)));
-                kicked = true;
-            }
-        }
+        if(playerWithBall.Team == teamHome[0].Team && tryKick())
+            return;
 
         if(playerWithBall.Team == teamAway[0].Team)
         {
-            if(Math.Sqrt(((102 - playerMap[playerWithBall].X) * (102 - playerMap[playerWithBall].X)) + ((639 - playerMap[playerWithBall].Y) * (639 - playerMap[playerWithBall].Y))) < 300 && !kicked)
+            if(Math.Sqrt(((102 - playerMap[playerWithBall].X) * (102 - playerMap[playerWithBall].X)) + ((639 - playerMap[playerWithBall].Y) * (639 - playerMap[playerWithBall].Y))) < 300)
             {
                 nextMap.Add(ballInGame.Key, new PointF(95, random.Next(578, 700)));
-                kicked = true;
+                return;
             }
+        }
+
+        bool tryKick()
+        {
+            var dx = 1817 - playerMap[playerWithBall].X;
+            var dy = 639 - playerMap[playerWithBall].Y;
+            var dist = MathF.Sqrt(dx * dx + dy * dy);
+
+            if (dist > 500)
+                return false;
+            
+            if (dist < 500 && dist > 300 && random.NextSingle() < 0.8f)
+                return false;
+
+            int keeper = teamAway[0].GoalKeeperAbility;
+            int kicker = playerWithBall.KickingAblity;
+            int gap = (kicker - keeper) / 5 - (dist > 300 ? 3 : 2);
+            float goalChance = 1 / (1 + MathF.Exp(-gap));
+            var isGoal = goalChance > random.NextSingle();
+
+            if (isGoal)
+                nextMap.Add(key: ballInGame.Key, new PointF(endField + 12, random.Next(578, 700)));
+            else nextMap.Add(key: ballInGame.Key, new PointF(endField + 12, random.Next(800, 1000)));
+            kicked = true;
+            return isGoal;
         }
         
         var otherPlayers = players
@@ -197,8 +246,6 @@ public class Simulator
                 .FirstOrDefault();
         }
 
-        playerWithBall = playerChoosed.Key;
-
         otherPlayers = players
             .Where(p => p.Key != playerWithBall);
 
@@ -206,64 +253,65 @@ public class Simulator
 
         if(!kicked)
         {
-            if(random.Next(1, 100) < playerChoosed.Key.PassingAbility)
+            var ballDx = playerMap[key: ballInGame.Key].X - playerMap[playerWithBall].X;
+            var ballDy = playerMap[ballInGame.Key].Y - playerMap[playerWithBall].Y;
+            var dist = Math.Sqrt(ballDx * ballDx + ballDy * ballDy);
+
+            if (dist > 50)
+            {
+                nextMap[playerWithBall] = ballInGame.Value;
+                nextMap[ballInGame.Key] = ballInGame.Value;
+            }
+            else if (random.Next(1, 100) < playerWithBall.PassingAbility)
                 nextMap.Add(ballInGame.Key, playerChoosed.Value);
             else
-                nextMap.Add(ballInGame.Key, new PointF(playerChoosed.Value.X + random.Next(1,100), playerChoosed.Value.Y + random.Next(1,100)));
+                nextMap.Add(ballInGame.Key, new PointF(
+                    playerChoosed.Value.X + random.Next(-100,100), 
+                    playerChoosed.Value.Y + random.Next(-100,100)
+                    ));
         }
             
         foreach (var pair in otherPlayers)
         {
+            if (nextMap.ContainsKey(pair.Key))
+                continue;
+            
             var player = pair.Key;
             var position = pair.Value;
+            bool isHome = teamHome[0].Team == pair.Key.Team;
 
-            // Aqui
+            var ballDx = playerMap[key: ballInGame.Key].X - playerMap[player].X;
+            var ballDy = playerMap[ballInGame.Key].Y - playerMap[key: player].Y;
+            var dist = Math.Sqrt(ballDx * ballDx + ballDy * ballDy);
 
-            var nextPosition = new PointF();
-
-            if(pair.Key.Team == teamHome[0].Team)
+            if (dist < 100)
             {
-                if(pair.Value == home433[0])
-                    nextPosition = new PointF(position.X, position.Y);
-                else
-                    {
-                        switch (styleHome)
-                        {
-                            case 0:
-                                nextPosition = new PointF(position.X + random.Next(1,200), position.Y);
-                                break;
-                            case 1:
-                                nextPosition = new PointF(position.X + random.Next(1,35), position.Y);
-                                break;
-                            case 2:
-                                nextPosition = new PointF(position.X + random.Next(1,20), position.Y);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
+                nextMap[player] = ballInGame.Value;
+                continue;
+            }
+
+
+            int index = teamHome.FindIndex(p => p == player);
+            if (index == -1) 
+                index = teamAway.FindIndex(match: p => p == player);
+            
+            var nextPosition = new PointF();
+            var style = isHome ? styleHome : styleAway;
+            int ep = isHome ? 100 + 1700 * (index + 2 - style) / 11 : 1800 - 1700 * (index + 2 - style) / 11;
+            float error = ep - position.X;
+            float dx = (random.NextSingle() - 0.1f) * error / 10;
+
+            if(isHome)
+            {
+                if(pair.Key == teamHome[0])
+                    nextPosition = new PointF(position.X, position.Y + random.Next(minValue: -15,16));
+                else nextPosition = new PointF(position.X + dx, position.Y + random.Next(minValue: -15,16));
             }
             else
             {
-                if(pair.Value == away433[0])
-                    nextPosition = new PointF(position.X, position.Y);
-                else
-                {
-                        switch (styleAway)
-                        {
-                            case 0:
-                                nextPosition = new PointF(position.X - random.Next(1,200), position.Y);
-                                break;
-                            case 1:
-                                nextPosition = new PointF(position.X - random.Next(1,35), position.Y);
-                                break;
-                            case 2:
-                                nextPosition = new PointF(position.X - random.Next(1,20), position.Y);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
+                if(pair.Key == teamAway[0])
+                    nextPosition = new PointF(position.X, position.Y + random.Next(minValue: -15,16));
+                else nextPosition = new PointF(position.X + dx, position.Y + random.Next(minValue: -15,16));
             }
 
             nextMap.Add(player, nextPosition);
