@@ -14,9 +14,6 @@ public abstract class Formation
     SolidBrush grayBrush = new SolidBrush(Color.FromArgb(100, 0, 0, 0));
     public Player[] FieldTeam = new Player[11];
 
-    public float y { get; set; } = 40;
-
-
     public void AddEmptyPosition(Position pos, PointF loc)
         => FieldList.Add((pos, loc, null));
 

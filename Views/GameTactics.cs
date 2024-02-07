@@ -10,9 +10,9 @@ public static class GameTactics{
     {
         ComboBox tacticalTraining = new ComboBox
         {
-            Location = new Point(1350, 870),
-            Width = 150,
-            Height = 80,
+            Location = new Point((int)(Screen.PrimaryScreen.Bounds.Width*0.703f), (int)(Screen.PrimaryScreen.Bounds.Height*0.805f)),
+            Width = (int)(Screen.PrimaryScreen.Bounds.Width*0.078f),
+            Height = (int)(Screen.PrimaryScreen.Bounds.Height*0.074f),
             DropDownStyle = ComboBoxStyle.DropDownList
         };
         tacticalTraining.Items.Add("4-3-3");
@@ -28,9 +28,9 @@ public static class GameTactics{
     {
         ComboBox style = new ComboBox
         {
-            Location = new Point(1550, 870),
-            Width = 150,
-            Height = 80,
+            Location = new Point((int)(Screen.PrimaryScreen.Bounds.Width*0.807f), (int)(Screen.PrimaryScreen.Bounds.Height*0.805f)),
+            Width = (int)(Screen.PrimaryScreen.Bounds.Width*0.078f),
+            Height = (int)(Screen.PrimaryScreen.Bounds.Height*0.074f),
             DropDownStyle = ComboBoxStyle.DropDownList
         };
         style.Items.Add("Attack");
@@ -44,9 +44,9 @@ public static class GameTactics{
     {
         ComboBox markingType = new ComboBox
         {
-            Location = new Point(1350, 920),
-            Width = 150,
-            Height = 100,
+            Location = new Point((int)(Screen.PrimaryScreen.Bounds.Width*0.703f), (int)(Screen.PrimaryScreen.Bounds.Height*0.851f)),
+            Width = (int)(Screen.PrimaryScreen.Bounds.Width*0.078f),
+            Height = (int)(Screen.PrimaryScreen.Bounds.Height*0.074f),
             DropDownStyle = ComboBoxStyle.DropDownList
         };
         markingType.Items.Add("Light");
@@ -60,9 +60,9 @@ public static class GameTactics{
     {
         ComboBox attack = new ComboBox
         {
-            Location = new Point(1550, 920),
-            Width = 150,
-            Height = 80,
+            Location = new Point((int)(Screen.PrimaryScreen.Bounds.Width*0.807f), (int)(Screen.PrimaryScreen.Bounds.Height*0.851f)),
+            Width = (int)(Screen.PrimaryScreen.Bounds.Width*0.078f),
+            Height = (int)(Screen.PrimaryScreen.Bounds.Height*0.074f),
             DropDownStyle = ComboBoxStyle.DropDownList
         };
         attack.Items.Add("Mixed");

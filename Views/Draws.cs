@@ -71,7 +71,7 @@ public static class Draws
     }
 
     public static void DrawPlayer(Image player, PointF location)
-        => g.DrawImage(player, new RectangleF(location.X, location.Y, 25, 42));
+        => g.DrawImage(player, new RectangleF(location.X, location.Y, Screen.PrimaryScreen.Bounds.Width*0.013f, Screen.PrimaryScreen.Bounds.Height*0.038f));
 
 
     public static void DrawPlayerName(string text, Color color, PointF location)

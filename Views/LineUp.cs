@@ -363,6 +363,7 @@ public class LineUp : Form
             Draws.DrawPlayerStats( "DC", new PointF( Screen.PrimaryScreen.Bounds.Width * 0.813f, Screen.PrimaryScreen.Bounds.Height * 0.023f));
             Draws.DrawPlayerStats( "MC", new PointF( Screen.PrimaryScreen.Bounds.Width * 0.833f, Screen.PrimaryScreen.Bounds.Height * 0.023f));
             Draws.DrawPlayerStats( "ST", new PointF( Screen.PrimaryScreen.Bounds.Width * 0.853f, Screen.PrimaryScreen.Bounds.Height * 0.023f));
+            Draws.DrawPlayerStats( "Over", new PointF( Screen.PrimaryScreen.Bounds.Width * 0.873f, Screen.PrimaryScreen.Bounds.Height * 0.023f));
 
             pb.Refresh();
         };
@@ -429,6 +430,7 @@ public class LineUp : Form
                     Draws.DrawText(player.IntercepionsAbility.ToString(),Color.Black,new RectangleF( playerRect.X + Screen.PrimaryScreen.Bounds.Width * 0.02f , playerRect.Y , playerRect.Width, playerRect.Height));
                     Draws.DrawText(player.PassingAbility.ToString(),Color.Black,new RectangleF( playerRect.X + Screen.PrimaryScreen.Bounds.Width * 0.04f, playerRect.Y , playerRect.Width, playerRect.Height));
                     Draws.DrawText(player.KickingAblity.ToString(),Color.Black,new RectangleF( playerRect.X + Screen.PrimaryScreen.Bounds.Width * 0.06f, playerRect.Y , playerRect.Width, playerRect.Height));
+                    Draws.DrawText(player.OverAll.ToString(),Color.Black,new RectangleF( playerRect.X + Screen.PrimaryScreen.Bounds.Width * 0.08f, playerRect.Y , playerRect.Width, playerRect.Height));
                 }
             }
         }
