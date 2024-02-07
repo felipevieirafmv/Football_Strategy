@@ -18,13 +18,17 @@ public class Team
 
     public Team(string name, int points, int diff)
     {
+        Random random = new Random();
+
+        int overall = random.Next(80, 121);
+
         this.Name = name;
         this.Points = points;
         this.Diff = diff;
 
         for(int i = 0; i < 20; i++)
         {
-            Squad.Add(new Player(this.Name));
+            Squad.Add(new Player(this.Name, overall));
         }
 
         for(int i = 0; i < 11; i++)
@@ -32,16 +36,7 @@ public class Team
             FirstTeam.Add(Squad[i]);
         }
 
-        Random random = new Random();
 
         // this.Style = random.Next(0, 3);
     }
-
-    // public void getTeamPlayer()
-    // {
-    //     for(int i = 0; i < 20; i++)
-    //     {
-    //         this.TeamPlayers.Add(new Player(this.Name));
-    //     }
-    // }
 }

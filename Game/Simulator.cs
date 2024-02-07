@@ -23,7 +23,7 @@ public class Simulator
     private List<PointF> home433 = new();
     private List<PointF> away433 = new();
     private SizeF playerSize= new SizeF(20, 20);
-    private Player ball = new Player("ball");
+    private Player ball = new Player("ball", 0);
     public List<Player> TeamHome;
     public List<Player> TeamAway;
     int taticalHome, styleHome, attackHome, markHome;
@@ -142,8 +142,10 @@ public class Simulator
             .FirstOrDefault(p => p.Key.Team == "ball");
         var ballPosition = ballInGame.Value;
 
-        int startField = 92;
-        int endField = 1827;
+        int startX = 92;
+        int endX = 1827;
+        int startY = 256;
+        int endY = 1023;
         
         var homeGoal = new RectangleF(70, 500, 32, 122);
         if(homeGoal.Contains(ballInGame.Value.X, ballInGame.Value.Y))
@@ -152,14 +154,14 @@ public class Simulator
             return;
         }
 
-        var awayGoal = new RectangleF(endField, 500, 32, 122);
+        var awayGoal = new RectangleF(endX, 500, 32, 122);
         if(awayGoal.Contains(ballInGame.Value.X, ballInGame.Value.Y))
         {
             resetPosition(false);
             return;
         }
 
-        if (ballInGame.Value.X > endField)
+        if (ballInGame.Value.X > endX)
         {
             resetPosition(false);
             return;
@@ -181,7 +183,6 @@ public class Simulator
             .FirstOrDefault()
             .Key;
 
-        // MessageBox.Show(Math.Sqrt(((1817 - playerMap[playerWithBall].X) * (1817 - playerMap[playerWithBall].X)) + ((639 - playerMap[playerWithBall].Y) * (639 - playerMap[playerWithBall].Y))).ToString());
         if(playerWithBall.Team == TeamHome[0].Team && tryKick(true))
             return;
 
@@ -190,7 +191,7 @@ public class Simulator
 
         bool tryKick(bool home)
         {
-            int xGoal = home ? endField : startField;
+            int xGoal = home ? endX : startX;
 
             var dx = xGoal - playerMap[playerWithBall].X;
             var dy = 639 - playerMap[playerWithBall].Y;
@@ -208,7 +209,7 @@ public class Simulator
             float goalChance = 1 / (1 + MathF.Exp(-gap));
             var isGoal = goalChance > random.NextSingle();
 
-            int missedGoal = random.NextSingle() > 0.5 ? random.Next(256, 500) : random.Next(760, 1023);
+            int missedGoal = random.NextSingle() > 0.5 ? random.Next(startY, 500) : random.Next(760, endY);
 
             if (isGoal)
             {
@@ -255,9 +256,21 @@ public class Simulator
 
         if(!kicked)
         {
-            var ballDx = playerMap[key: ballInGame.Key].X - playerMap[playerWithBall].X;
+            var ballDx = playerMap[ballInGame.Key].X - playerMap[playerWithBall].X;
             var ballDy = playerMap[ballInGame.Key].Y - playerMap[playerWithBall].Y;
             var dist = Math.Sqrt(ballDx * ballDx + ballDy * ballDy);
+
+            float randX = playerChoosed.Value.X + random.Next(-100,100);
+            if(randX > endX)
+                randX = endX;
+            if(randX < startX)
+                randX = startX;
+
+            float randY = playerChoosed.Value.Y + random.Next(-100,100);
+            if(randY > endY)
+                randY = endY;
+            if(randY < startY)
+                randY = startY;
 
             if (dist > 20)
             {
@@ -267,10 +280,7 @@ public class Simulator
             else if (random.Next(1, 100) < playerWithBall.PassingAbility)
                 nextMap.Add(ballInGame.Key, playerChoosed.Value);
             else
-                nextMap.Add(ballInGame.Key, new PointF(
-                    playerChoosed.Value.X + random.Next(-100,100), 
-                    playerChoosed.Value.Y + random.Next(-100,100)
-                    ));
+                nextMap.Add(ballInGame.Key, new PointF(randX, randY));
         }
             
         foreach (var pair in otherPlayers)

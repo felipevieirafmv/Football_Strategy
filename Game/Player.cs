@@ -19,18 +19,59 @@ public class Player
     public int GoalKeeperAbility { get; set; }
     public int Intercepions { get; set; }
 
-    public Player(string team)
+    public Player(string team, int overAll)
     {
-        Random random = Random.Shared;
+        Random random = new Random();
         string[] firstName = File.ReadAllLines("./Game/firstName.txt");
         string[] lastName = File.ReadAllLines("./Game/lastName.txt");
         this.Name = firstName[random.Next(firstName.Length)] + " " + lastName[random.Next(lastName.Length)];
         this.Team = team;
-        this.OverAll = random.Next(40, 61);
+        this.OverAll = overAll;
 
-        this.PassingAbility = random.Next(40, 61);
-        this.KickingAblity = random.Next(40, 61);
-        this.GoalKeeperAbility = random.Next(40, 61);
-        this.Intercepions = random.Next(40, 61);
+        switch (random.Next(0, 7))
+        {
+            case 0:
+                this.Intercepions = random.Next((overAll-20)/2, overAll/2);
+                this.PassingAbility = random.Next((overAll-20)/6, overAll/6);
+                this.GoalKeeperAbility = random.Next((overAll-20)/6, overAll/6);
+                this.KickingAblity = overAll - GoalKeeperAbility - Intercepions - PassingAbility;
+                break;
+            case 1:
+                this.Intercepions = random.Next((overAll-20)/2, overAll/2);
+                this.PassingAbility = random.Next((overAll-20)/6, overAll/6);
+                this.GoalKeeperAbility = random.Next((overAll-20)/6, overAll/6);
+                this.KickingAblity = overAll - GoalKeeperAbility - Intercepions - PassingAbility;
+                break;
+            case 2:
+                this.PassingAbility = random.Next((overAll-20)/2, overAll/2);
+                this.KickingAblity = random.Next((overAll-20)/6, overAll/6);
+                this.Intercepions = random.Next((overAll-20)/6, overAll/6);
+                this.GoalKeeperAbility = overAll - KickingAblity - Intercepions - PassingAbility;
+                break;
+            case 3:
+                this.PassingAbility = random.Next((overAll-20)/2, overAll/2);
+                this.KickingAblity = random.Next((overAll-20)/6, overAll/6);
+                this.Intercepions = random.Next((overAll-20)/6, overAll/6);
+                this.GoalKeeperAbility = overAll - KickingAblity - Intercepions - PassingAbility;
+                break;
+            case 4:
+                this.KickingAblity = random.Next((overAll-20)/2, overAll/2);
+                this.PassingAbility = random.Next((overAll-20)/6, overAll/6);
+                this.Intercepions = random.Next((overAll-20)/6, overAll/6);
+                this.GoalKeeperAbility = overAll - KickingAblity - Intercepions - PassingAbility;
+                break;
+            case 5:
+                this.KickingAblity = random.Next((overAll-20)/2, overAll/2);
+                this.PassingAbility = random.Next((overAll-20)/6, overAll/6);
+                this.Intercepions = random.Next((overAll-20)/6, overAll/6);
+                this.GoalKeeperAbility = overAll - KickingAblity - Intercepions - PassingAbility;
+                break;
+            default:
+                this.GoalKeeperAbility = random.Next((overAll-20)/2, overAll/2);
+                this.Intercepions = random.Next((overAll-20)/6, overAll/6);
+                this.PassingAbility = random.Next((overAll-20)/6, overAll/6);
+                this.KickingAblity = overAll - GoalKeeperAbility - Intercepions - PassingAbility;
+            break;
+        }
     }
 }

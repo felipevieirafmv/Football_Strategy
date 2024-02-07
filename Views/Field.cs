@@ -62,7 +62,11 @@ public class Field : Form
 
             g.DrawImage(field,0,0,field.Width, field.Height);
 
-            g.DrawString($"{simulation.TeamHome[0].Team} {simulation.ScoreHome} X {simulation.ScoreAway} {simulation.TeamAway[0].Team}", SystemFonts.MenuFont, Brushes.Black, new RectangleF(832, 136, 255, 46));
+            g.DrawString($"{simulation.TeamHome[0].Team} {simulation.ScoreHome} X {simulation.ScoreAway} {simulation.TeamAway[0].Team}",
+                SystemFonts.MenuFont,
+                Brushes.Black,
+                new RectangleF(Screen.PrimaryScreen.Bounds.Width*0.433f, Screen.PrimaryScreen.Bounds.Height*0.125f, 255, 46)
+            );
 
             var time = DateTime.Now - start;
             simulation.Draw(g, (float)time.TotalSeconds);

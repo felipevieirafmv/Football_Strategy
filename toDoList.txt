@@ -1,5 +1,4 @@
 -Ver dados do jogador. Murilo - 3:00h/4:00h
--Mudar geração dos dados do jogador. Felipe - ?
 -Gerar Rodada. (placar aleatorio por partida + remover times da lista) Juntos - Quarta
 -Responsividade. Felipe - quinta
 -Finalizar detalhes da partida. (tempo, tamanho) - quinta
