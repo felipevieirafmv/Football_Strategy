@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
+
 namespace Views;
 
 using System.Security.Cryptography.X509Certificates;
@@ -294,6 +295,19 @@ public class LineUp : Form
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
+        KeyDown += (o, e) =>
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    Application.Exit();
+                    break;
+
+            }
+        };
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        
         this.Load += delegate
         {
             bmp = new Bitmap(
@@ -314,11 +328,23 @@ public class LineUp : Form
         {
             Application.Exit();
         };
+        KeyDown += (o, e) =>
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    Application.Exit();
+                    break;
+
+            }
+        };
 
         tm.Tick += delegate
         {
+
             g.Clear(Color.DarkGreen);
 
+            
             Draws.Menu(pb);
             Draws.MenuBorder(pb);
             Draws.DrawField(Bitmap.FromFile("./img/Fields/fieldLineUp.png"), pb);
@@ -332,6 +358,11 @@ public class LineUp : Form
                 
             btMatch.DrawChooseButton(g);
             btRand.DrawChooseButton(g);
+            Draws.DrawPlayerStats( "Name", new PointF( Screen.PrimaryScreen.Bounds.Width * 0.713f, Screen.PrimaryScreen.Bounds.Height * 0.023f));
+            Draws.DrawPlayerStats( "GK", new PointF( Screen.PrimaryScreen.Bounds.Width * 0.793f, Screen.PrimaryScreen.Bounds.Height * 0.023f));
+            Draws.DrawPlayerStats( "DC", new PointF( Screen.PrimaryScreen.Bounds.Width * 0.813f, Screen.PrimaryScreen.Bounds.Height * 0.023f));
+            Draws.DrawPlayerStats( "MC", new PointF( Screen.PrimaryScreen.Bounds.Width * 0.833f, Screen.PrimaryScreen.Bounds.Height * 0.023f));
+            Draws.DrawPlayerStats( "ST", new PointF( Screen.PrimaryScreen.Bounds.Width * 0.853f, Screen.PrimaryScreen.Bounds.Height * 0.023f));
 
             pb.Refresh();
         };
@@ -347,6 +378,7 @@ public class LineUp : Form
         var playerRect = item.rect ?? defaultRect;
         var player = item.player;
         var selected = item.selected;
+
 
         if (isDown && isRight)
         {
@@ -392,7 +424,11 @@ public class LineUp : Form
                 {
                     Draws.Graphics.FillRectangle(Brushes.White, playerRect);
                     Draws.Graphics.DrawRectangle(pen, playerRect);
-                    Draws.DrawText(text: player.Name,Color.Black,playerRect);
+                    Draws.DrawText(player.Name,Color.Black,new RectangleF( playerRect.X - playerRect.Width / 3, playerRect.Y , playerRect.Width, playerRect.Height));
+                    Draws.DrawText(player.GoalKeeperAbility.ToString(),Color.Black,new RectangleF( playerRect.X + Screen.PrimaryScreen.Bounds.Width * 0.0f, playerRect.Y , playerRect.Width, playerRect.Height));
+                    Draws.DrawText(player.IntercepionsAbility.ToString(),Color.Black,new RectangleF( playerRect.X + Screen.PrimaryScreen.Bounds.Width * 0.02f , playerRect.Y , playerRect.Width, playerRect.Height));
+                    Draws.DrawText(player.PassingAbility.ToString(),Color.Black,new RectangleF( playerRect.X + Screen.PrimaryScreen.Bounds.Width * 0.04f, playerRect.Y , playerRect.Width, playerRect.Height));
+                    Draws.DrawText(player.KickingAblity.ToString(),Color.Black,new RectangleF( playerRect.X + Screen.PrimaryScreen.Bounds.Width * 0.06f, playerRect.Y , playerRect.Width, playerRect.Height));
                 }
             }
         }

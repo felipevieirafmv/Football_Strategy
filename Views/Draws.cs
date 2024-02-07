@@ -25,6 +25,14 @@ public static class Draws
         g.FillRectangle(yellowLight, pb.Width*0.677f, pb.Height*0.037f, pb.Width*0.234f, pb.Height*0.74f);
         g.DrawRectangle(Pens.Black, pb.Width*0.677f, pb.Height*0.037f, pb.Width*0.234f, pb.Height*0.74f);
     }
+
+    public static void DrawPlayerStats( string text, PointF position)
+    {
+        var format = new StringFormat();
+        format.Alignment = StringAlignment.Center;
+        format.LineAlignment = StringAlignment.Center;
+        g.DrawString(text, SystemFonts.MenuFont, Brushes.White, position.X, position.Y, format);
+    }
     
     public static void DrawPlayerShirt(PointF location, PictureBox pb, Image shirt)
         => g.DrawImage(shirt, new RectangleF(location.X, location.Y , pb.Width*0.044f, pb.Height*0.081f));
@@ -64,6 +72,20 @@ public static class Draws
 
     public static void DrawPlayer(Image player, PointF location)
         => g.DrawImage(player, new RectangleF(location.X, location.Y, 25, 42));
+
+
+    public static void DrawPlayerName(string text, Color color, PointF location)
+    {
+        var format = new StringFormat();
+        format.Alignment = StringAlignment.Center;
+        format.LineAlignment = StringAlignment.Center;
+ 
+        var brush = new SolidBrush(color);
+ 
+        g.DrawString(text, SystemFonts.MenuFont, brush, new RectangleF(location.X, location.Y, 450, 40), format);
+    }
+
+
 
     /////////////////////////////////////////////////////////////////////////
     

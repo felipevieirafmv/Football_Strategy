@@ -175,7 +175,7 @@ public class Simulator
             .Where(p => p.Key != ballInGame.Key);
         
         var playerWithBall = players
-            .OrderBy(p => -p.Key.Intercepions +
+            .OrderBy(p => -p.Key.IntercepionsAbility +
                 (p.Value.X - ballPosition.X) * (p.Value.X - ballPosition.X) + 
                 (p.Value.Y - ballPosition.Y) * (p.Value.Y - ballPosition.Y))
             .FirstOrDefault()

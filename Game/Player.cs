@@ -17,7 +17,7 @@ public class Player
     public int PassingAbility { get; set; }
     public int KickingAblity { get; set; }
     public int GoalKeeperAbility { get; set; }
-    public int Intercepions { get; set; }
+    public int IntercepionsAbility { get; set; }
 
     public Player(string team)
     {
@@ -31,6 +31,6 @@ public class Player
         this.PassingAbility = random.Next(40, 61);
         this.KickingAblity = random.Next(40, 61);
         this.GoalKeeperAbility = random.Next(40, 61);
-        this.Intercepions = random.Next(40, 61);
+        this.IntercepionsAbility = random.Next(40, 61);
     }
 }
