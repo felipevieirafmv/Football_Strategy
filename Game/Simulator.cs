@@ -22,7 +22,7 @@ public class Simulator
 
     private List<PointF> home433 = new();
     private List<PointF> away433 = new();
-    private SizeF playerSize= new SizeF(20, 20);
+    private SizeF playerSize= new SizeF(Screen.PrimaryScreen.Bounds.Height*0.018f, Screen.PrimaryScreen.Bounds.Height*0.018f);
     private Player ball = new Player("ball", 0);
     public List<Player> TeamHome;
     public List<Player> TeamAway;
@@ -75,7 +75,11 @@ public class Simulator
 
             // g.FillRectangle(Brushes.Blue, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
             Draws.DrawPlayer(homePlayer, new PointF(position.X - homePlayer.Width/2, position.Y - homePlayer.Height/2));
-            Draws.DrawText(player.Name, Color.White, new RectangleF(position.X - playerSize.Width/2, position.Y - playerSize.Height/2, 100, 20));
+            Draws.DrawText(
+                player.Name,
+                Color.White,
+                new RectangleF(position.X - playerSize.Width/2, position.Y - playerSize.Height/2, Screen.PrimaryScreen.Bounds.Width*0.052f, Screen.PrimaryScreen.Bounds.Height*0.019f)
+            );
         }
 
         foreach (var player in TeamAway)
@@ -272,7 +276,7 @@ public class Simulator
             if(randY < startY)
                 randY = startY;
 
-            if (dist > 20)
+            if (dist > 10)
             {
                 nextMap[playerWithBall] = ballInGame.Value;
                 nextMap[ballInGame.Key] = ballInGame.Value;

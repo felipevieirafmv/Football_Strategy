@@ -36,6 +36,7 @@ public class NewGame : Form
                 pb.Height
             );
             this.g = Graphics.FromImage(bmp);
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             pb.Image = bmp;
 
             float XIB = pb.Width*0.05f; //X inside box

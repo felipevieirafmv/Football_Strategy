@@ -34,6 +34,7 @@ public class Menu : Form
                 pb.Height
             );
             this.g = Graphics.FromImage(bmp);
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             pb.Image = bmp;
             g.DrawImage(img, 0, 0, img.Width * 1.15f, img.Height* 1.15f);
 

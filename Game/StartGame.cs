@@ -104,6 +104,7 @@ public class StartGame
         foreach(Team t in teams)
         {
             t.Points = 0;
+            t.Diff = 0;
         }
     }
 }

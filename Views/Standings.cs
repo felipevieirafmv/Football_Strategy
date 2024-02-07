@@ -16,11 +16,7 @@ public class Standings : Form
     Timer tm = new Timer();
     private PictureBox pb = new PictureBox {
         Dock = DockStyle.Fill,
-    };
-
-    
-
-        
+    };        
 
     public Image field = Bitmap.FromFile("./img/Fields/FieldGame.png");
     public Standings()
@@ -47,10 +43,10 @@ public class Standings : Form
                 pb.Height
             );
             g = Graphics.FromImage(bmp);
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             Draws.Graphics = g;
             pb.Image = bmp;
-            tm.Start();
-
+            // tm.Start();
 
             var pen = new Pen(Color.Black, 2);
             var i = 0;

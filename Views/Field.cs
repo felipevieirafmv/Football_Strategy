@@ -39,6 +39,7 @@ public class Field : Form
                 pb.Height
             );
             g = Graphics.FromImage(bmp);
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             Draws.Graphics = g;
             pb.Image = bmp;
             tm.Start();
@@ -62,15 +63,24 @@ public class Field : Form
 
             g.DrawImage(field,0,0,field.Width, field.Height);
 
-            g.DrawString($"{simulation.TeamHome[0].Team} {simulation.ScoreHome} X {simulation.ScoreAway} {simulation.TeamAway[0].Team}",
+            var time = DateTime.Now - start;
+
+            g.DrawString($"{simulation.TeamHome[0].Team} {simulation.ScoreHome} X {simulation.ScoreAway} {simulation.TeamAway[0].Team} {(60 - time.TotalSeconds>0?"1:":"0:")}{(int)((120 - time.TotalSeconds)%60)}",
                 SystemFonts.MenuFont,
                 Brushes.Black,
                 new RectangleF(Screen.PrimaryScreen.Bounds.Width*0.433f, Screen.PrimaryScreen.Bounds.Height*0.125f, 255, 46)
             );
 
-            var time = DateTime.Now - start;
             simulation.Draw(g, (float)time.TotalSeconds);
             
+            // if(60 - time.TotalSeconds < 50)
+            // {
+            //     this.Close();
+            //     Standings standings = new Standings();
+            //     standings.Show();
+            //     return;
+            // }
+
             pb.Refresh();
         };
     }
