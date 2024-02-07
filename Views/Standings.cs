@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Game;
 
@@ -56,14 +57,15 @@ public class Standings : Form
             var totalHeight = 50 * (Teams.GetAllTeams.Count + 1);
             var startY = (Height - totalHeight) / 2;
 
+            var orderedTeams = Teams.GetAllTeams.OrderByDescending(t => t.Points*1000 + t.Diff);
 
             g.FillRectangle(Brushes.White, 600, startY, 1200, totalHeight);
             g.DrawRectangle(pen, 600, startY, 1200, totalHeight);
-            Draws.DrawText("Tems", Color.Black, new RectangleF(600, startY, 200, 50));
+            Draws.DrawText("Teams", Color.Black, new RectangleF(600, startY, 200, 50));
             Draws.DrawText("Points", Color.Black, new RectangleF(1200, startY, 200, 50));
-            Draws.DrawText("Pontos", Color.Black, new RectangleF(1600, startY, 200, 50));
+            Draws.DrawText("Diff", Color.Black, new RectangleF(1600, startY, 200, 50));
 
-            foreach (var teams in Teams.GetAllTeams)
+            foreach (var teams in orderedTeams)
             {
                 i++;
                 g.FillRectangle(Brushes.White, 600, startY + 50 * i, 1200, 50);
