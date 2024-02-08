@@ -63,9 +63,15 @@ public class Menu : Form
                 this.Hide();
                 game.Show();
             }
+
             if(exBtn.Rect.Contains(e.X, e.Y))
             {
                 Application.Exit();
+            }
+            
+            if(cntBtn.Rect.Contains(e.X, e.Y))
+            {
+                MessageBox.Show("Don't Click Here Again");
             }
         };
     }

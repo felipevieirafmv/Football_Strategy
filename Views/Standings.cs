@@ -13,16 +13,14 @@ public class Standings : Form
     private Bitmap bmp = null;
     private Image img = null;
     private float timeDraw = 0;
+
+    ChooseButton btNewRound = null;
     Timer tm = new Timer();
     private PictureBox pb = new PictureBox {
         Dock = DockStyle.Fill,
     };
 
-    
-
-        
-
-    public Image field = Bitmap.FromFile("./img/Fields/FieldGame.png");
+    public Image standings = Bitmap.FromFile("./img/Standings/Standing.png");
     public Standings()
     { 
         tm.Interval = 10;
@@ -35,6 +33,14 @@ public class Standings : Form
             Location = new PointF(pb.Width*0.677f, pb.Height*0.037f + Teams.GetAllTeams.Count * pb.Height*0.037f),
             Width = pb.Width*0.234f,
             Height = pb.Height*0.037f
+        };
+
+        pb.MouseDown += (o, e) =>
+        {
+            if(btNewRound.Rect.Contains(e.X, e.Y))
+            {
+                
+            }
         };
         
 
@@ -51,29 +57,25 @@ public class Standings : Form
             pb.Image = bmp;
             tm.Start();
 
+            btNewRound = new ChooseButton(g, Screen.PrimaryScreen.Bounds.Width*0.897f, Screen.PrimaryScreen.Bounds.Height * 0.897f, Screen.PrimaryScreen.Bounds.Width *0.093f, Screen.PrimaryScreen.Bounds.Height * 0.055f, "New Round");
+            g.DrawImage(standings,0,0,Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
 
             var pen = new Pen(Color.Black, 2);
             var i = 0;
-            var totalHeight = 50 * (Teams.GetAllTeams.Count + 1);
-            var startY = (Height - totalHeight) / 2;
+            // var totalHeight = Screen.PrimaryScreen.Bounds.Height * 0.00001f * (Teams.GetAllTeams.Count + 1);
+            // var startY = (Height - totalHeight) / 2;
 
             var orderedTeams = Teams.GetAllTeams.OrderByDescending(t => t.Points*1000 + t.Diff);
-
-            g.FillRectangle(Brushes.White, 600, startY, 1200, totalHeight);
-            g.DrawRectangle(pen, 600, startY, 1200, totalHeight);
-            Draws.DrawText("Teams", Color.Black, new RectangleF(600, startY, 200, 50));
-            Draws.DrawText("Points", Color.Black, new RectangleF(1200, startY, 200, 50));
-            Draws.DrawText("Diff", Color.Black, new RectangleF(1600, startY, 200, 50));
-
+            
             foreach (var teams in orderedTeams)
             {
                 i++;
-                g.FillRectangle(Brushes.White, 600, startY + 50 * i, 1200, 50);
-                g.DrawRectangle(pen, 600, startY + 50 * i, 1200, 50);
-                Draws.DrawText(teams.Name, Color.Black, new RectangleF(600, startY + 50 * i, 200, 50));
-                Draws.DrawPoints(teams.Points.ToString(), Color.Black, new RectangleF(1200, startY + 50 * i, 200, 50));
-                Draws.DrawGDTeam(teams.Diff.ToString(), Color.Black, new RectangleF(1600, startY + 50 * i, 200, 50));
+                Draws.DrawText(teams.Name, Color.Black, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.24f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, 200, Screen.PrimaryScreen.Bounds.Height * 0.22f));
+                Draws.DrawPoints(teams.Points.ToString(), Color.Black, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.54f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, 200, Screen.PrimaryScreen.Bounds.Height * 0.22f));
+                Draws.DrawGDTeam(teams.Diff.ToString(), Color.Black, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.74f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, 200, Screen.PrimaryScreen.Bounds.Height * 0.22f));
             }
+            
+            btNewRound.DrawChooseButton(g);
 
             pb.Refresh();
 
@@ -93,28 +95,4 @@ public class Standings : Form
 
 
     }
-
-    // public void DrawTeams(int index)
-    // {
-    //     var item = Teams.GetAllTeams[index: index];
-    //     var defaultRect = new RectangleF(pb.Width*0.677f, pb.Height*0.037f, pb.Width*0.234f, pb.Height*0.037f);
-    //     var playerRect = item.rect ?? defaultRect;
-    //     var player = item.player;
-    //     var selected = item.selected;
-
-    //     var pen = new Pen(Color.Black, 2);
-        
-    //     foreach (var position in list)
-    //     {
-    //         Draws.Graphics.FillRectangle(Brushes.White, playerRect);
-    //         Draws.Graphics.DrawRectangle(pen, playerRect);
-    //         Draws.DrawText(text: player.Name,Color.Black,playerRect);
-    //     }
-
-
-    //     list[index] = (playerRect == defaultRect ? null : playerRect , player, selected);
-    //     if (!selected)
-    //         return;
-
-    // }
 }

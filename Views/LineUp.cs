@@ -123,7 +123,7 @@ public class LineUp : Form
     {
         tm.Interval = 10;
         WindowState = FormWindowState.Maximized;
-        // FormBorderStyle = FormBorderStyle.None;
+        FormBorderStyle = FormBorderStyle.None;
 
         SetShirt();
 
@@ -179,10 +179,12 @@ public class LineUp : Form
             if (btRand.Rect.Contains(e.X, e.Y))
             {
                 formation.FieldList = list
-                    .Select(el => (Position.Bench, PointF.Empty, el.player))
+                    .Select(el => (Position.Bench, new PointF(9000, 90000), el.player))
                     .OrderByDescending(el => Random.Shared.Next())
                     .Take(11)
                     .ToList();
+
+                    btRand.Selected = true;
             }
         };
 
