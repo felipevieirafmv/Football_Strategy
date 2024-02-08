@@ -16,7 +16,7 @@ public static class Teams
                 {
                     allTeams = new List<Team>();
 
-                    string[] lines = File.ReadAllLines("./Game/teams.txt");
+                    string[] lines = File.ReadAllLines("./img/teams.txt");
                     foreach (string line in lines)
                     {
                         string[] stats = line.Split(',');

@@ -93,19 +93,19 @@ public class Field : Form
                 new PointF(score.X + (score.Width/2 - countSize.Width/2), Screen.PrimaryScreen.Bounds.Height*0.146f)
             );
 
-            g.DrawRectangle(Pens.Red, new RectangleF(
-                Screen.PrimaryScreen.Bounds.Width*0.031f, 
-                Screen.PrimaryScreen.Bounds.Height*0.537f, 
-                Screen.PrimaryScreen.Bounds.Width*0.016f, 
-                Screen.PrimaryScreen.Bounds.Height*0.115f
-            ));
+            // g.DrawRectangle(Pens.Red, new RectangleF(
+            //     Screen.PrimaryScreen.Bounds.Width*0.031f, 
+            //     Screen.PrimaryScreen.Bounds.Height*0.537f, 
+            //     Screen.PrimaryScreen.Bounds.Width*0.016f, 
+            //     Screen.PrimaryScreen.Bounds.Height*0.115f
+            // ));
 
-            g.DrawRectangle(Pens.Red, new RectangleF(
-                Screen.PrimaryScreen.Bounds.Width * 0.951f, 
-                Screen.PrimaryScreen.Bounds.Height*0.537f, 
-                Screen.PrimaryScreen.Bounds.Width*0.016f, 
-                Screen.PrimaryScreen.Bounds.Height*0.115f
-            ));
+            // g.DrawRectangle(Pens.Red, new RectangleF(
+            //     Screen.PrimaryScreen.Bounds.Width * 0.951f, 
+            //     Screen.PrimaryScreen.Bounds.Height*0.537f, 
+            //     Screen.PrimaryScreen.Bounds.Width*0.016f, 
+            //     Screen.PrimaryScreen.Bounds.Height*0.115f
+            // ));
 
             simulation.Draw(g, (float)time.TotalSeconds);
             
