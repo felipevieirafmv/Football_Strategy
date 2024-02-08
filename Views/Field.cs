@@ -77,7 +77,7 @@ public class Field : Form
 
             var time = DateTime.Now - start;
 
-            string match = $"{simulation.TeamHome[0].Team} {simulation.ScoreHome} X {simulation.ScoreAway} {simulation.TeamAway[0].Team}";
+            string match = $"{simulation.TeamHome[0].Team} {Simulator.ScoreHome} X {Simulator.ScoreAway} {simulation.TeamAway[0].Team}";
 
             SizeF matchSize = g.MeasureString(match, font);
 
@@ -109,9 +109,10 @@ public class Field : Form
 
             simulation.Draw(g, (float)time.TotalSeconds);
             
-            if(120 - time.TotalSeconds < 110)
+            if(120 - time.TotalSeconds < 118)
             {
                 this.Close();
+                tm.Stop();
                 standings.Show();
                 return;
             }

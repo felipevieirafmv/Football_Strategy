@@ -12,6 +12,7 @@ public class Game //singleton?
     public Game() { }
 
     public List<Player> TeamGame { get; set; }
+    public int Round { get; set; } = 0;
     public List<Team> AllTeams { get; set; } = Teams.GetAllTeams;
     public List<Team[]> Confrontations { get; set; } = new List<Team[]>();
     public Team CrrTeam { get; set; }

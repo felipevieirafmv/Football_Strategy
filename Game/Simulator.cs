@@ -10,8 +10,8 @@ namespace Game;
 
 public class Simulator
 {
-    public int ScoreHome { get; set; } = 0;
-    public int ScoreAway { get; set; } = 0;
+    public static int ScoreHome { get; set; } = 0;
+    public static int ScoreAway { get; set; } = 0;
 
     private int currentTime = -1;
     private Dictionary<Player, PointF> playerMap = new();
@@ -31,6 +31,8 @@ public class Simulator
     bool kicked = false;
     public Simulator(Team teamHome, Team teamAway)
     {
+        ScoreHome = ScoreAway = 0;
+
         this.TeamHome = teamHome.FirstTeam;
         this.TeamAway = teamAway.FirstTeam;
 

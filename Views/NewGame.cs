@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 
 namespace Views;
+
+using System.Linq;
 using Game;
 
 public class NewGame : Form
@@ -143,6 +145,7 @@ public class NewGame : Form
                     if (item.Selected)
                     {
                         Game.New(item.Name);
+                        Game.Current.CrrConfrontation = Game.Current.Confrontations.FirstOrDefault(t => t[0] == Game.Current.CrrTeam || t[1] == Game.Current.CrrTeam);
                         LineUp lu = new LineUp(Game.Current.CrrTeam.Squad);
                         this.Hide();
                         lu.Show();

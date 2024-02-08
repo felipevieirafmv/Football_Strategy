@@ -2,10 +2,10 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Game;
 
 
 namespace Views;
+using Game;
 
 public class Standings : Form
 {
@@ -39,9 +39,13 @@ public class Standings : Form
         {
             if(btNewRound.Rect.Contains(e.X, e.Y))
             {
-                
+                LineUp lu = new LineUp(Game.Current.CrrTeam.Squad);
+                this.Hide();
+                lu.Show();
             }
         };
+
+        Font font = new Font("Copperplate Gothic Bold", Screen.PrimaryScreen.Bounds.Width*0.005f);
         
 
         Controls.Add(pb);
@@ -67,13 +71,69 @@ public class Standings : Form
             // var startY = (Height - totalHeight) / 2;
 
             var orderedTeams = Teams.GetAllTeams.OrderByDescending(t => t.Points*1000 + t.Diff);
+
+            var game = Game.Current;
+            var matches = game.Confrontations
+                .Skip(game.Round * 10)
+                .Take(10)
+                .Where(m => m[0] != game.CrrTeam && m[1] != game.CrrTeam)
+                .ToArray();
+
+            Game.Current.CrrConfrontation = game.Confrontations
+                .Skip((game.Round + 1) * 10)
+                .Take(10)
+                .Where(m => m[0] == game.CrrTeam || m[1] == game.CrrTeam)
+                .FirstOrDefault();
+            game.Round++;
+            foreach (var match in matches)
+            {
+                var r = Random.Shared.NextSingle();
+                var goals = Random.Shared.Next(5);
+
+                if (r < 0.3)
+                {
+                    match[0].Points++;
+                    match[1].Points++;
+                }
+                else if (r < 0.7)
+                {
+                    match[0].Points += 3;
+                    match[0].Diff += goals;
+                    match[1].Diff -= goals;
+                }
+                else
+                {
+                    match[1].Points += 3;
+                    match[1].Diff += goals;
+                    match[0].Diff -= goals;
+                }
+            }
+
+            var diff = Simulator.ScoreHome - Simulator.ScoreAway;
+            if (diff == 0)
+            {
+                game.CrrConfrontation[0].Points++;
+                game.CrrConfrontation[1].Points++;
+            }
+            else if (diff > 0)
+            {
+                game.CrrConfrontation[0].Points += 3;
+                game.CrrConfrontation[0].Diff += diff;
+                game.CrrConfrontation[1].Diff -= diff;
+            }
+            else
+            {
+                game.CrrConfrontation[1].Points += 3;
+                game.CrrConfrontation[1].Diff += diff;
+                game.CrrConfrontation[0].Diff -= diff;
+            }
             
             foreach (var teams in orderedTeams)
             {
                 i++;
-                Draws.DrawText(teams.Name, Color.Black, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.24f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, 200, Screen.PrimaryScreen.Bounds.Height * 0.22f));
-                Draws.DrawPoints(teams.Points.ToString(), Color.Black, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.54f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, 200, Screen.PrimaryScreen.Bounds.Height * 0.22f));
-                Draws.DrawGDTeam(teams.Diff.ToString(), Color.Black, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.74f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, 200, Screen.PrimaryScreen.Bounds.Height * 0.22f));
+                Draws.DrawTeamName(teams.Name, Color.White, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.24f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, Screen.PrimaryScreen.Bounds.Width * 0.104f, Screen.PrimaryScreen.Bounds.Height * 0.22f));
+                Draws.DrawPoints(teams.Points.ToString(), Color.White, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.54f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, Screen.PrimaryScreen.Bounds.Width * 0.104f, Screen.PrimaryScreen.Bounds.Height * 0.22f));
+                Draws.DrawDiff(teams.Diff.ToString(), Color.White, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.74f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, Screen.PrimaryScreen.Bounds.Width * 0.104f, Screen.PrimaryScreen.Bounds.Height * 0.22f));
             }
             
             btNewRound.DrawChooseButton(g);
@@ -89,7 +149,6 @@ public class Standings : Form
                 case Keys.Escape:
                     Application.Exit();
                     break;
-
             }
         };
 

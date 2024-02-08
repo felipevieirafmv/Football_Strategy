@@ -9,6 +9,7 @@ public static class Draws
 {
     public static Graphics Graphics { get; set; }
     private static Graphics g => Graphics;
+    private static Font font = new Font("Copperplate Gothic Bold", Screen.PrimaryScreen.Bounds.Width*0.005f);
 
     static SolidBrush yellowLight = new SolidBrush(Color.FromArgb(255, 211, 250, 214));
     static SolidBrush green = new SolidBrush(Color.FromArgb(255, 8, 113, 8));
@@ -54,12 +55,12 @@ public static class Draws
         var format = new StringFormat();
         format.Alignment = StringAlignment.Center;
         format.LineAlignment = StringAlignment.Center;
- 
+
         var brush = new SolidBrush(color);
         
-        g.DrawString(points, SystemFonts.MenuFont, brush, location, format);
+        g.DrawString(points, font, brush, location, format);
     }
-    public static void DrawGDTeam(string text, Color color, RectangleF location)
+    public static void DrawDiff(string text, Color color, RectangleF location)
     {
         var format = new StringFormat();
         format.Alignment = StringAlignment.Center;
@@ -67,14 +68,14 @@ public static class Draws
  
         var brush = new SolidBrush(color);
  
-        g.DrawString(text, SystemFonts.MenuFont, brush, location, format);
+        g.DrawString(text, font, brush, location, format);
     }
 
     public static void DrawPlayer(Image player, PointF location)
         => g.DrawImage(player, new RectangleF(location.X, location.Y, Screen.PrimaryScreen.Bounds.Width*0.013f, Screen.PrimaryScreen.Bounds.Height*0.038f));
 
 
-    public static void DrawPlayerName(string text, Color color, PointF location)
+    public static void DrawTeamName(string text, Color color, RectangleF location)
     {
         var format = new StringFormat();
         format.Alignment = StringAlignment.Center;
@@ -82,7 +83,7 @@ public static class Draws
  
         var brush = new SolidBrush(color);
  
-        g.DrawString(text, SystemFonts.MenuFont, brush, new RectangleF(location.X, location.Y, 450, 40), format);
+        g.DrawString(text, font, brush, location, format);
     }
 
 

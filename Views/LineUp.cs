@@ -169,9 +169,8 @@ public class LineUp : Form
 
                 Game.Current.CrrTeam.FirstTeam = Game.Current.TeamGame;
 
-                Game.Current.CrrConfrontation = Game.Current.Confrontations.FirstOrDefault(t => t[0] == Game.Current.CrrTeam || t[1] == Game.Current.CrrTeam);
-
                 Field field = new Field();
+                tm.Stop();
                 this.Hide();
                 field.Show();
             }
