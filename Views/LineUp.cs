@@ -55,7 +55,7 @@ public class LineUp : Form
             this.shirt = Bitmap.FromFile("./img//Shirts/America.png");
 
         else if (Game.Current.CrrTeam.Name == "Athletico")
-            this.shirt = Bitmap.FromFile("./img//Shirts/Shirt.png");
+            this.shirt = Bitmap.FromFile("./img//Shirts/Athletico.png");
 
         else if (Game.Current.CrrTeam.Name == "AtleticoMG")
             this.shirt = Bitmap.FromFile("./img//Shirts/AtleticoMG.png");

@@ -265,7 +265,7 @@ public class Simulator
                 nextMap.Add(ballInGame.Key, new PointF(xGoal + (Screen.PrimaryScreen.Bounds.Width*0.006f), random.Next((int)yTopGoal, (int)yBottomGoal)));
                 if(home) ScoreHome++; else ScoreAway++;
             }
-            else nextMap.Add(ballInGame.Key, new PointF(xGoal + (Screen.PrimaryScreen.Bounds.Width+0.006f), missedGoal));
+            else nextMap.Add(ballInGame.Key, new PointF(xGoal + (Screen.PrimaryScreen.Bounds.Width*0.006f), missedGoal));
             kicked = true;
             return isGoal;
         }
@@ -393,28 +393,28 @@ public class Simulator
 
     private void fillTacticals()
     {
-        home433.Add(new PointF(154, 628)); //GK
-        home433.Add(new PointF(284, 498)); //DCL
-        home433.Add(new PointF(264, 738)); //DCR
-        home433.Add(new PointF(344, 335)); //LB
-        home433.Add(new PointF(304, 902)); //RB
-        home433.Add(new PointF(500, 628)); //MD
-        home433.Add(new PointF(603, 528)); //MCL
-        home433.Add(new PointF(597, 728)); //MCR
-        home433.Add(new PointF(800, 335)); //LW
-        home433.Add(new PointF(800, 902)); //RW
-        home433.Add(new PointF(900, 628)); //ST
+        home433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.08f, Screen.PrimaryScreen.Bounds.Height*0.581f)); //GK
+        home433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.147f, Screen.PrimaryScreen.Bounds.Height*0.462f)); //DCL
+        home433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.136f, Screen.PrimaryScreen.Bounds.Height*0.683f)); //DCR
+        home433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.179f, Screen.PrimaryScreen.Bounds.Height*0.31f)); //LB
+        home433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.158f, Screen.PrimaryScreen.Bounds.Height*0.835f)); //RB
+        home433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.26f, Screen.PrimaryScreen.Bounds.Height*0.581f)); //MD
+        home433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.314f, Screen.PrimaryScreen.Bounds.Height*0.488f)); //MCL
+        home433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.314f, Screen.PrimaryScreen.Bounds.Height*0.683f)); //MCR
+        home433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.416f, Screen.PrimaryScreen.Bounds.Height*0.31f)); //LW
+        home433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.416f, Screen.PrimaryScreen.Bounds.Height*0.835f)); //RW
+        home433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.468f, Screen.PrimaryScreen.Bounds.Height*0.581f)); //ST
 
-        away433.Add(new PointF(1755, 628)); //GK
-        away433.Add(new PointF(1635, 498)); //DCL
-        away433.Add(new PointF(1655, 738)); //DCR
-        away433.Add(new PointF(1575, 335)); //LB
-        away433.Add(new PointF(1615, 902)); //RB
-        away433.Add(new PointF(1409, 628)); //MD
-        away433.Add(new PointF(1307, 528)); //MCL
-        away433.Add(new PointF(1312, 728)); //MCR
-        away433.Add(new PointF(1120, 335)); //LW
-        away433.Add(new PointF(1120, 902)); //RW
-        away433.Add(new PointF(1020, 628)); //ST
+        away433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.914f, Screen.PrimaryScreen.Bounds.Height*0.581f)); //GK
+        away433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.851f, Screen.PrimaryScreen.Bounds.Height*0.462f)); //DCL
+        away433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.861f, Screen.PrimaryScreen.Bounds.Height*0.683f)); //DCR
+        away433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.82f, Screen.PrimaryScreen.Bounds.Height*0.31f)); //LB
+        away433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.841f, Screen.PrimaryScreen.Bounds.Height*0.835f)); //RB
+        away433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.733f, Screen.PrimaryScreen.Bounds.Height*0.581f)); //MD
+        away433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.68f, Screen.PrimaryScreen.Bounds.Height*0.488f)); //MCL
+        away433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.68f, Screen.PrimaryScreen.Bounds.Height*0.683f)); //MCR
+        away433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.583f, Screen.PrimaryScreen.Bounds.Height*0.31f)); //LW
+        away433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.583f, Screen.PrimaryScreen.Bounds.Height*0.835f)); //RW
+        away433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.531f, Screen.PrimaryScreen.Bounds.Height*0.581f)); //ST
     }
 }

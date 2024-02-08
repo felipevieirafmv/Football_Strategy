@@ -20,6 +20,8 @@ public class Field : Form
 
     public Field()
     {
+        Standings standings = new Standings();
+
         tm.Interval = 10;
         WindowState = FormWindowState.Maximized;
         FormBorderStyle = FormBorderStyle.None;
@@ -107,13 +109,12 @@ public class Field : Form
 
             simulation.Draw(g, (float)time.TotalSeconds);
             
-            // if(60 - time.TotalSeconds < 50)
-            // {
-            //     this.Close();
-            //     Standings standings = new Standings();
-            //     standings.Show();
-            //     return;
-            // }
+            if(120 - time.TotalSeconds < 110)
+            {
+                this.Close();
+                standings.Show();
+                return;
+            }
             
             pb.Refresh();
         };

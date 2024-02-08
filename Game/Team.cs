@@ -20,7 +20,7 @@ public class Team
     {
         Random random = new Random();
 
-        int overall = random.Next(80, 121);
+        int overall = random.Next(100, 151);
 
         this.Name = name;
         this.Points = points;
