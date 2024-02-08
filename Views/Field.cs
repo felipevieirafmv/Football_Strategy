@@ -45,6 +45,8 @@ public class Field : Form
             tm.Start();
         };
 
+        this.field = this.field.GetThumbnailImage(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, null, nint.Zero);
+
         KeyDown += (o, e) =>
         {
             switch (e.KeyCode)
@@ -56,6 +58,14 @@ public class Field : Form
             }
         };
 
+        RectangleF score = new RectangleF(
+            Screen.PrimaryScreen.Bounds.Width*0.433f, 
+            Screen.PrimaryScreen.Bounds.Height*0.122f, 
+            Screen.PrimaryScreen.Bounds.Width*0.133f, 
+            Screen.PrimaryScreen.Bounds.Height*0.049f
+        );
+        Font font = new Font("Copperplate Gothic Bold", Screen.PrimaryScreen.Bounds.Width*0.005f);
+
         DateTime start = DateTime.Now;
         tm.Tick += delegate
         {
@@ -65,11 +75,35 @@ public class Field : Form
 
             var time = DateTime.Now - start;
 
-            g.DrawString($"{simulation.TeamHome[0].Team} {simulation.ScoreHome} X {simulation.ScoreAway} {simulation.TeamAway[0].Team} {(60 - time.TotalSeconds>0?"1:":"0:")}{(int)((120 - time.TotalSeconds)%60)}",
-                SystemFonts.MenuFont,
-                Brushes.Black,
-                new RectangleF(Screen.PrimaryScreen.Bounds.Width*0.433f, Screen.PrimaryScreen.Bounds.Height*0.125f, 255, 46)
+            string match = $"{simulation.TeamHome[0].Team} {simulation.ScoreHome} X {simulation.ScoreAway} {simulation.TeamAway[0].Team}";
+
+            SizeF matchSize = g.MeasureString(match, font);
+
+            g.DrawString(match, font, Brushes.Black, 
+                new PointF(score.X + (score.Width/2 - matchSize.Width/2), score.Y)
             );
+
+            string countdown = $" {(60 - time.TotalSeconds>0?"1:":"0:")}{(int)((120 - time.TotalSeconds)%60)}";
+
+            SizeF countSize = g.MeasureString(countdown, font);
+
+            g.DrawString(countdown, font, Brushes.Black,
+                new PointF(score.X + (score.Width/2 - countSize.Width/2), Screen.PrimaryScreen.Bounds.Height*0.146f)
+            );
+
+            g.DrawRectangle(Pens.Red, new RectangleF(
+                Screen.PrimaryScreen.Bounds.Width*0.031f, 
+                Screen.PrimaryScreen.Bounds.Height*0.537f, 
+                Screen.PrimaryScreen.Bounds.Width*0.016f, 
+                Screen.PrimaryScreen.Bounds.Height*0.115f
+            ));
+
+            g.DrawRectangle(Pens.Red, new RectangleF(
+                Screen.PrimaryScreen.Bounds.Width * 0.951f, 
+                Screen.PrimaryScreen.Bounds.Height*0.537f, 
+                Screen.PrimaryScreen.Bounds.Width*0.016f, 
+                Screen.PrimaryScreen.Bounds.Height*0.115f
+            ));
 
             simulation.Draw(g, (float)time.TotalSeconds);
             
@@ -80,7 +114,7 @@ public class Field : Form
             //     standings.Show();
             //     return;
             // }
-
+            
             pb.Refresh();
         };
     }

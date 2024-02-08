@@ -105,7 +105,7 @@ public class LineUp : Form
         else if (Game.Current.CrrTeam.Name == "Santos")
             this.shirt = Bitmap.FromFile("./img/Shirts/Santos.png");
 
-        else if (Game.Current.CrrTeam.Name == "SaoPaulo")
+        else if (Game.Current.CrrTeam.Name == "São Paulo")
             this.shirt = Bitmap.FromFile("./img/Shirts/SaoPaulo.png");
 
         else if (Game.Current.CrrTeam.Name == "Vasco")
@@ -205,7 +205,6 @@ public class LineUp : Form
             {
                 this.formation = new Tactical433();
                 Game.Current.CrrTeam.Tactical = 0;
-                MessageBox.Show("433");
                 for (int i = scrollInfo; i < int.Min(list.Count, 20 + scrollInfo); i++)
                     DrawPlayer(i);
 
@@ -214,16 +213,12 @@ public class LineUp : Form
             {
                 this.formation = new Tactical4222();
                 Game.Current.CrrTeam.Tactical = 1;
-                MessageBox.Show("4222");
 
             }
             if (cbTactics.SelectedIndex == 2)
             {
                 this.formation = new Tactical442();
                 Game.Current.CrrTeam.Tactical = 2;
-                MessageBox.Show("442");
-
-                MessageBox.Show(list.Count.ToString());
             }
         };
         var cbStyle = GameTactics.Style();
@@ -233,10 +228,7 @@ public class LineUp : Form
                 Game.Current.CrrTeam.Style = 0;
 
             if(cbStyle.SelectedIndex == 1)
-            {
                 Game.Current.CrrTeam.Style = 1;
-                MessageBox.Show("entrou");
-            }
             if(cbStyle.SelectedIndex == 2)
                 Game.Current.CrrTeam.Style = 2;
         };

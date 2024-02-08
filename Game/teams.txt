@@ -16,5 +16,5 @@ Internacional,0,0
 Palmeiras,0,0
 RBBragantino,0,0
 Santos,0,0
-SaoPaulo,0,0
+São Paulo,0,0
 Vasco,0,0

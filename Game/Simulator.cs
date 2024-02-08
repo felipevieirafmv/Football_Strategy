@@ -45,10 +45,23 @@ public class Simulator
 
         fillTacticals();
         resetPosition(true);
+
+        this.awayPlayer = this.awayPlayer.GetThumbnailImage(
+            (int)(Screen.PrimaryScreen.Bounds.Width*0.013f), 
+            (int)(Screen.PrimaryScreen.Bounds.Height*0.038f),
+            null, nint.Zero
+        );
+        this.homePlayer = this.homePlayer.GetThumbnailImage(
+            (int)(Screen.PrimaryScreen.Bounds.Width*0.013f), 
+            (int)(Screen.PrimaryScreen.Bounds.Height*0.038f),
+            null, nint.Zero
+        );
     }
 
     public void Draw(Graphics g, float time)
     {
+        Font font = new Font("Copperplate Gothic Bold", Screen.PrimaryScreen.Bounds.Width*0.004f);
+
         var dt = currentTime - (int)time;
         if (dt < 0)
         {
@@ -73,12 +86,15 @@ public class Simulator
             );
             crrMap[player] = position;
 
+            SizeF nameSize = g.MeasureString(player.Name, font);
+
             // g.FillRectangle(Brushes.Blue, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
             Draws.DrawPlayer(homePlayer, new PointF(position.X - homePlayer.Width/2, position.Y - homePlayer.Height/2));
-            Draws.DrawText(
+            g.DrawString(
                 player.Name,
-                Color.White,
-                new RectangleF(position.X - playerSize.Width/2, position.Y - playerSize.Height/2, Screen.PrimaryScreen.Bounds.Width*0.052f, Screen.PrimaryScreen.Bounds.Height*0.019f)
+                font,
+                Brushes.White,
+                new PointF(position.X - nameSize.Width/2, position.Y + playerSize.Height)
             );
         }
 
@@ -94,9 +110,16 @@ public class Simulator
                 oldPosition.Y * (1 - frameTime) + newPosition.Y * frameTime
             );
 
+            SizeF nameSize = g.MeasureString(player.Name, font);
+
             // g.FillRectangle(Brushes.Red, position.X - playerSize.Width/2, position.Y - playerSize.Height/2, playerSize.Width, playerSize.Height);
             Draws.DrawPlayer(awayPlayer, new PointF(position.X - homePlayer.Width/2, position.Y - homePlayer.Height/2));
-            Draws.DrawText(player.Name, Color.White, new RectangleF(position.X - playerSize.Width/2, position.Y - playerSize.Height/2, 100, 20));
+            g.DrawString(
+                player.Name,
+                font,
+                Brushes.White,
+                new PointF(position.X - nameSize.Width/2, position.Y + playerSize.Height)
+            );
         }
 
         if (!nextMap.ContainsKey(ball))
@@ -146,19 +169,34 @@ public class Simulator
             .FirstOrDefault(p => p.Key.Team == "ball");
         var ballPosition = ballInGame.Value;
 
-        int startX = 92;
-        int endX = 1827;
-        int startY = 256;
-        int endY = 1023;
+        float startX = Screen.PrimaryScreen.Bounds.Width * 0.047f;
+        float endX = Screen.PrimaryScreen.Bounds.Width * 0.951f;
+        float startY = Screen.PrimaryScreen.Bounds.Height * 0.237f;
+        float endY = Screen.PrimaryScreen.Bounds.Height * 0.947f;
+
+        float yTopGoal = Screen.PrimaryScreen.Bounds.Height*0.537f;
+        float yBottomGoal = Screen.PrimaryScreen.Bounds.Height*0.652f;
         
-        var homeGoal = new RectangleF(70, 500, 32, 122);
+        var homeGoal = new RectangleF(
+            Screen.PrimaryScreen.Bounds.Width*0.031f, 
+            yTopGoal,
+            Screen.PrimaryScreen.Bounds.Width*0.016f, 
+            Screen.PrimaryScreen.Bounds.Height*0.115f
+        );
+        
         if(homeGoal.Contains(ballInGame.Value.X, ballInGame.Value.Y))
         {
             resetPosition(true);
             return;
         }
 
-        var awayGoal = new RectangleF(endX, 500, 32, 122);
+        var awayGoal = new RectangleF(
+            endX, 
+            yTopGoal, 
+            Screen.PrimaryScreen.Bounds.Width*0.016f, 
+            Screen.PrimaryScreen.Bounds.Height*0.115f
+        );
+
         if(awayGoal.Contains(ballInGame.Value.X, ballInGame.Value.Y))
         {
             resetPosition(false);
@@ -171,7 +209,7 @@ public class Simulator
             return;
         }
 
-        if (ballInGame.Value.X < 102)
+        if (ballInGame.Value.X < Screen.PrimaryScreen.Bounds.Width*0.053f)
         {
             resetPosition(true);
             return;
@@ -195,32 +233,39 @@ public class Simulator
 
         bool tryKick(bool home)
         {
-            int xGoal = home ? endX : startX;
+            float xGoal = home ? endX : startX;
 
             var dx = xGoal - playerMap[playerWithBall].X;
-            var dy = 639 - playerMap[playerWithBall].Y;
+            var dy = Screen.PrimaryScreen.Bounds.Height*0.592f - playerMap[playerWithBall].Y;
             var dist = MathF.Sqrt(dx * dx + dy * dy);
 
-            if (dist > 500)
+            var defaultDist = MathF.Sqrt(
+                Screen.PrimaryScreen.Bounds.Width * Screen.PrimaryScreen.Bounds.Width + 
+                Screen.PrimaryScreen.Bounds.Height * Screen.PrimaryScreen.Bounds.Height
+            );
+
+            if (dist > defaultDist*0.227f)
                 return false;
             
-            if (dist < 500 && dist > 300 && random.NextSingle() < 0.8f)
+            if (dist < defaultDist*0.227f && dist > defaultDist*0.136f && random.NextSingle() < 0.8f)
                 return false;
 
             int keeper = TeamAway[0].GoalKeeperAbility;
             int kicker = playerWithBall.KickingAblity;
-            int gap = (kicker - keeper) / 5 - (dist > 300 ? 3 : 2);
+            int gap = (kicker - keeper) / 5 - (dist > defaultDist*0.136f ? 3 : 2);
             float goalChance = 1 / (1 + MathF.Exp(-gap));
             var isGoal = goalChance > random.NextSingle();
 
-            int missedGoal = random.NextSingle() > 0.5 ? random.Next(startY, 500) : random.Next(760, endY);
+            float missedGoal = random.NextSingle() > 0.5 ? 
+                random.Next((int)startY, (int)(Screen.PrimaryScreen.Bounds.Height*0.462f)) : 
+                random.Next((int)(Screen.PrimaryScreen.Bounds.Height*0.703f), (int)endY);
 
             if (isGoal)
             {
-                nextMap.Add(key: ballInGame.Key, new PointF(xGoal + 12, random.Next(578, 700)));
+                nextMap.Add(ballInGame.Key, new PointF(xGoal + (Screen.PrimaryScreen.Bounds.Width*0.006f), random.Next((int)yTopGoal, (int)yBottomGoal)));
                 if(home) ScoreHome++; else ScoreAway++;
             }
-            else nextMap.Add(key: ballInGame.Key, new PointF(xGoal + 12, missedGoal));
+            else nextMap.Add(ballInGame.Key, new PointF(xGoal + (Screen.PrimaryScreen.Bounds.Width+0.006f), missedGoal));
             kicked = true;
             return isGoal;
         }
@@ -258,25 +303,34 @@ public class Simulator
 
         nextMap.Add(playerChoosed.Key, playerChoosed.Value);
 
+        var defaultDist = MathF.Sqrt(
+            Screen.PrimaryScreen.Bounds.Width * Screen.PrimaryScreen.Bounds.Width + 
+            Screen.PrimaryScreen.Bounds.Height * Screen.PrimaryScreen.Bounds.Height
+        );
+
         if(!kicked)
         {
             var ballDx = playerMap[ballInGame.Key].X - playerMap[playerWithBall].X;
             var ballDy = playerMap[ballInGame.Key].Y - playerMap[playerWithBall].Y;
             var dist = Math.Sqrt(ballDx * ballDx + ballDy * ballDy);
 
-            float randX = playerChoosed.Value.X + random.Next(-100,100);
+            float standDevX = Screen.PrimaryScreen.Bounds.Width*0.052f;
+            float standDevY = Screen.PrimaryScreen.Bounds.Height*0.092f;
+
+            float randX = playerChoosed.Value.X + random.Next((int)(standDevX*-1),(int)standDevX);
+            
             if(randX > endX)
                 randX = endX;
             if(randX < startX)
                 randX = startX;
 
-            float randY = playerChoosed.Value.Y + random.Next(-100,100);
+            float randY = playerChoosed.Value.Y + random.Next((int)(standDevY*-1),(int)standDevY);
             if(randY > endY)
                 randY = endY;
             if(randY < startY)
                 randY = startY;
 
-            if (dist > 10)
+            if (dist > defaultDist*0.005f)
             {
                 nextMap[playerWithBall] = ballInGame.Value;
                 nextMap[ballInGame.Key] = ballInGame.Value;
@@ -300,12 +354,11 @@ public class Simulator
             var ballDy = playerMap[ballInGame.Key].Y - playerMap[key: player].Y;
             var dist = Math.Sqrt(ballDx * ballDx + ballDy * ballDy);
 
-            if (dist < 100)
+            if (dist < defaultDist*0.045f)
             {
                 nextMap[player] = ballInGame.Value;
                 continue;
             }
-
 
             int index = TeamHome.FindIndex(p => p == player);
             if (index == -1) 
@@ -313,21 +366,25 @@ public class Simulator
             
             var nextPosition = new PointF();
             var style = isHome ? styleHome : styleAway;
-            int ep = isHome ? 100 + 1700 * (index + 2 - style) / 11 : 1800 - 1700 * (index + 2 - style) / 11;
+            float ep = isHome ? 
+                Screen.PrimaryScreen.Bounds.Width*0.052f + Screen.PrimaryScreen.Bounds.Width*0.885f * (index + 2 - style) / 11 : 
+                Screen.PrimaryScreen.Bounds.Width*0.937f - Screen.PrimaryScreen.Bounds.Width*0.885f * (index + 2 - style) / 11;
             float error = ep - position.X;
             float dx = (random.NextSingle() - 0.1f) * error / 10;
+
+            float yDeviation = Screen.PrimaryScreen.Bounds.Height * 0.013f;
 
             if(isHome)
             {
                 if(pair.Key == TeamHome[0])
-                    nextPosition = new PointF(position.X, position.Y + random.Next(minValue: -15,16));
-                else nextPosition = new PointF(position.X + dx, position.Y + random.Next(minValue: -15,16));
+                    nextPosition = new PointF(position.X, position.Y + random.Next((int)(yDeviation*-1),(int)yDeviation));
+                else nextPosition = new PointF(position.X + dx, position.Y + random.Next((int)(yDeviation*-1),(int)yDeviation));
             }
             else
             {
                 if(pair.Key == TeamAway[0])
-                    nextPosition = new PointF(position.X, position.Y + random.Next(minValue: -15,16));
-                else nextPosition = new PointF(position.X + dx, position.Y + random.Next(minValue: -15,16));
+                    nextPosition = new PointF(position.X, position.Y + random.Next((int)(yDeviation*-1),(int)yDeviation));
+                else nextPosition = new PointF(position.X + dx, position.Y + random.Next((int)(yDeviation*-1),(int)yDeviation));
             }
 
             nextMap.Add(player, nextPosition);
