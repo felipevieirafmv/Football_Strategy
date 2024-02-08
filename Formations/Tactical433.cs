@@ -7,16 +7,38 @@ public class Tactical433 : Formation
 {
     public Tactical433()
     {
-        AddEmptyPosition(Position.GoalKeeper, new PointF(522, 800)); //GL
-        AddEmptyPosition(Position.LeftBack, new PointF(246, 640)); //LE
-        AddEmptyPosition(Position.Defender, new PointF(422, 680)); //ZC
-        AddEmptyPosition(Position.Defender, new PointF(621, 680)); //ZC
-        AddEmptyPosition(Position.RightBack, new PointF(800, 640)); //LD
-        AddEmptyPosition(Position.Midfield, new PointF(521, 500)); //VOL
-        AddEmptyPosition(Position.Midfield, new PointF(382, 400)); //MC
-        AddEmptyPosition(Position.Midfield, new PointF(662, 400)); //MC
-        AddEmptyPosition(Position.LeftWinger, new PointF(246, 200)); //PE
-        AddEmptyPosition(Position.RightWinger,new PointF(800, 200)); //PD
-        AddEmptyPosition(Position.Striker, new PointF(522, 150)); //ATA
+        AddEmptyPosition(Position.GoalKeeper, 
+            new PointF(Screen.PrimaryScreen.Bounds.Width*0.271f, Screen.PrimaryScreen.Bounds.Height*0.74f)
+        ); //GL
+        AddEmptyPosition(Position.LeftBack, 
+            new PointF(Screen.PrimaryScreen.Bounds.Width*0.128f, Screen.PrimaryScreen.Bounds.Height*0.592f)
+        ); //LE
+        AddEmptyPosition(Position.Defender, 
+            new PointF(Screen.PrimaryScreen.Bounds.Width*0.219f, Screen.PrimaryScreen.Bounds.Height*0.629f)
+        ); //ZC
+        AddEmptyPosition(Position.Defender, 
+            new PointF(Screen.PrimaryScreen.Bounds.Width*0.323f, Screen.PrimaryScreen.Bounds.Height*0.629f)
+        ); //ZC
+        AddEmptyPosition(Position.RightBack, 
+            new PointF(Screen.PrimaryScreen.Bounds.Width*0.416f, Screen.PrimaryScreen.Bounds.Height*0.592f)
+        ); //LD
+        AddEmptyPosition(Position.Midfield, 
+            new PointF(Screen.PrimaryScreen.Bounds.Width*0.271f, Screen.PrimaryScreen.Bounds.Height*0.462f)
+        ); //VOL
+        AddEmptyPosition(Position.Midfield, 
+            new PointF(Screen.PrimaryScreen.Bounds.Width*0.199f, Screen.PrimaryScreen.Bounds.Height*0.370f)
+        ); //MC
+        AddEmptyPosition(Position.Midfield, 
+            new PointF(Screen.PrimaryScreen.Bounds.Width*0.344f, Screen.PrimaryScreen.Bounds.Height*0.370f)
+        ); //MC
+        AddEmptyPosition(Position.LeftWinger, 
+            new PointF(Screen.PrimaryScreen.Bounds.Width*0.128f, Screen.PrimaryScreen.Bounds.Height*0.185f)
+        ); //PE
+        AddEmptyPosition(Position.RightWinger,
+            new PointF(Screen.PrimaryScreen.Bounds.Width*0.416f, Screen.PrimaryScreen.Bounds.Height*0.185f)
+        ); //PD
+        AddEmptyPosition(Position.Striker, 
+            new PointF(Screen.PrimaryScreen.Bounds.Width*0.271f, Screen.PrimaryScreen.Bounds.Height*0.138f)
+        ); //ATA
     }
 }

@@ -36,6 +36,7 @@ public class NewGame : Form
                 pb.Height
             );
             this.g = Graphics.FromImage(bmp);
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             pb.Image = bmp;
 
             float XIB = pb.Width*0.05f; //X inside box
@@ -74,7 +75,7 @@ public class NewGame : Form
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/Logos/palmeiras.png"), XIB + XTB, YTB2 + DifY*3, WTB, HTB, "Palmeiras"));
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/Logos/bragantino.png"), XTB2 + DifX, YTB2 + DifY*3, WTB, HTB, "RBBragantino"));
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/Logos/santos.png"), XTB2 + DifX*2, YTB2 + DifY*3, WTB, HTB, "Santos"));
-            Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/Logos/saopaulo.png"), XTB2 + DifX*3, YTB2 + DifY*3, WTB, HTB, "SaoPaulo"));
+            Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/Logos/saopaulo.png"), XTB2 + DifX*3, YTB2 + DifY*3, WTB, HTB, "São Paulo"));
             Teams.Add(new TeamButton(this.g, Bitmap.FromFile("img/Logos/vasco.png"), XTB2 + DifX*4, YTB2 + DifY*3, WTB, HTB, "Vasco"));
 
             chooseTeam = new ChooseButton(g, pb.Width*0.9f - XTB, pb.Height*0.93f, 200, 50, "New Game");
