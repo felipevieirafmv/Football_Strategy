@@ -109,7 +109,7 @@ public class Field : Form
 
             simulation.Draw(g, (float)time.TotalSeconds);
             
-            if(120 - time.TotalSeconds < 118)
+            if(120 - time.TotalSeconds < 0)
             {
                 this.Close();
                 tm.Stop();
