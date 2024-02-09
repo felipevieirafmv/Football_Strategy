@@ -17,8 +17,15 @@ public class Simulator
     private Dictionary<Player, PointF> playerMap = new();
     private Dictionary<Player, PointF> crrMap = new();
     private Dictionary<Player, PointF> nextMap = new();
-    private Image homePlayer = Bitmap.FromFile("./img/Players/PlayerRight.png");
-    private Image awayPlayer = Bitmap.FromFile("./img/Players/PlayerLeftRed.png");
+
+    private String teamHome;
+    private String teamAway;
+
+    private Image homePlayer = null;
+    private Image awayPlayer = null;
+    //   private Image homePlayer = Bitmap.FromFile("./img/Players/PlayerRight.png");
+    // private Image awayPlayer = Bitmap.FromFile("./img/Players/PlayerLeftRed.png");
+
 
     private List<PointF> home433 = new();
     private List<PointF> away433 = new();
@@ -29,12 +36,16 @@ public class Simulator
     int taticalHome, styleHome, attackHome, markHome;
     int taticalAway, styleAway, attackAway, markAway;
     bool kicked = false;
+
+    
     public Simulator(Team teamHome, Team teamAway)
     {
         ScoreHome = ScoreAway = 0;
 
         this.TeamHome = teamHome.FirstTeam;
         this.TeamAway = teamAway.FirstTeam;
+        this.teamHome = teamHome.Name;
+        this.teamAway = teamAway.Name;
 
         this.taticalHome = teamHome.Tactical;
         this.styleHome = teamHome.Style;
@@ -47,6 +58,8 @@ public class Simulator
 
         fillTacticals();
         resetPosition(true);
+        PlayerHome();
+        PlayerAway();
 
         this.awayPlayer = this.awayPlayer.GetThumbnailImage(
             (int)(Screen.PrimaryScreen.Bounds.Width*0.013f), 
@@ -418,5 +431,138 @@ public class Simulator
         away433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.583f, Screen.PrimaryScreen.Bounds.Height*0.31f)); //LW
         away433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.583f, Screen.PrimaryScreen.Bounds.Height*0.835f)); //RW
         away433.Add(new PointF(Screen.PrimaryScreen.Bounds.Width*0.531f, Screen.PrimaryScreen.Bounds.Height*0.581f)); //ST
+    }
+
+    void PlayerHome()
+    {
+        if(teamHome == "America")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/AmericaHome.png");
+
+        else if (teamHome == "Athletico")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/AthleticoHome.png");
+
+        else if (teamHome == "AtleticoMG")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/AtleticoMGHome.png");
+
+        else if (teamHome == "Bahia")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/BahiaHome.png");
+
+        else if (teamHome == "Botafogo")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/BotafogoHome.png");
+
+        else if (teamHome == "Corinthians")
+                this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/CorinthiansHome.png");
+    
+        else if (teamHome == "Coritiba")
+                this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/CoritibaHome.png");
+
+        else if (teamHome == "Cruzeiro")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/CruzeiroHome.png");
+
+        else if (teamHome == "Cuiaba")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/CuiabaHome.png");
+
+        else if (teamHome == "Flamengo")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/FlamengoHome.png");
+
+        else if (teamHome == "Fluminense")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/FluminenseHome.png");
+
+        else if (teamHome == "Fortaleza")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/FortalezaHome.png");
+
+        else if (teamHome == "Goias")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/GoiasHome.png");
+
+        else if (teamHome == "Gremio")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/GremioHome.png");
+
+        else if (teamHome == "Internacional")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/InternacionalHome.png");
+
+        else if (teamHome == "Palmeiras")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/PalmeirasHome.png");
+
+        else if (teamHome == "RBBragantino")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/RBBragantinoHome.png");
+
+        else if (teamHome == "Santos")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/SantosHome.png");
+
+        else if (teamHome == "São Paulo")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/SaoPauloHome.png");
+
+        else if (teamHome == "Vasco")
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/VascoHome.png");
+
+        else
+            this.homePlayer = Bitmap.FromFile("./img/Players/PlayerHome/CoritibaHome.png");
+
+    }
+    void PlayerAway()
+    {
+
+        if(teamAway == "America")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/AmericaAway.png");
+
+        else if (teamAway == "Athletico")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/AthleticoAway.png");
+
+        else if (teamAway == "AtleticoMG")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/AtleticoMGAway.png");
+
+        else if (teamAway == "Bahia")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/BahiaAway.png");
+
+        else if (teamAway == "Botafogo")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/BotafogoAway.png");
+
+        else if (teamAway == "Corinthians")
+                this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/CorinthiansAway.png");
+    
+        else if (teamAway == "Coritiba")
+                this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/CoritibaAway.png");
+
+        else if (teamAway == "Cruzeiro")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/CruzeiroAway.png");
+
+        else if (teamAway == "Cuiaba")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/CuiabaAway.png");
+
+        else if (teamAway == "Flamengo")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/FlamengoAway.png");
+
+        else if (teamAway == "Fluminense")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/FluminenseAway.png");
+
+        else if (teamAway == "Fortaleza")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/FortalezaAway.png");
+
+        else if (teamAway == "Goias")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/GoiasAway.png");
+
+        else if (teamAway == "Gremio")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/GremioAway.png");
+
+        else if (teamAway == "Internacional")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/InternacionalAway.png");
+
+        else if (teamAway == "Palmeiras")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/PalmeirasAway.png");
+
+        else if (teamAway == "RBBragantino")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/RBBragantinoAway.png");
+
+        else if (teamAway == "Santos")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/SantosAway.png");
+
+        else if (teamAway == "São Paulo")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/SaoPauloAway.png");
+
+        else if (teamAway == "Vasco")
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/VascoAway.png");
+
+        else
+            this.awayPlayer = Bitmap.FromFile("./img/Players/PlayerAway/CoritibaAway.png");
     }
 }

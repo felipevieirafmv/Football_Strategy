@@ -11,7 +11,7 @@
 *.sln.docstates
 
 
-/img/confrontations.txt
+/txt/confrontations.txt
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

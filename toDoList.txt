@@ -1,5 +1,0 @@
--Gerar Rodada. (placar aleatorio por partida + remover times da lista) Juntos - Quarta
--Responsividade. Felipe - quinta
--Finalizar detalhes da partida. (tempo, tamanho) - quinta
--Melhorar time (vemos depois).
--Se Sobrar tempo, resolver erros da outra lista.

@@ -31,7 +31,7 @@ public class StartGame
 
     public void CreateConfrontations()
     {
-        StreamWriter sw = new StreamWriter("./img/confrontations.txt");
+        StreamWriter sw = new StreamWriter("./txt/confrontations.txt");
 
         ChampionshipGenerator cg = new ChampionshipGenerator();
 
@@ -89,7 +89,7 @@ public class StartGame
     }
     private void UseSave()
     {
-        string[] lines = File.ReadAllLines("./img/confrontations.txt");
+        string[] lines = File.ReadAllLines("./txt/confrontations.txt");
         foreach (string l in lines)
         {
             string[] line = l.Split(',');

@@ -22,8 +22,8 @@ public class Player
     public Player(string team, int overAll)
     {
         Random random = new Random();
-        string[] firstName = File.ReadAllLines("./img/firstName.txt");
-        string[] lastName = File.ReadAllLines("./img/lastName.txt");
+        string[] firstName = File.ReadAllLines("./txt/firstName.txt");
+        string[] lastName = File.ReadAllLines("./txt/lastName.txt");
         this.Name = firstName[random.Next(firstName.Length)] + " " + lastName[random.Next(lastName.Length)];
         this.Team = team;
         this.OverAll = overAll;
