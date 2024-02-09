@@ -133,8 +133,9 @@ public class Standings : Form
             {
                 i++;
                 Draws.DrawTeamName(teams.Name, Color.White, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.24f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, Screen.PrimaryScreen.Bounds.Width * 0.104f, Screen.PrimaryScreen.Bounds.Height * 0.22f));
-                Draws.DrawPoints(teams.Points.ToString(), Color.White, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.54f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, Screen.PrimaryScreen.Bounds.Width * 0.104f, Screen.PrimaryScreen.Bounds.Height * 0.22f));
-                Draws.DrawDiff(teams.Diff.ToString(), Color.White, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.74f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, Screen.PrimaryScreen.Bounds.Width * 0.104f, Screen.PrimaryScreen.Bounds.Height * 0.22f));
+                Draws.DrawPoints(teams.Points.ToString(), Color.White, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.517f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, Screen.PrimaryScreen.Bounds.Width * 0.104f, Screen.PrimaryScreen.Bounds.Height * 0.22f));
+                Draws.DrawDiff(teams.Diff.ToString(), Color.White, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.649f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, Screen.PrimaryScreen.Bounds.Width * 0.104f, Screen.PrimaryScreen.Bounds.Height * 0.22f));
+                Draws.DrawDiff(game.Round.ToString(), Color.White, new RectangleF(Screen.PrimaryScreen.Bounds.Width * 0.762f, Screen.PrimaryScreen.Bounds.Height * 0.0379f * i, Screen.PrimaryScreen.Bounds.Width * 0.104f, Screen.PrimaryScreen.Bounds.Height * 0.22f));
             }
             
             btNewRound.DrawChooseButton(g);
