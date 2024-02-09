@@ -1,0 +1,380 @@
+Cruzeiro,America
+Athletico,Internacional
+AtleticoMG,Santos
+Cuiaba,Bahia
+Goias,Botafogo
+Corinthians,RBBragantino
+Vasco,Coritiba
+Flamengo,Gremio
+Fluminense,Palmeiras
+São Paulo,Fortaleza
+Coritiba,America
+Athletico,Goias
+Internacional,AtleticoMG
+Cruzeiro,Bahia
+Palmeiras,Botafogo
+Corinthians,Fluminense
+São Paulo,Cuiaba
+Santos,Flamengo
+Gremio,Fortaleza
+Vasco,RBBragantino
+RBBragantino,America
+Palmeiras,Athletico
+AtleticoMG,Goias
+São Paulo,Bahia
+Botafogo,Corinthians
+Cruzeiro,Coritiba
+Gremio,Cuiaba
+Flamengo,Internacional
+Vasco,Fluminense
+Fortaleza,Santos
+Fluminense,America
+Athletico,Corinthians
+Palmeiras,AtleticoMG
+Bahia,Coritiba
+Botafogo,Vasco
+Cruzeiro,RBBragantino
+Cuiaba,Santos
+Goias,Flamengo
+Fortaleza,Internacional
+São Paulo,Gremio
+Botafogo,America
+Vasco,Athletico
+AtleticoMG,Corinthians
+Gremio,Bahia
+RBBragantino,Coritiba
+Cruzeiro,Fluminense
+Cuiaba,Internacional
+Flamengo,Palmeiras
+Fortaleza,Goias
+Santos,São Paulo
+America,Athletico
+AtleticoMG,Vasco
+RBBragantino,Bahia
+Cruzeiro,Botafogo
+Flamengo,Corinthians
+Coritiba,Fluminense
+Cuiaba,Goias
+Palmeiras,Fortaleza
+Santos,Gremio
+Internacional,São Paulo
+America,AtleticoMG
+Cruzeiro,Athletico
+Bahia,Santos
+Coritiba,Botafogo
+Corinthians,Fortaleza
+Palmeiras,Cuiaba
+Flamengo,Vasco
+Fluminense,RBBragantino
+Goias,São Paulo
+Internacional,Gremio
+America,Flamengo
+Athletico,Coritiba
+AtleticoMG,Cruzeiro
+Fluminense,Bahia
+Botafogo,RBBragantino
+Corinthians,Cuiaba
+Fortaleza,Vasco
+Gremio,Goias
+Internacional,Santos
+São Paulo,Palmeiras
+America,Fortaleza
+RBBragantino,Athletico
+Coritiba,AtleticoMG
+Internacional,Bahia
+Fluminense,Botafogo
+Corinthians,São Paulo
+Flamengo,Cruzeiro
+Cuiaba,Vasco
+Santos,Goias
+Palmeiras,Gremio
+Cuiaba,America
+Fluminense,Athletico
+AtleticoMG,RBBragantino
+Bahia,Botafogo
+Gremio,Corinthians
+Flamengo,Coritiba
+Cruzeiro,Fortaleza
+Goias,Internacional
+Santos,Palmeiras
+São Paulo,Vasco
+São Paulo,America
+Athletico,Botafogo
+Fluminense,AtleticoMG
+Goias,Bahia
+Santos,Corinthians
+Fortaleza,Coritiba
+Cruzeiro,Cuiaba
+RBBragantino,Flamengo
+Gremio,Vasco
+Palmeiras,Internacional
+America,Gremio
+Bahia,Athletico
+Botafogo,AtleticoMG
+Corinthians,Internacional
+Coritiba,Cuiaba
+São Paulo,Cruzeiro
+Flamengo,Fluminense
+RBBragantino,Fortaleza
+Palmeiras,Goias
+Vasco,Santos
+Santos,America
+AtleticoMG,Athletico
+Palmeiras,Bahia
+Botafogo,Flamengo
+Corinthians,Goias
+Coritiba,São Paulo
+Gremio,Cruzeiro
+Cuiaba,RBBragantino
+Fluminense,Fortaleza
+Internacional,Vasco
+Internacional,America
+Flamengo,Athletico
+Bahia,AtleticoMG
+Fortaleza,Botafogo
+Corinthians,Palmeiras
+Coritiba,Gremio
+Cruzeiro,Santos
+Cuiaba,Fluminense
+Goias,Vasco
+RBBragantino,São Paulo
+America,Goias
+Fortaleza,Athletico
+Flamengo,AtleticoMG
+Bahia,Corinthians
+Cuiaba,Botafogo
+Santos,Coritiba
+Cruzeiro,Internacional
+São Paulo,Fluminense
+RBBragantino,Gremio
+Palmeiras,Vasco
+Palmeiras,America
+Athletico,Cuiaba
+Fortaleza,AtleticoMG
+Flamengo,Bahia
+São Paulo,Botafogo
+Corinthians,Vasco
+Internacional,Coritiba
+Cruzeiro,Goias
+Fluminense,Gremio
+RBBragantino,Santos
+Corinthians,America
+São Paulo,Athletico
+Cuiaba,AtleticoMG
+Bahia,Vasco
+Gremio,Botafogo
+Coritiba,Goias
+Palmeiras,Cruzeiro
+Flamengo,Fortaleza
+Santos,Fluminense
+RBBragantino,Internacional
+Vasco,America
+Gremio,Athletico
+São Paulo,AtleticoMG
+Fortaleza,Bahia
+Santos,Botafogo
+Corinthians,Cruzeiro
+Palmeiras,Coritiba
+Flamengo,Cuiaba
+Fluminense,Internacional
+RBBragantino,Goias
+Bahia,America
+Santos,Athletico
+AtleticoMG,Gremio
+Botafogo,Internacional
+Coritiba,Corinthians
+Cruzeiro,Vasco
+Fortaleza,Cuiaba
+São Paulo,Flamengo
+Fluminense,Goias
+Palmeiras,RBBragantino
+America,Cruzeiro
+Internacional,Athletico
+Santos,AtleticoMG
+Bahia,Cuiaba
+Botafogo,Goias
+RBBragantino,Corinthians
+Coritiba,Vasco
+Gremio,Flamengo
+Palmeiras,Fluminense
+Fortaleza,São Paulo
+America,Coritiba
+Goias,Athletico
+AtleticoMG,Internacional
+Bahia,Cruzeiro
+Botafogo,Palmeiras
+Fluminense,Corinthians
+Cuiaba,São Paulo
+Flamengo,Santos
+Fortaleza,Gremio
+RBBragantino,Vasco
+America,RBBragantino
+Athletico,Palmeiras
+Goias,AtleticoMG
+Bahia,São Paulo
+Corinthians,Botafogo
+Coritiba,Cruzeiro
+Cuiaba,Gremio
+Internacional,Flamengo
+Fluminense,Vasco
+Santos,Fortaleza
+America,Fluminense
+Corinthians,Athletico
+AtleticoMG,Palmeiras
+Coritiba,Bahia
+Vasco,Botafogo
+RBBragantino,Cruzeiro
+Santos,Cuiaba
+Flamengo,Goias
+Internacional,Fortaleza
+Gremio,São Paulo
+America,Botafogo
+Athletico,Vasco
+Corinthians,AtleticoMG
+Bahia,Gremio
+Coritiba,RBBragantino
+Fluminense,Cruzeiro
+Internacional,Cuiaba
+Palmeiras,Flamengo
+Goias,Fortaleza
+São Paulo,Santos
+Athletico,America
+Vasco,AtleticoMG
+Bahia,RBBragantino
+Botafogo,Cruzeiro
+Corinthians,Flamengo
+Fluminense,Coritiba
+Goias,Cuiaba
+Fortaleza,Palmeiras
+Gremio,Santos
+São Paulo,Internacional
+AtleticoMG,America
+Athletico,Cruzeiro
+Santos,Bahia
+Botafogo,Coritiba
+Fortaleza,Corinthians
+Cuiaba,Palmeiras
+Vasco,Flamengo
+RBBragantino,Fluminense
+São Paulo,Goias
+Gremio,Internacional
+Flamengo,America
+Coritiba,Athletico
+Cruzeiro,AtleticoMG
+Bahia,Fluminense
+RBBragantino,Botafogo
+Cuiaba,Corinthians
+Vasco,Fortaleza
+Goias,Gremio
+Santos,Internacional
+Palmeiras,São Paulo
+Fortaleza,America
+Athletico,RBBragantino
+AtleticoMG,Coritiba
+Bahia,Internacional
+Botafogo,Fluminense
+São Paulo,Corinthians
+Cruzeiro,Flamengo
+Vasco,Cuiaba
+Goias,Santos
+Gremio,Palmeiras
+America,Cuiaba
+Athletico,Fluminense
+RBBragantino,AtleticoMG
+Botafogo,Bahia
+Corinthians,Gremio
+Coritiba,Flamengo
+Fortaleza,Cruzeiro
+Internacional,Goias
+Palmeiras,Santos
+Vasco,São Paulo
+America,São Paulo
+Botafogo,Athletico
+AtleticoMG,Fluminense
+Bahia,Goias
+Corinthians,Santos
+Coritiba,Fortaleza
+Cuiaba,Cruzeiro
+Flamengo,RBBragantino
+Vasco,Gremio
+Internacional,Palmeiras
+Gremio,America
+Athletico,Bahia
+AtleticoMG,Botafogo
+Internacional,Corinthians
+Cuiaba,Coritiba
+Cruzeiro,São Paulo
+Fluminense,Flamengo
+Fortaleza,RBBragantino
+Goias,Palmeiras
+Santos,Vasco
+America,Santos
+Athletico,AtleticoMG
+Bahia,Palmeiras
+Flamengo,Botafogo
+Goias,Corinthians
+São Paulo,Coritiba
+Cruzeiro,Gremio
+RBBragantino,Cuiaba
+Fortaleza,Fluminense
+Vasco,Internacional
+America,Internacional
+Athletico,Flamengo
+AtleticoMG,Bahia
+Botafogo,Fortaleza
+Palmeiras,Corinthians
+Gremio,Coritiba
+Santos,Cruzeiro
+Fluminense,Cuiaba
+Vasco,Goias
+São Paulo,RBBragantino
+Goias,America
+Athletico,Fortaleza
+AtleticoMG,Flamengo
+Corinthians,Bahia
+Botafogo,Cuiaba
+Coritiba,Santos
+Internacional,Cruzeiro
+Fluminense,São Paulo
+Gremio,RBBragantino
+Vasco,Palmeiras
+America,Palmeiras
+Cuiaba,Athletico
+AtleticoMG,Fortaleza
+Bahia,Flamengo
+Botafogo,São Paulo
+Vasco,Corinthians
+Coritiba,Internacional
+Goias,Cruzeiro
+Gremio,Fluminense
+Santos,RBBragantino
+America,Corinthians
+Athletico,São Paulo
+AtleticoMG,Cuiaba
+Vasco,Bahia
+Botafogo,Gremio
+Goias,Coritiba
+Cruzeiro,Palmeiras
+Fortaleza,Flamengo
+Fluminense,Santos
+Internacional,RBBragantino
+America,Vasco
+Athletico,Gremio
+AtleticoMG,São Paulo
+Bahia,Fortaleza
+Botafogo,Santos
+Cruzeiro,Corinthians
+Coritiba,Palmeiras
+Cuiaba,Flamengo
+Internacional,Fluminense
+Goias,RBBragantino
+America,Bahia
+Athletico,Santos
+Gremio,AtleticoMG
+Internacional,Botafogo
+Corinthians,Coritiba
+Vasco,Cruzeiro
+Cuiaba,Fortaleza
+Flamengo,São Paulo
+Goias,Fluminense
+RBBragantino,Palmeiras

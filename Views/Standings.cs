@@ -79,11 +79,6 @@ public class Standings : Form
                 .Where(m => m[0] != game.CrrTeam && m[1] != game.CrrTeam)
                 .ToArray();
 
-            Game.Current.CrrConfrontation = game.Confrontations
-                .Skip((game.Round + 1) * 10)
-                .Take(10)
-                .Where(m => m[0] == game.CrrTeam || m[1] == game.CrrTeam)
-                .FirstOrDefault();
             game.Round++;
             foreach (var match in matches)
             {
@@ -127,6 +122,12 @@ public class Standings : Form
                 game.CrrConfrontation[1].Diff += diff;
                 game.CrrConfrontation[0].Diff -= diff;
             }
+
+            Game.Current.CrrConfrontation = game.Confrontations
+                .Skip(game.Round  * 10)
+                .Take(10)
+                .Where(m => m[0] == game.CrrTeam || m[1] == game.CrrTeam)
+                .FirstOrDefault();
             
             foreach (var teams in orderedTeams)
             {
