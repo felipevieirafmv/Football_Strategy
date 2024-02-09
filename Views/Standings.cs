@@ -113,14 +113,14 @@ public class Standings : Form
             else if (diff > 0)
             {
                 game.CrrConfrontation[0].Points += 3;
-                game.CrrConfrontation[0].Diff += diff;
-                game.CrrConfrontation[1].Diff -= diff;
+                game.CrrConfrontation[0].Diff += Math.Abs(diff);
+                game.CrrConfrontation[1].Diff -= Math.Abs(diff);
             }
             else
             {
                 game.CrrConfrontation[1].Points += 3;
-                game.CrrConfrontation[1].Diff += diff;
-                game.CrrConfrontation[0].Diff -= diff;
+                game.CrrConfrontation[1].Diff += Math.Abs(diff);
+                game.CrrConfrontation[0].Diff -= Math.Abs(diff);
             }
 
             Game.Current.CrrConfrontation = game.Confrontations
