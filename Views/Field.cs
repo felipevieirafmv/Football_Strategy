@@ -62,7 +62,7 @@ public class Field : Form
 
         RectangleF score = new RectangleF(
             Screen.PrimaryScreen.Bounds.Width*0.433f, 
-            Screen.PrimaryScreen.Bounds.Height*0.122f, 
+            Screen.PrimaryScreen.Bounds.Height*0.128f, 
             Screen.PrimaryScreen.Bounds.Width*0.133f, 
             Screen.PrimaryScreen.Bounds.Height*0.049f
         );
@@ -90,7 +90,7 @@ public class Field : Form
             SizeF countSize = g.MeasureString(countdown, font);
 
             g.DrawString(countdown, font, Brushes.Black,
-                new PointF(score.X + (score.Width/2 - countSize.Width/2), Screen.PrimaryScreen.Bounds.Height*0.146f)
+                new PointF(score.X + (score.Width/2 - countSize.Width/2), Screen.PrimaryScreen.Bounds.Height*0.15f)
             );
 
             // g.DrawRectangle(Pens.Red, new RectangleF(

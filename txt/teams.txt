@@ -1,11 +1,11 @@
 America,0,0
-Athletico,0,-1
+Athletico,0,0
 AtleticoMG,0,0
 Bahia,0,0
 Botafogo,0,0
 Corinthians,0,0
-Coritiba,100,0
-Cruzeiro,50,0
+Coritiba,0,0
+Cruzeiro,0,0
 Cuiaba,0,0
 Flamengo,0,0
 Fluminense,0,0
