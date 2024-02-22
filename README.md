@@ -18,7 +18,7 @@ To play Football Strategy, follow these instructions:
 
 ## Controls
 - Mouse only.
-- Close Game: ESC
+- Close Game: ESC.
 
 ## Credits
 - Developer: [Murilo Socek](https://github.com/SocekMurilo)
